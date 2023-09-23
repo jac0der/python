@@ -39,6 +39,8 @@ SaleRevenue = SaleCost * SaleCopiesSold # total monies gain from SALE sales of t
 
 TotalRevenue = Revenue + SaleRevenue    # total earnings of song as at current date
 
+firsNameInitial = 'J'
+lastNameInitial = 'E'
 
 
 
@@ -80,6 +82,7 @@ print('Sale Revenue: ', Currency + f"{SaleRevenue: ,}")    # formatting number f
 
 print('Total Revenue: ', Currency + f"{TotalRevenue: ,}")  # formatting number for better display
 
+print('Artist Initial: ', firsNameInitial + lastNameInitial)
 
 
 
