@@ -33,7 +33,7 @@ def validateInput(number):
         # try cast input to integer
         number = int(number)
 
-        # att this point user input was successfully cast
+        # at this point user input was successfully cast
         print(f"Factorial of {number} is:", factorial(number))          
 
     except ValueError:
