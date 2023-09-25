@@ -5,8 +5,8 @@
     @author:: jac0der
 """
 
-# getting number from user.
-number = input("Enter number: ")
+# getting number from user - retrieved as a string from user.
+str_number = input("Enter number: ")
 
 """
     Function to find the factorial of a number
@@ -27,11 +27,11 @@ def factorial(number):
     @input:: number to validate and get factorial for
     @output:: message with factorial result for input number.
 """
-def validateInput(number):
+def validateInput(value):
 
     try:
         # try cast input to integer
-        number = int(number)
+        number = int(value)
 
         # at this point user input was successfully cast
         print(f"Factorial of {number} is:", factorial(number))          
@@ -40,4 +40,4 @@ def validateInput(number):
         print("Invalid Input...")       
 
 # call to valudate the input to ensure its a number
-validateInput(number)
+validateInput(str_number)
