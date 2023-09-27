@@ -36,7 +36,7 @@ def serachList(target, list):
     # iterate over the search list to find the target number
     for item in list:
 
-        if(item == int(target)): # cast target to an integer
+        if(item == int_target): # cast target to an integer
             isExists = True
             break; # item found so break
     
