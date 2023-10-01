@@ -25,14 +25,14 @@ def validateInput(str_number):
 
         # ensure positive whole numbers are entered >= 1
         if(number < 1):
-            return [False, number]
+            return (False, number)
 
         # input valid so return True
-        return [True, number]
+        return (True, number)
     
     except ValueError:
         # invalid input enetered
-        return [False, str_number]
+        return (False, str_number)
 
 """
     Function to calculate the number of steps taken
