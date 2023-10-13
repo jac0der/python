@@ -41,7 +41,13 @@ student_average['ruby'] = 49
 print(jamaican_culture)
 print(student_average, '\n')
 
-#*** 3 => 
+
+#*** 3 => Access a value in a dictionary - use the key
+# get esther's average score
+print(f"Esther's average is:: {student_average['esther']}")
+
+# get the national bird of jamaica
+print(f"Jamaica's national bird is the '{jamaican_culture['bird'].title()}'")
 
 
 
