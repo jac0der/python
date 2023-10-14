@@ -213,15 +213,47 @@ for alien in aliens[:3]:
 
 
 print(aliens)
+print('\n')
 
 
+#*** 18 => Nesting List in a Dictionary
 
-#*** 18 => 
+pizza = {
+    'crust': 'thick',
+    'toppings': ['extra-cheese', 'green-peppers', 'peperoni']
+}
 
+print(f"You have ordered the {pizza['crust'].title()}-crust pizza.")
 
+for topping in pizza['toppings']:
+    print(topping)
 
+print('\n')
 
+#*** 19 => Nesting Dictionary in a Dictionary
+# values of the dictionary keys are values themselves.
+users = {
+    'jdoe': {
+        'first': 'jane',
+        'last': 'doe',
+        'location': 'ethiopia'
+    },
+    'phil': {
+        'first': 'phil',
+        'last': 'burges',
+        'location': 'egypt'
+    },
+    'sarah': {
+        'first': 'sarah',
+        'last': 'nuten',
+        'location': 'israel'
+    }
+}
 
+print(users)
 
-
+for username, userinfo in users.items():
+    print(f"Username: {username}")
+    print(f"\t Fullname: {userinfo['first']} {userinfo['last']}")
+    print(f"\t Location: {userinfo['location']}")
 
