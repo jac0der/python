@@ -158,4 +158,70 @@ print('\n')
 # duplicated python will be removed - only keeping 1 instance of python
 languages = {'python', 'ruby', 'python', 'c'}
 print(languages)
+print('\n')
+
+#*** 14 => Add items to a Set
+languages.add('rust')
+languages.add('golang')
+print(languages)
+print('\n')
+
+#*** 15 => Remove items from a Set - 3 ways of removing an item from a Set
+languages.remove('c')
+languages.discard('ruby')
+languages.pop()
+
+print(languages)
+
+
+#*** 16 => Clear/emptying a Set
+languages.clear()
+print(languages)
+
+
+
+#*** 17 => Nesting Dictionaries within a List
+
+# define an empty List to store aliens
+aliens = []
+
+# create 30 aliens to store in List - use range method
+for count in range(30):
+
+    #creating a mnew alien on each iteration of loop
+    new_alien = {'color': 'red', 'speed': 'slow', 'points': 5}
+
+    # append/add new alien to the List
+    aliens.append(new_alien)
+
+
+# print first 5 aliens
+for alien in aliens[:5]:
+    print(alien)
+
+print('\n')
+
+print(f"Total alien count is: {len(aliens)}")
+
+# modify the first 3 aliens in the List
+for alien in aliens[:3]:
+
+    if(alien['color'] == 'red'):
+        alien['color'] = 'yellow'
+        alien['speed'] = 'medium'
+        alien['points'] = 10
+
+
+print(aliens)
+
+
+
+#*** 18 => 
+
+
+
+
+
+
+
 
