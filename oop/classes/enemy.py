@@ -3,6 +3,8 @@ class Enemy:
     # instance variable assigned to all objects 
     hp = 200
 
+    name = 'battaw'
+
     # define and initialize atkl and atkh for each new object
     def __init__(self, atkl, atkh):
         self.atkl = atkl
@@ -13,6 +15,9 @@ class Enemy:
 
     def getHp(self):
         print("Hp is", self.hp)
+
+    def getName(self):
+        return self.name
 
 enemy1 = Enemy(40, 49)
 enemy1.getAtk()
