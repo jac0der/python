@@ -41,5 +41,7 @@ def Calculate():
         else:
             previous = eval(str(previous) + equation)
 
+# loop to control the continous running of the calculator
+# by using the boolean variable run.
 while run:
     Calculate()
