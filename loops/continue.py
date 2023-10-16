@@ -1,5 +1,6 @@
 """
-    Using the continue keyword to skip a loop iteration.
+    Using the continue keyword to force a next loop 
+    iteration, ignoring codes whic comes after.
 
     @datetime:: October 16, 2023 12:15 pm (UTC-5)
     @author:: jac0der
