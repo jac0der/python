@@ -14,6 +14,7 @@
 """
 import random
 
+
 playerhp = 260
 enemyatkl = 60
 enemyatkh = 80
@@ -29,7 +30,7 @@ while playerhp > 0:
     print("Enenmy strikes for ", dmg, " points of damage. Current HP is", playerhp)
 
     if playerhp == 30:
-        print("You have low health. Tou've been teleported to the nearest inn.")
+        print("You have low health. You've been teleported to the nearest inn.")
         break
 
 
@@ -71,7 +72,7 @@ count = 0
 # will break, NOT processing player 30
 for player in players:
 
-    if len(player['offensies']) == 0:
+    if len(player['offensies']) == 0: # get length of List
         break
     
     count+=1
