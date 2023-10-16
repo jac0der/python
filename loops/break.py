@@ -43,10 +43,10 @@ print('\n')
     offenssies is reached, break from the loop.
 """
 
-# create empty List too store dictionary of players
+# create empty List to store dictionary of players
 players = []
 
-# loop 30 times - uuse the range() function
+# loop 30 times - use the range() function
 for loop_count in range(30):
     #create a new player dictionary.
     new_player = {

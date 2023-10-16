@@ -23,7 +23,8 @@ enemy2.getAtk()
 enemy2.getHp()
 
 """
-    enemy1 = Enemy(40, 49)
-    enemy1.getAtk()
-    enemy1.getHp()
+    k is 40
+    Hp is 200
+    atk is 75
+    Hp is 200
 """
