@@ -30,7 +30,7 @@ while playerhp > 0:
 
     if playerhp == 30:
         print("You have low health. Tou've been teleported to the nearest inn.")
-        break;
+        break
 
 
 print('\n')
