@@ -7,6 +7,9 @@
     such as: List of words and their meanings
              List of people names and their favorite numbers
              List of mountains and their elevations etc...
+    
+    @datetime:: October 13, 2023 11:49 am (UTC-5)
+    @author:: jac0der
 '''
 
 #*** 1 => Creating a dictionary
