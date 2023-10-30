@@ -8,7 +8,7 @@ def getChangeOwed():
         try:
             change = float(input("Change owed: "))
         
-        except:
+        except ValueError:
             continue
 
         if change > 0:
