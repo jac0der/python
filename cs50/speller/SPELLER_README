@@ -1,0 +1,14 @@
+Speller is used to read the lines from a file to creat a dictionary
+which may be checked for the existence of words. The length of the 
+dictionary may also be obtained to check the size of the dictionary.
+
+The files provided as dictionaries are:
+    1. small
+    2 large
+
+A python set is used to represent the dictionary, as a set contains
+only unique values.
+
+This implementation shows the ease of which a higher level language
+such as python may accomplish such a task as compared to a lower level
+language such as C.
