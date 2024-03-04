@@ -1,21 +1,61 @@
-while True:
-    try:
-        # try cast input from user to integer
-        height = int(input("Height: "))
+"""
+    main function to start program execution.
+
+    @input:: none.
+    @output:: none.
+"""
+def main():
+    height = get_height();
+    print_pyramid(height)
+
+
+"""
+    function used to get a positive integer for 
+    height of pyramid.
     
-    except ValueError:
-        continue
+    @input::none
+    @output::int -> height of pyramid to be printed.
+"""
+def get_height():
 
-    # check for valid user pyramid height entered
-    if height > 0 and height < 9:
+    # loop until a valid input is entered
+    while True:
         
-        # ignore index 0 from range function and go up to entered height plus 1
-        for count in range(1, height + 1):
-            spaces = " " * (height - count)
-            hash_prints = "#" * count
+        try:
+            # get user pyramid height cast to integer
+            height = int(input('Height: '))
 
-            # print pyramid - left spaces, left hashes #, 2 spaces, right hashes #
-            print(spaces + hash_prints)
+            if height > 0 and height < 9:
+                return height
+            else:
+                print('enter a positive number')
 
-        # terminate loop after printing pyramid
-        break
+        except ValueError:
+            print('invalid')
+
+
+"""
+    function to print the pyramid based on height
+    passed in.
+
+    @input::int -> height of pyramid to print.
+    @output: printed pyramid.
+"""
+def print_pyramid(height):
+
+    hash_count = 1
+    space_count = height - 1
+
+    for i in range(height):
+
+        # print spaces on same line
+        print(' ' * space_count, end="")
+        print('#' * hash_count)
+
+        space_count -= 1
+        hash_count += 1 
+
+
+# start program execution.
+if __name__ == "__main__":
+    main()
