@@ -1,8 +1,9 @@
 """
-     variables are a way of storing data/information that I may want to keep for later.
+     variables are a way of storing data/information that I may want to 
+     keep for later.
      A variable is general a placeholder for a value.
-     In python I dont have to tell the computer what type I want my variable to be, It
-     figures the type out automatically.
+     In python I dont have to tell the computer what type I want my variable 
+     to be, It figures the type out automatically.
 """
 
 # Global variables - defined outside the scope of any function
