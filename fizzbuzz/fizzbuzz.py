@@ -52,15 +52,15 @@ def fizzbuzz():
     # why 101 is specified, in dorder to include 100.
     for number in range(1, 101):
         #check if number is both a multiple of 3 AND 5
-        if is_multiple(number, 3) and is_multiple(number, 5):
+        if is_multiple(number, MULT3) and is_multiple(number, MULT5):
             print('FizzBuzz ', end='')
 
         # check ifnumber is multiple of 3
-        elif is_multiple(number, 3):
+        elif is_multiple(number, MULT3):
             print('Fizz ', end='')
 
         # check if number is multiple of 5
-        elif is_multiple(number, 5):
+        elif is_multiple(number, MULT5):
             print('Buzz ', end='')
 
         # no multiple found, print number
