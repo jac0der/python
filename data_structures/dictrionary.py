@@ -1,5 +1,5 @@
 '''
-    A dictionary is a collection of key-value pairs.
+    A dictionary is an ordered collection of key-value pairs.
     Each key is connected to a value by a colon (:),
     and I can use a key to access the value associated with that key.
 
@@ -77,6 +77,13 @@ print(people_languages)
 #*** 6 => removing key-value pairs - use del keyword
 del people_languages['edward']
 print(people_languages, '\n')
+
+# removing jen itme from the dictionary
+# pop returns the value of the item popped.
+people_languages.pop('jen')
+
+# but using popitem, the actual key: value pair is popped.
+people_languages.popitem()
 
 
 #*** 7 => using get() method to access a key
@@ -259,4 +266,40 @@ for username, userinfo in users.items():
     print(f"Username: {username}")
     print(f"\t Fullname: {userinfo['first']} {userinfo['last']}")
     print(f"\t Location: {userinfo['location']}")
+
+
+#*** 20 => Find length of a dictionary
+# use len() method to find length of a dictionary
+fruit_colors = dict()
+fruit_colors['grape'] = 'purple'
+fruit_colors['water melon'] = 'red'
+
+print(len(fruit_colors))
+
+
+
+#*** 21 => dictionary membership test - use in operator
+print('grape' in fruit_colors)  # True
+
+
+#*** 22 => dictionary comprehension
+'''
+    Dictionary comprehension is an elegant and concise way
+    to create dictionaries in python.
+
+    Create a dictionary that maps the values of a list of
+    numbers to their squares.
+'''
+numerics = [1, 2, 3, 4, 5]
+square_dict = {num: num**2 for num in numerics}
+print(square_dict)
+
+
+# Construct a new dictionary with new prices by increasing the 
+# prices by 50% for those that are more than $2.
+
+old_price = {"milk": 1.02, "coffee": 2.5, "bread": 2.5}
+new_price = {key: value * 1.5 if value > 2 else value for (key, value) in old_price.items()}
+print(new_price)
+
 
