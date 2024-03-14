@@ -9,6 +9,18 @@
     @author::
     @datetime::
 """
+import random
+
+
+# declare global variables
+# store computer choices as a list
+COMPUTER_CHOICE = ['r', 'p', 's']
+
+# track winner of each round, thus winner of game
+WINNER = {
+    'user': 0,
+    'computer': 0
+}
 
 
 def main():
@@ -16,6 +28,7 @@ def main():
     print("Start by entering the number of rounds to play.")
 
     rounds = get_rounds()
+    play(rounds)
 
 
 def get_rounds():
@@ -45,10 +58,75 @@ def get_rounds():
             print("Invalid Input, Please enter a numberic value.")
 
 
+def get_user_choice():
+    ''' 
 
-# get random computer choice
+    '''
+    while True:
+         # get user's choice
+        print("Enter [r/R - Rock | p/P - Paper | s/S - Sissors]")
+        user_choice = input("Your choice: ")
 
-# determine winner - compare user and computer choice
+        if user_choice.strip().lower() in COMPUTER_CHOICE:
+            return user_choice.strip().lower()
+
+
+# Rock beats scissors, scissors beat paper, and paper beats rock.
+def who_wins_round(user_choice, computer_choice):
+    '''
+
+    '''
+
+    if user_choice == computer_choice:
+        print("Round Tie!")
+        print()
+
+    elif (user_choice == "r" and computer_choice == "s") or \
+         (user_choice == "s" and computer_choice == "p") or \
+         (user_choice == "p" and computer_choice == "r"):
+
+         # update user's round count
+         WINNER['user'] += 1
+         
+         print("User wins!")
+         print()
+         
+    else:
+        # update computer's round count
+         WINNER['computer'] += 1
+         
+         print("Computer wins!")
+         print()
+
+
+def who_wins_game():
+    pass
+
+
+def play(rounds):
+    '''
+        Function to start the rock paper sissors game for number
+        of rounds specified as input.
+
+        @input::int -> number of rounds to play.  
+        @output::
+    '''
+    print()
+
+
+    for i in range(rounds):
+
+        # get user's choice
+        user_choice = get_user_choice()
+
+        # get the computer choice
+        computer_choice = random.choice(COMPUTER_CHOICE)
+        print("Computer's choice is: ", computer_choice)
+
+        # determine winner
+        who_wins_round(user_choice, computer_choice)
+
+    # print out the winner of the Rock Paper Sissors Game
 
 
 if __name__ == '__main__':
