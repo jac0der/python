@@ -100,7 +100,20 @@ def who_wins_round(user_choice, computer_choice):
 
 
 def who_wins_game():
-    pass
+    '''
+        Function to determine which player won the most rounds,
+        hence won the game, otherwise, a tie.
+
+        @input:: none
+        @output::str -> the player who won the game or string tie.
+    '''
+
+    if WINNER['user'] > WINNER['computer']:
+        return 'user'
+    elif WINNER['computer'] > WINNER['user']:
+        return 'computer'
+    else:
+        return 'tie'
 
 
 def play(rounds):
@@ -112,7 +125,6 @@ def play(rounds):
         @output::
     '''
     print()
-
 
     for i in range(rounds):
 
@@ -126,7 +138,12 @@ def play(rounds):
         # determine winner
         who_wins_round(user_choice, computer_choice)
 
-    # print out the winner of the Rock Paper Sissors Game
+        winner = who_wins_game()
+
+        if winner != 'tie':
+            print(f"After {rounds} rounds, {winner} wins the game!")
+        else:
+            print("No winner - tie game!")
 
 
 if __name__ == '__main__':
