@@ -1,0 +1,52 @@
+"""
+    Rock beats scissors, scissors beat paper, and paper beats rock.
+    Agree ahead of time whether you’ll count off “rock, paper, scissors, shoot” or just 
+    “rock, paper, scissors.”
+    Use rock, paper, scissors to settle minor decisions or simply play to pass the time.
+
+    user decide best of N tries
+
+    @author::
+    @datetime::
+"""
+
+
+def main():
+    print("Ready! Set! -> Rock!, Paper!, Sissors!")
+    print("Start by entering the number of rounds to play.")
+
+    rounds = get_rounds()
+
+
+def get_rounds():
+    '''
+        function to get the user's input for the number 
+        of rounds of rock paper sissors to play.
+
+        @input::  none
+        @output::int -> user's entered number of rounds to play
+    '''
+
+    while(True):
+
+        try:
+            rounds = int(input("Number of rounds: "))
+
+            if rounds > 0:
+                return rounds
+            else:
+                print("Invalid Input, Please enter a positive number.")
+
+        except ValueError:
+            print("Invalid Input, Please enter a numberic value.")
+
+
+# validate user input
+
+# get random computer choice
+
+# determine winner - compare user and computer choice
+
+
+if __name__ == '__main__':
+    main()
