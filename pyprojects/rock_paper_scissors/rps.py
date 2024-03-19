@@ -99,14 +99,14 @@ def who_wins_round(user_choice, computer_choice):
          # update user's round count
          WINNER['user'] += 1
          
-         print("User wins!")
+         print("User wins round!")
          print()
          
     else:
         # update computer's round count
          WINNER['computer'] += 1
          
-         print("Computer wins!")
+         print("Computer wins round!")
          print()
 
 
