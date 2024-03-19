@@ -1,20 +1,17 @@
 """
+    Implementation of the Rock, Paper, Scissors game.
     Rock beats scissors, scissors beat paper, and paper beats rock.
-    Agree ahead of time whether you’ll count off “rock, paper, scissors, shoot” or just 
-    “rock, paper, scissors.”
-    Use rock, paper, scissors to settle minor decisions or simply play to pass the time.
+    user decide best of N rounds.
 
-    user decide best of N tries
-
-    @author::
-    @datetime::
+    @author:: jacoder
+    @datetime:: March 14, 2024 11:57 PM
 """
 import random
 
 
 # declare global variables
-# store computer choices as a list
-COMPUTER_CHOICE = ['r', 'p', 's']
+# store computer choices as a tuple - immutable (unchangable throughtout game)
+COMPUTER_CHOICE = ('r', 'p', 's')
 
 # track winner of each round, thus winner of game
 WINNER = {
@@ -24,7 +21,7 @@ WINNER = {
 
 
 def main():
-    print("Ready! Set! -> Rock!, Paper!, Sissors!")
+    print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
     print("Start by entering the number of rounds to play.")
 
     rounds = get_rounds()
@@ -60,9 +57,15 @@ def get_rounds():
 
 def get_user_choice():
     ''' 
+        function to accept users input of either rock (r),
+        paper (p) or scissors (s).
 
+        @input::  none
+        @output:: user's chose.
     '''
-    while True:
+    running = True
+
+    while running:
          # get user's choice
         print("Enter [r/R - Rock | p/P - Paper | s/S - Sissors]")
         user_choice = input("Your choice: ")
@@ -74,7 +77,15 @@ def get_user_choice():
 # Rock beats scissors, scissors beat paper, and paper beats rock.
 def who_wins_round(user_choice, computer_choice):
     '''
+        function to determine winner of round based on 
+        user and computer inputs.
 
+        @input::int user_choice 
+                    the user's entered choice
+        @input:: int computer_choice
+                     the randomly selected compouter choice.
+        @output::str
+                  message indicating who wins round, otherwise, print tie.              
     '''
 
     if user_choice == computer_choice:
@@ -109,11 +120,11 @@ def who_wins_game():
     '''
 
     if WINNER['user'] > WINNER['computer']:
-        return 'user'
+        return 1 # user wins
     elif WINNER['computer'] > WINNER['user']:
-        return 'computer'
+        return -1 # computer wins
     else:
-        return 'tie'
+        return 0 # tie
 
 
 def play(rounds):
@@ -122,7 +133,7 @@ def play(rounds):
         of rounds specified as input.
 
         @input::int -> number of rounds to play.  
-        @output::
+        @output::  winner of game.
     '''
     print()
 
@@ -131,7 +142,7 @@ def play(rounds):
         # get user's choice
         user_choice = get_user_choice()
 
-        # get the computer choice
+        # get the computer choice randomly
         computer_choice = random.choice(COMPUTER_CHOICE)
         print("Computer's choice is: ", computer_choice)
 
@@ -140,8 +151,10 @@ def play(rounds):
 
         winner = who_wins_game()
 
-        if winner != 'tie':
-            print(f"After {rounds} rounds, {winner} wins the game!")
+        if winner == 1:
+            print(f"After {rounds} rounds, User wins the game!")
+        elif winner == -1:
+            print(f"After {rounds} rounds, Computer wins the game!")
         else:
             print("No winner - tie game!")
 
