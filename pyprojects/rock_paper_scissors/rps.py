@@ -149,14 +149,16 @@ def play(rounds):
         # determine winner
         who_wins_round(user_choice, computer_choice)
 
-        winner = who_wins_game()
+    
+    # determine who won game
+    winner = who_wins_game()
 
-        if winner == 1:
-            print(f"After {rounds} rounds, User wins the game!")
-        elif winner == -1:
-            print(f"After {rounds} rounds, Computer wins the game!")
-        else:
-            print("No winner - tie game!")
+    if winner == 1:
+        print(f"After {rounds} rounds, User wins the game!")
+    elif winner == -1:
+        print(f"After {rounds} rounds, Computer wins the game!")
+    else:
+        print("No winner - tie game!")
 
 
 if __name__ == '__main__':
