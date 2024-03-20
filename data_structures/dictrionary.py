@@ -34,6 +34,10 @@ student_average = {
 }
 print(student_average, '\n')
 
+# create empty dictionary
+empty_dict = {}
+empty_dict2 = dict()
+
 
 #*** 2 => Add a new key-value pair
 jamaican_culture['hero'] = 'marcus garvey'
@@ -53,6 +57,7 @@ print(f"Esther's average is:: {student_average['esther']}")
 print(f"Jamaica's national bird is the '{jamaican_culture['bird'].title()}'", '\n')
 
 
+student_average.get('ruby', 'invalid key...')
 
 #*** 4 => Modifying values in a dictionary - assign new value to existing key
 # change sarah's grade
