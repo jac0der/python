@@ -159,7 +159,7 @@ print('\n')
     A Set is a collection in which each item must be unique.
 '''
 
-#*** 12 => looping unique values in a List (from dictionary keys() or values())
+#*** 13 => looping unique values in a List (from dictionary keys() or values())
 # Use a Set to store unique values, so convert List with duplicated values 
 # to a Set. using set() converts the dictionary's values list to a Set of
 # uniuque languages.
@@ -169,19 +169,19 @@ for language in set(people_languages.values()):
 print('\n')
 
 
-#*** 13 => Define a Set manually
+#*** 14 => Define a Set manually
 # duplicated python will be removed - only keeping 1 instance of python
 languages = {'python', 'ruby', 'python', 'c'}
 print(languages)
 print('\n')
 
-#*** 14 => Add items to a Set
+#*** 15 => Add items to a Set
 languages.add('rust')
 languages.add('golang')
 print(languages)
 print('\n')
 
-#*** 15 => Remove items from a Set - 3 ways of removing an item from a Set
+#*** 16 => Remove items from a Set - 3 ways of removing an item from a Set
 languages.remove('c')
 languages.discard('ruby')
 languages.pop()
@@ -189,13 +189,13 @@ languages.pop()
 print(languages)
 
 
-#*** 16 => Clear/emptying a Set
+#*** 17 => Clear/emptying a Set
 languages.clear()
 print(languages)
 
 
 
-#*** 17 => Nesting Dictionaries within a List
+#*** 18 => Nesting Dictionaries within a List
 
 # define an empty List to store aliens
 aliens = []
@@ -231,7 +231,7 @@ print(aliens)
 print('\n')
 
 
-#*** 18 => Nesting List in a Dictionary
+#*** 19 => Nesting List in a Dictionary
 
 pizza = {
     'crust': 'thick',
@@ -245,7 +245,7 @@ for topping in pizza['toppings']:
 
 print('\n')
 
-#*** 19 => Nesting Dictionary in a Dictionary
+#*** 20 => Nesting Dictionary in a Dictionary
 # values of the dictionary keys are values themselves.
 users = {
     'jdoe': {
@@ -273,7 +273,7 @@ for username, userinfo in users.items():
     print(f"\t Location: {userinfo['location']}")
 
 
-#*** 20 => Find length of a dictionary
+#*** 21 => Find length of a dictionary
 # use len() method to find length of a dictionary
 fruit_colors = dict()
 fruit_colors['grape'] = 'purple'
@@ -283,11 +283,11 @@ print(len(fruit_colors))
 
 
 
-#*** 21 => dictionary membership test - use in operator
+#*** 22 => dictionary membership test - use in operator
 print('grape' in fruit_colors)  # True
 
 
-#*** 22 => dictionary comprehension
+#*** 23 => dictionary comprehension
 '''
     Dictionary comprehension is an elegant and concise way
     to create dictionaries in python.
