@@ -177,6 +177,114 @@ print(numbers)         # [7, 5, 3, 9]
 
 
 
+#*** 16 => using range() to make a list of numbers
+print(list(range(1, 11))) # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+even_numbers = list(range(2, 11, 2))
+print(even_numbers) # [2, 4, 6, 8, 10]
+
+# using a loop
+numerics = list()
+for i in range(0, 21, 2):
+    numerics.append(i)
+
+print(numerics) # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+
+
+#*** 17 => perform simple statistics with a list of numbers
+print(min(numerics))
+print(max(numerics))
+print(sum(numerics))
+
+
+
+#*** 18  => Iterate through a list
+fruits = list()
+
+fruits.append('apple')
+fruits.insert(1, 'orange')
+fruits.insert(2, 'banana')
+
+for fruit in fruits:
+    print("I really like {}".format(fruit))
+
+
+
+#*** 19 => check if item exists in a list or not
+vegetables = ['carrot', 'cabbage', 'lettuce']
+
+print('tomato' in vegetables) # False
+print('cabbage' in vegetables) # True
+print('lettuce' not in vegetables) # False
+
+
+
+#*** 20 => Iterate through a slice
+players = ['charles', 'martina', 'michael', 'florence', 'eli' ]
+
+for player in players[:3]:
+    print(player.title())
+
+
+
+#*** 21 => Copy a list
+# copy a list by slicing an entire existing list by [:],
+# ignoring the start and end indicies.
+
+my_foods = ['pizza', 'falafel', 'carrot cake']
+friend_foods = my_foods[:]
+
+print("My favorite foods are:")
+print(my_foods)
+
+friend_foods.append('jerk')
+print("\nMy friends favorite foods are:")
+print(friend_foods)
+
+
+
+#*** 22 => list comprehension
+ # put first 10 squares in a list
+square = [num**2 for num in range(11)]
+print(square) # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# Create a numbers list with elements in the  
+# form of 2 to the power of i, where i takes values from 1 to 5.
+twos = [2**i for i in range(1,6)]
+print(twos)  # [2, 4, 8, 16, 32]
+
+# create list of even numbers
+evens = [num for num in range(11) if num % 2 == 0]
+print(evens) # [0, 2, 4, 6, 8, 10]
+
+# find the vowels in the string "Python" using list comprehension
+vowels = [l for l in 'Python' if l in ['a', 'e', 'i', 'o', 'u']]
+print(vowels)  # ['o']
+
+# find even numbers that are divisible by 5 from 0 to 100.
+even = [num for num in range(101) if num % 2 == 0 and num % 5 == 0]
+print(even)  # [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+# print "Even" and "Odd" in a list for even and odd numbers in list
+# # [1, 2, 3, 4, 5, 6]
+even_odd = ["Even" if i % 2 == 0 else "Odd" for i in [1, 2, 3, 4, 5, 6]]
+print(even_odd) # ['Odd', 'Even', 'Odd', 'Even', 'Odd', 'Even']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
