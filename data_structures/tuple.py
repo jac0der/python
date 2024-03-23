@@ -61,6 +61,19 @@ var = ('hello', )
 
 
 
+#*** 8 => writing over a tuple
+# since a tuple is immutable (not changable), I can re-assign
+dimensions = (200, 50)
+print('original dimensions:')
+for dimension in dimensions:
+    print(dimension)
+
+dimensions = (400, 100)
+print('\nModified dimensions:')
+for dimension in dimensions:
+    print(dimension)
+
+
 
 
 
