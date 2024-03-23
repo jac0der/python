@@ -84,7 +84,7 @@ print(A.union(B))   # {0, 1, 2, 3, 4}
 
 
 
-#*** 8 => set intersection
+#*** 9 => set intersection
 C = {1, 3, 5}
 D = {1, 2, 3}
 
@@ -93,7 +93,7 @@ print(C.intersection(D))   # {1, 3}
 
 
 
-#*** 9 => set difference
+#*** 10 => set difference
 E = {2, 3, 5}
 F = {1, 2, 6}
 
@@ -102,7 +102,7 @@ print(E.difference(F))  # {3, 5}
 
 
 
-#*** 10 => symmetric difference
+#*** 11 => symmetric difference
 G = {2, 3, 5}
 H = {1, 2, 6}
 
@@ -111,7 +111,7 @@ print(G.symmetric_difference(H))    # {1, 3, 5, 6}
 
 
 
-#*** 10 => check if two sets are equal
+#*** 12 => check if two sets are equal
 A = {1, 3, 5}
 B = {3, 5, 1}
 
@@ -124,7 +124,7 @@ else:
 
 
 
-#*** 11 => set comprehension
+#*** 13 => set comprehension
 word = "programming"
 
 unique_letters = {l for l in word}
