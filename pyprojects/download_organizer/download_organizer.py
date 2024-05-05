@@ -40,6 +40,9 @@ def create_destination_directories():
     '''
         Function to check if all the destination directories
         already exists, if not, create destination directory.
+
+        @input:: none
+        @output:: none
     '''
     # create the destination path if it doesnt exists.
     for destination_path in DEST_DIRS.values():
@@ -64,10 +67,14 @@ def extract_file_extensions(files):
         Function to loop over all the files in source directory,
         and move out files to their respective destination directories
         based on the file extensions.
+
+        @input:: iterator -> files collection with all files found within the
+                             source directory.
+        @output:: none
     '''
     for file in files:
         file_name = file.name # get each file name
-        source_file_path = file.path
+        source_file_path = file.path # get each absolute path
 
         # check file_name for a period(.)
         # If there is no period, catch raised ValueError and 
@@ -103,6 +110,16 @@ def extract_file_extensions(files):
 
 
 def move_file(source_file_path, destination_file_path):
+    '''
+        Function to move a file from a source directory 
+        to a destination directory.
+
+        @inputs:: 
+                 source_file_path:str -> absolute source file path of file to move.
+                 destination_file_path:str -> absolute destination file path to move
+                                              file to.
+        @output:: none
+    '''
     shutil.move(source_file_path, destination_file_path)
 
 
