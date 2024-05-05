@@ -25,9 +25,9 @@ DEST_DIRS = {
 }
 
 
-DOC_EXTENSIONS = ('.pdf', '.iso', '.txt')
+DOC_EXTENSIONS = ('.pdf', '.iso', '.txt', '.zip')
 MUS_EXTENSIONS = ('.mp3', '.wav')
-IMG_EXTENSIONS = ('.png', '.jpg', '.jpeg')
+IMG_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
 VID_EXTENSIONS = ('.mov', '.mp4')
 
 
@@ -86,20 +86,20 @@ def extract_file_extensions(files):
 
         if file_extension in DOC_EXTENSIONS:
             # copy file to documents destination folder
-            move_file(source_file_path, DEST_DOC + file_name)
+            move_file(source_file_path, DEST_DIRS['dest_doc'] + file_name)
 
         elif file_extension in MUS_EXTENSIONS:
-            move_file(source_file_path, DEST_MUS + file_name)
+            move_file(source_file_path, DEST_DIRS['dest_mus'] + file_name)
 
         elif file_extension in IMG_EXTENSIONS:
-            move_file(source_file_path, DEST_IMG + file_name)
+            move_file(source_file_path, DEST_DIRS['dest_img'] + file_name)
 
         elif file_extension in VID_EXTENSIONS:
-            move_file(source_file_path, DEST_VID + file_name)
+            move_file(source_file_path, DEST_DIRS['dest_vid'] + file_name)
 
         else:
             # copy file without extension to unsorted folder
-            move_file(source_file_path, DEST_UNSORTED + file_name)  
+            move_file(source_file_path, DEST_DIRS['dest_unsorted'] + file_name)  
 
 
 def move_file(source_file_path, destination_file_path):
