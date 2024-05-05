@@ -47,7 +47,10 @@ def create_destination_directories():
     # create the destination path if it doesnt exists.
     for destination_path in DEST_DIRS.values():
         if not os.path.exists(destination_path):
-            os.mkdir(destination_path)
+            try:
+                os.mkdir(destination_path)
+            except FileNotFoundError:
+                print(f'Path {destination_path} doesnt exists.')
 
 
 def get_files():
