@@ -33,7 +33,10 @@ VID_EXTENSIONS = ('.mov', '.mp4')
 
 def main():
     create_destination_directories()
-    extract_file_extensions(get_files())
+    files = get_files()
+
+    if files is not None:
+        extract_file_extensions(files)
 
 
 def create_destination_directories():
@@ -49,8 +52,9 @@ def create_destination_directories():
         if not os.path.exists(destination_path):
             try:
                 os.mkdir(destination_path)
+
             except FileNotFoundError:
-                print(f'Path {destination_path} doesnt exists.')
+                print(f'Destination directory {destination_path} doesnt exists.')
 
 
 def get_files():
@@ -61,7 +65,14 @@ def get_files():
         @input:: none
         @output:: iterator of all files within source directory.
     '''
-    files = os.scandir(SOURCE_DIR)
+    files = None
+
+    try:
+        files = os.scandir(SOURCE_DIR)
+        
+    except FileNotFoundError:
+        print(f'Source directory {SOURCE_DIR} doesnt exists.')    
+
     return files
 
 
