@@ -38,6 +38,9 @@ def main():
     if files is not None:
         extract_file_extensions(files)
 
+    else:
+        print(f'No files currently exists in source directory {SOURCE_DIR}')
+
 
 def create_destination_directories():
     '''
@@ -54,7 +57,7 @@ def create_destination_directories():
                 os.mkdir(destination_path)
 
             except FileNotFoundError:
-                print(f'Destination directory {destination_path} doesnt exists.')
+                print(f'Destination directory {destination_path} doesn''t exists.')
 
 
 def get_files():
@@ -86,55 +89,85 @@ def extract_file_extensions(files):
                              source directory.
         @output:: none
     '''
-    for file in files:
-        file_name = file.name # get each file name
-        source_file_path = file.path # get each absolute path
+    try:
+        for file in files:
+            file_name = file.name # get each file name
+            source_file_path = file.path # get each absolute file path
 
-        # check file_name for a period(.)
-        # If there is no period, catch raised ValueError and 
-        # set last_index to -1
-        try:
-            last_index = file_name.rindex('.')
-        except ValueError:
-            last_index = -1
+            # check file_name for a period(.)
+            # If there is no period, catch raised ValueError and 
+            # set last_index to -1
+            try:
+                # find last period (.) in filename
+                last_index = file_name.rindex('.')
+            except ValueError:
+                last_index = -1
 
-        # get file extension
-        if last_index >= 0:
-            # substring file name from last period index to end of file_name
-            file_extension = file_name[last_index:].lower().strip() 
-        else:
-            file_extension = None
+            # get file extension
+            if last_index >= 0:
+                # substring file name from last period index to end of file_name
+                file_extension = file_name[last_index:].lower().strip() 
+            else:
+                file_extension = None
 
-        if file_extension in DOC_EXTENSIONS:
-            # copy file to documents destination folder
-            move_file(source_file_path, DEST_DIRS['dest_doc'] + file_name)
+            if file_extension in DOC_EXTENSIONS:
+                # copy file to documents destination folder
+                move_file(source_file_path, DEST_DIRS['dest_doc'], file_name)
 
-        elif file_extension in MUS_EXTENSIONS:
-            move_file(source_file_path, DEST_DIRS['dest_mus'] + file_name)
+            elif file_extension in MUS_EXTENSIONS:
+                move_file(source_file_path, DEST_DIRS['dest_mus'], file_name)
 
-        elif file_extension in IMG_EXTENSIONS:
-            move_file(source_file_path, DEST_DIRS['dest_img'] + file_name)
+            elif file_extension in IMG_EXTENSIONS:
+                move_file(source_file_path, DEST_DIRS['dest_img'], file_name)
 
-        elif file_extension in VID_EXTENSIONS:
-            move_file(source_file_path, DEST_DIRS['dest_vid'] + file_name)
+            elif file_extension in VID_EXTENSIONS:
+                move_file(source_file_path, DEST_DIRS['dest_vid'], file_name)
 
-        else:
-            # copy file without extension to unsorted folder
-            move_file(source_file_path, DEST_DIRS['dest_unsorted'] + file_name)  
+            else:
+                # copy file without extension to unsorted folder
+                move_file(source_file_path, DEST_DIRS['dest_unsorted'], file_name, False)
+
+    except Exception:
+        print('Error in extract_file_extensions(files) method.')
 
 
-def move_file(source_file_path, destination_file_path):
+def move_file(source_file_path, destination_file_path, filename, is_extension = True):
     '''
         Function to move a file from a source directory 
         to a destination directory.
 
         @inputs:: 
                  source_file_path:str -> absolute source file path of file to move.
-                 destination_file_path:str -> absolute destination file path to move
-                                              file to.
+                 destination_file_path:str -> destination file path to move file to.
+                 filename:str -> name of the file to be copied to destination.
+                 is_extension:bool -> optional parameter flag used to indicate whether
+                                      filename passed in has a valid extension checked for.
         @output:: none
     '''
-    shutil.move(source_file_path, destination_file_path)
+    # check if file already exists, if so add counter increment to the new file being 
+    # copied to make it a unique filename.
+    counter = 2
+
+    try:
+        while True:
+            # check if file exists before trying to copy file to destination
+            if os.path.exists(destination_file_path + filename):
+
+                if is_extension:
+                    parts = filename.split('.')
+                    filename = parts[0] + str(counter) + '.' + parts[1]
+
+                else:
+                    filename = filename + str(counter)
+
+                counter += 1
+            else:
+                break
+
+        shutil.move(source_file_path, destination_file_path + filename)
+
+    except Exception:
+        print(f'Error moving file {filename} to destination {destination_file_path}.')
 
 
 if __name__ == "__main__":
