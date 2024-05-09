@@ -9,8 +9,10 @@
 
 # import modules
 import os
+import time
 import shutil
-
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 # declare constants
 SOURCE_DIR = '/home/jacoder/Downloads/'
@@ -28,7 +30,7 @@ DEST_DIRS = {
 DOC_EXTENSIONS = ('.pdf', '.iso', '.txt', '.zip')
 MUS_EXTENSIONS = ('.mp3', '.wav')
 IMG_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
-VID_EXTENSIONS = ('.mov', '.mp4')
+VID_EXTENSIONS = ('.mov', '.mp4', '.webm')
 
 
 def main():
@@ -170,5 +172,35 @@ def move_file(source_file_path, destination_file_path, filename, is_extension = 
         print(f'Error moving file {filename} to destination {destination_file_path}.')
 
 
+class Watcher:
+
+    def __init__(self, directory=".", handler=FileSystemEventHandler()):
+        self.observer = Observer()
+        self.handler = handler
+        self.directory = directory
+
+    def run(self):
+        self.observer.schedule(
+            self.handler, self.directory, recursive=True)
+        self.observer.start()
+        print("\nWatcher Running in {}/\n".format(self.directory))
+        try:
+            while True:
+                time.sleep(1)
+        except:
+            self.observer.stop()
+        self.observer.join()
+        print("\nWatcher Terminated\n")
+    
+
+class MyHandler(FileSystemEventHandler):
+
+    def on_created(self, event):
+        #print(event) # Your code here
+        main()
+
+
 if __name__ == "__main__":
-    main()
+    w = Watcher(SOURCE_DIR, MyHandler())
+    w.run()
+    #main()
