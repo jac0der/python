@@ -193,7 +193,7 @@ class Watcher:
         print("\nWatcher Terminated\n")
     
 
-class MyHandler(FileSystemEventHandler):
+class MonitorDocumentCreation(FileSystemEventHandler):
 
     def on_created(self, event):
         #print(event) # Your code here
@@ -201,6 +201,6 @@ class MyHandler(FileSystemEventHandler):
 
 
 if __name__ == "__main__":
-    w = Watcher(SOURCE_DIR, MyHandler())
+    w = Watcher(SOURCE_DIR, MonitorDocumentCreation())
     w.run()
     #main()
