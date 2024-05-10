@@ -14,6 +14,7 @@ import shutil
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+
 # declare constants
 SOURCE_DIR = '/home/jacoder/Downloads/'
 
@@ -35,6 +36,10 @@ VID_EXTENSIONS = ('.mov', '.mp4', '.webm')
 
 def main():
     create_destination_directories()
+
+    #print('debouncing/delaying for 7 seconds...', end='\n')
+    #time.sleep(7)
+
     files = get_files()
 
     if files is not None:
@@ -42,6 +47,10 @@ def main():
 
     else:
         print(f'No files currently exists in source directory {SOURCE_DIR}')
+    
+    print()
+    print("\nWatcher Running in {}\n".format(SOURCE_DIR))
+    print()
 
 
 def create_destination_directories():
@@ -91,10 +100,54 @@ def extract_file_extensions(files):
                              source directory.
         @output:: none
     '''
+    is_next_file = False
+
     try:
         for file in files:
+            # get the file size  to loop and check if file has been
+            # completly created/downloaded within the source directory.
+         #   file_size = file.stat().st_size
+            try:
+                initial_file_size = file.stat().st_size
+            except Exception as e:
+                print(e)
+                print('file named: {}'.format(file.name) + 'missing...')
+                continue
+            
             file_name = file.name # get each file name
             source_file_path = file.path # get each absolute file path
+
+            # check if the file size has stopped changing, which
+            # indicates that the file has been fully written or downloaded.
+            while True:
+                print('in while...')
+                # delay to check for file size change, which would mean
+                # file is not fully written as yet.
+                time.sleep(1)
+                try:
+                    new_file_size_check = os.path.getsize(file.path)
+
+                    print('file size ' + str(initial_file_size))
+                    print('new file size ' + str(new_file_size_check))
+
+                    if new_file_size_check == initial_file_size:
+                        # file completly written to directory so break from
+                        # loop and move file
+                        break
+                    else:
+                        initial_file_size = new_file_size_check
+
+                        # if file size just never stabilizes, check if timeout
+                        # point is reached to exit loop, preventing an infinite loop.
+
+                except Exception as e:
+                    print(e)
+                    print('Error checking if file has been fully written.')
+                    is_next_file = True
+                    break # break to prevent infinite loop
+
+            if is_next_file:
+                continue   # move to next file
 
             # check file_name for a period(.)
             # If there is no period, catch raised ValueError and 
@@ -104,6 +157,8 @@ def extract_file_extensions(files):
                 last_index = file_name.rindex('.')
             except ValueError:
                 last_index = -1
+            except Exception as e:
+                print(e) # if I try to get index of a file which no longer exists
 
             # get file extension
             if last_index >= 0:
@@ -168,7 +223,8 @@ def move_file(source_file_path, destination_file_path, filename, is_extension = 
 
         shutil.move(source_file_path, destination_file_path + filename)
 
-    except Exception:
+    except Exception as e:
+        print(e)
         print(f'Error moving file {filename} to destination {destination_file_path}.')
 
 
@@ -196,11 +252,12 @@ class Watcher:
 class MonitorDocumentCreation(FileSystemEventHandler):
 
     def on_created(self, event):
-        #print(event) # Your code here
-        main()
+
+        # only process files, not directories
+        if not event.is_directory:
+            main()
 
 
 if __name__ == "__main__":
     w = Watcher(SOURCE_DIR, MonitorDocumentCreation())
     w.run()
-    #main()
