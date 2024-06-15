@@ -22,8 +22,8 @@ def factorial(number):
     """
 
     # 1! is 1 so return 1 - base case met
-    if number == 1:
-        return number
+    if number == 1 or number == 0:
+        return 1
 
     # recursively call factorial on n - 1
     return number * factorial(number - 1)
@@ -39,11 +39,18 @@ def validateInput(value):
         # try cast input to integer
         number = int(value)
 
-        # at this point user input was successfully cast
-        print(f"Factorial of {number} is:", factorial(number))          
+        if number >= 0:
+
+            # at this point user input was successfully cast
+            print(f"Factorial of {number} is:", factorial(number))  
+            print()
+        else:
+            print("Only Positive Numbers Valid.") 
+            print()       
 
     except ValueError:
-        print("Invalid Input...")       
+        print("Invalid Input...")
+        print()       
 
 
 if __name__ == "__main__":
