@@ -7,6 +7,9 @@ pygame.init()
 # set up the drawing window - can be a list or tuple
 screen = pygame.display.set_mode([800, 800])
 
+# set title fore pygame window
+pygame.display.set_caption('Misile Math')
+
 # run until user asks to quit
 running = True
 
