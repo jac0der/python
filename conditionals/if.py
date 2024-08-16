@@ -77,3 +77,10 @@ else:
     Pajamas = "Off"
 
 print(Pajamas)
+
+Fruit = "apple"
+
+if Fruit == "apple":
+    print("OK")
+else:
+    print("404")
