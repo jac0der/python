@@ -125,6 +125,34 @@ while running:
     )
 
 
+    '''
+        Drawing lines on screen
+    '''
+    pygame.draw.line(
+        screen,
+        RED,
+        (330, 0),
+        (330, SCREEN_HEIGHT),
+        5
+    )
+
+    pygame.draw.line(
+        screen,
+        GREEN,
+        (350, 0),
+        (350, SCREEN_HEIGHT),
+        5
+    )
+
+    pygame.draw.line(
+        screen,
+        BLUE,
+        (370, 0),
+        (370, SCREEN_HEIGHT),
+        5
+    )
+
+
 
     # update game window with new objects states
     pygame.display.flip()
