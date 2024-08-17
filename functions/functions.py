@@ -35,8 +35,31 @@ def print_events():
     To invoke/call a function simply use the function name.
 '''
 print_events()
+print()
 
 
+#*** 4 => Function Arguments
+'''
+    Functions can also accept arguments to be used for processing within its function code body.
+'''
+numerics = list(range(1, 1000))
+
+# define an empty list
+evens = list()
+
+def find_evens(numeric_values):
+    ''' 
+        function to determine which values are even numbers from a list of integer values.
+        numeric_values is the function parameter, specifying that the function accepts 1
+        argument.
+    '''
+    for i in numeric_values:
+        if i % 2 == 0:
+            evens.append(i) # add even number to evens list.
+
+# call find_evens function
+find_evens(numerics)
+print(evens)
 
 
 
