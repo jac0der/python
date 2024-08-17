@@ -19,7 +19,6 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0, 0, 255)
 
-POINTS = [(100, 100), (150, 50), (200, 100), (175, 200), (125, 200)]
 
 # setup game window
 screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
@@ -105,6 +104,26 @@ while running:
     # draw circle at right center of screen, showing ful circle with 
     # right edge touching screen right edge.
     pygame.draw.circle(screen, BLUE, ((SCREEN_WIDTH - RADIUS), 250), RADIUS)
+
+
+    '''
+        draw polygons on screen.
+
+        draw a 5 point polygon
+    '''
+    pygame.draw.polygon(
+        screen, 
+        RED, 
+        [(100, 100), (150, 50), (200, 100), (175, 200), (125, 200)]
+    )
+
+    # draw a 6 points polygon
+    pygame.draw.polygon(
+        screen, 
+        RED, 
+        [(40, 350), (100, 290), (200, 310), (230, 350), (170, 400), (120, 470)]
+    )
+
 
 
     # update game window with new objects states
