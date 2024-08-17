@@ -7,14 +7,19 @@ SCREEN_HEIGHT = 500
 SCREEN_WIDTH = 500
 
 # set global variables for rectangle size.
-REC_HEIGHT = 50
-REC_WIDTH = 50
+REC_HEIGHT = 40
+REC_WIDTH = 40
+
+# set circle radius
+RADIUS = 15
 
 # Define colors
 WHITE = (255, 255, 255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0, 0, 255)
+
+POINTS = [(100, 100), (150, 50), (200, 100), (175, 200), (125, 200)]
 
 # setup game window
 screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
@@ -44,14 +49,15 @@ while running:
     screen.fill(WHITE)
 
     # 2nd way to draw on screen - by creating shapes
-    '''
-        Draw green rectangles (40x40) at the four corners of the screen
+    ''' 
+        Draw green rectangles (40x40) at the four corners of the screen.
+        screen is the window on which to draw shape.
     '''
     # rectangle at top left corner: x=0; y=0
     pygame.draw.rect(
         screen, 
         GREEN,
-        (0, 0, 40, 40)
+        (0, 0, REC_WIDTH, REC_HEIGHT)
     )
 
     # rectangle at bottom left corner: x=0; y=SCREEN_HEIGHT-rec_height(40)
@@ -60,7 +66,7 @@ while running:
     pygame.draw.rect(
         screen, 
         GREEN,
-        (0, (SCREEN_HEIGHT - 40), 40, 40)
+        (0, (SCREEN_HEIGHT - REC_HEIGHT), REC_WIDTH, REC_HEIGHT)
     )
 
     # rectangle at top right corner: x=SCREEN_WIDTH - rec_width(40); y=0
@@ -69,7 +75,7 @@ while running:
     pygame.draw.rect(
         screen,
         GREEN,
-        ((SCREEN_WIDTH - 40), 0, 40, 40)
+        ((SCREEN_WIDTH - REC_WIDTH), 0, REC_WIDTH, REC_HEIGHT)
     )
 
     # rectangle at top right corner: x=SCREEN_WIDTH - rec_width(40); y=0
@@ -78,11 +84,30 @@ while running:
     pygame.draw.rect(
         screen,
         GREEN,
-        ((SCREEN_WIDTH - 40), (SCREEN_HEIGHT - 40), 40, 40)
+        ((SCREEN_WIDTH - REC_WIDTH), (SCREEN_HEIGHT - REC_HEIGHT), REC_WIDTH, REC_HEIGHT)
     )
 
+    '''
+        Draw blue circles (40x40) horizontally accross center of screen
+        
+        screen: the window on which to draw
+        (0, 0, 255): a tuple containing RGB color values
+        (250, 250): a tuple specifying the center coordinates of the circle.
+        15: the radius of the circle to draw in pixels
+    '''
+    # draw circle in center of screen
+    pygame.draw.circle(screen, BLUE, (250, 250), RADIUS)
 
-    # update game window with new object states
+    # draw circle at left center of screen, showing ful circle with 
+    # left edge touching screen left edge.
+    pygame.draw.circle(screen, BLUE, (RADIUS, 250), RADIUS)
+
+    # draw circle at right center of screen, showing ful circle with 
+    # right edge touching screen right edge.
+    pygame.draw.circle(screen, BLUE, ((SCREEN_WIDTH - RADIUS), 250), RADIUS)
+
+
+    # update game window with new objects states
     pygame.display.flip()
 
 # exit the game
