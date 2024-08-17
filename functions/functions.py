@@ -38,7 +38,7 @@ print_events()
 print()
 
 
-#*** 4 => Function Arguments
+#*** 4 => Function Parameters and Arguments
 '''
     Functions can also accept arguments to be used for processing within its function code body.
 '''
@@ -51,18 +51,33 @@ def find_evens(numeric_values):
     ''' 
         function to determine which values are even numbers from a list of integer values.
         numeric_values is the function parameter, specifying that the function accepts 1
-        argument.
+        argument when invoked.
     '''
     for i in numeric_values:
         if i % 2 == 0:
             evens.append(i) # add even number to evens list.
 
-# call find_evens function
+# call find_evens function with 1 argument.
 find_evens(numerics)
 print(evens)
+print()
 
 
+# define 2 sets to be used as arguments to the get_intersection function.
+set_a = {2, 8, 9, 4}
+set_b = {7, 4, 1, 8}
 
+def get_intersection(set_a, set_b):
+    '''
+        function which accepts 2 Set parameters and returns the 
+        intersection of the two sets. 
+    '''
+    return set_a.intersection(set_b)
+
+#  call/invoke get_intersection function
+get_intersection(set_a, set_b)
+
+print(get_intersection(set_a, set_b))
 
 
 
