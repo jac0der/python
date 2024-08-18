@@ -114,7 +114,7 @@ value = 25
 def get_root(value, get_root = True):
     '''
         function to return root of value argument if
-        optional boolean value is passed in = True, otherwise
+        optional boolean value is passed in = True, or not passed in, otherwise
         just return back the value argument.
     '''
     if(get_root):
@@ -129,7 +129,38 @@ print(get_root(value))          # 5.0
 
 print(get_root(value, True))    # 5.0
 print(get_root(value, False))    # 25
+print()
 
+
+
+#*** 7 => Keyword Arguments
+
+# use with default values
+def print_welcome_message(name="someone", age="unknown"):
+    '''
+        function to print a message based on inputs provided,
+        otherwise use the default values.
+    '''
+
+    print("Hello {}, you are {} years old!".format(name, age))
+    
+# use default values
+print_welcome_message() # Hello someone, you are unknown years old!
+
+# call function specifying which argument should be specified first
+print_welcome_message(age=34, name="Paul")
+print()
+
+
+# use with no default values
+def print_welcome(name, age):
+    print(f"Hello {name}, you are {age} years old.")
+
+# call function specifying order of arguments
+print_welcome(age = 34, name = "Peter")
+# call function as normal
+print_welcome("Jude", 37)
+print()
 
 
 
