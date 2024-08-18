@@ -13,7 +13,7 @@
 
 #*** 1 => global variables (global scope)
 ''' 
-    a global variable is avariable defined outside of a function, thus have
+    a global variable is a variable defined outside of a function, thus have
     global scope.
     declare global variables, accessible inside or outside of a function.
 '''
@@ -31,17 +31,17 @@ print()
 
 '''
     updating a global variable value within a function, creates
-    a local variable to the function, thus resulting in different values.
+    a new local variable within the function, thus resulting in different values.
 '''
 def get_fav_language():
     fav_language = 'rust'
     print(f'local: {fav_language}')
 
 # print updated local instance of fav_language
-get_fav_language()
+get_fav_language()                                  # rust
 
 # print unchanged value of fav_language
-print(f'global: {fav_language}')
+print(f'global: {fav_language}')                    # python
 print()
 
 
@@ -57,10 +57,10 @@ def change_fav_language():
     print(f'local: {fav_language}')
 
 # print updated global instance of fav_language
-change_fav_language()
+change_fav_language()                               # go
 
 # print updated value of fav_language
-print(f'global: {fav_language}')
+print(f'global: {fav_language}')                    # go
 print()
 
 
@@ -77,7 +77,7 @@ def which_os():
 
     print(os)
 
-which_os()
+which_os()  # Linux GNU
 
 # try access os variable outside of function
 print(os) # error
