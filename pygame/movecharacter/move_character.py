@@ -24,14 +24,12 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # set screen title
 pygame.display.set_caption("Move Shape")
 
-# define a game crectangle character, initially at position x=0, y=0 (top left)
+# define a game rectangle character, initially at position x=0, y=0 (top left)
 character = pygame.draw.rect(
     screen,
     (80,80, 125, 130),
     (0,0,REC_HEIGHT,REC_HEIGHT),
 )
-CHARACTER_X = 0
-CHARACTER_Y = 0
 
 # setup game loop
 running = True
