@@ -82,7 +82,7 @@ set_b = {7, 4, 1, 8}
 def get_intersection(set_a, set_b):
     '''
         function which accepts 2 Set parameters and returns the 
-        intersection of the two sets. 
+        intersection of the two sets.
     '''
     return set_a.intersection(set_b)
 
@@ -100,14 +100,35 @@ value = 16
 def get_square_root(value):
     return sqrt(value)
 
-square = get_square_root(value)
+square_root = get_square_root(value)
 
-print(square)
+print(square_root)
 print()
 
 
 
 
+#*** 6 => Default/Optional Arguments
+value = 25
+
+def get_root(value, get_root = True):
+    '''
+        function to return root of value argument if
+        optional boolean value is passed in = True, otherwise
+        just return back the value argument.
+    '''
+    if(get_root):
+        
+        return sqrt(value)
+
+    else:
+        return value
+
+# call get_rrot function without default value specified
+print(get_root(value))          # 5.0
+
+print(get_root(value, True))    # 5.0
+print(get_root(value, False))    # 25
 
 
 
