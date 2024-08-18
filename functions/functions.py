@@ -157,13 +157,53 @@ def print_welcome(name, age):
     print(f"Hello {name}, you are {age} years old.")
 
 # call function specifying order of arguments
-print_welcome(age = 34, name = "Peter")
+print_welcome(age = 34, name = "Peter")     # Hello Peter, you are 34 years old.
 # call function as normal
-print_welcome("Jude", 37)
+print_welcome("Jude", 37)                   # Hello Jude, you are 37 years old.
 print()
 
 
 
+
+#*** 7 => Functions Arbritrary Number of Arguments (*args & **kwargs)
+'''
+    use arbitrary arguments when I do not know the number of arguments I will
+    pass to a function. arbitrary arguments thus act as a data collection 
+    (list/dictionary) in function.
+'''
+'''
+    Using *args allows a function to take any number of "positional arguments" 
+    during a function call. 
+    argument act as a list.
+'''
+def sum_all(*numbers):
+    return sum(numbers)     # can also loop numbers argument with for loop.
+
+# call with 2 arguments
+print(sum_all(3,6))         # 9
+
+# call with 4 arguments
+print(sum_all(2, 6, 3, 4))  # 15
+print()
+
+
+
+'''
+    Using **kwargs allows the function to accept any number of "keyword arguments".
+    argument act as a dictionary.
+'''
+def display_language_favourites(**languages):
+    
+    for key, value in languages.items():
+        print(f"{key}: {value}")
+
+# print using 4 key  word arguments
+display_language_favourites(lua=80, python=100, c=50, php=40)
+print()
+
+# print using 2 key  word arguments
+display_language_favourites(rust=70, golong=20)
+print()
 
 
 
