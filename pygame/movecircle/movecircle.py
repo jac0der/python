@@ -4,13 +4,19 @@ import pygame
 #initialize pygame
 pygame.init()
 
+# define global constants
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 500
+
 CIRCLE_BACKGROUND = (80, 100, 200)
 CIRCLE_X = 50
 CIRCLE_Y = 50
 RADIUS = 20
 
+VELOCITY = 5
+
 # setup game screen
-screen = pygame.display.set_mode([500, 500])
+screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 # ste screen title
 pygame.display.set_caption("Move Circle")
@@ -38,35 +44,38 @@ while running:
     keys_pressed = pygame.key.get_pressed()
 
     if keys_pressed[pygame.K_LEFT]:
-        CIRCLE_X -= 5
+        CIRCLE_X -= VELOCITY
 
     elif keys_pressed[pygame.K_RIGHT]:
-        CIRCLE_X += 5
+        CIRCLE_X += VELOCITY
 
     elif keys_pressed[pygame.K_UP]:
-        CIRCLE_Y -= 5
+        CIRCLE_Y -= VELOCITY
 
     elif keys_pressed[pygame.K_DOWN]:
-        CIRCLE_Y += 5
+        CIRCLE_Y += VELOCITY
 
+    #ensure circle doesnt go outside the game window.
     # if center of the circle is less than the radius
-    if CIRCLE_X < 20:
-        CIRCLE_X = 20
+    if CIRCLE_X < RADIUS:
+        CIRCLE_X = RADIUS
 
-    if CIRCLE_X > (500 - 20):
-        CIRCLE_X = 490
+    if CIRCLE_Y < RADIUS:
+        CIRCLE_Y = RADIUS
 
-    if CIRCLE_Y < 20:
-        CIRCLE_Y = 20
+    # if center of the circle is greater than the r
+    # # screen height minus the adius
+    if CIRCLE_X > (SCREEN_WIDTH - RADIUS):
+        CIRCLE_X = (SCREEN_WIDTH - RADIUS)
 
-    if CIRCLE_Y > 20:
-        CIRCLE_Y = 20
+    if CIRCLE_Y > (SCREEN_HEIGHT - RADIUS):
+        CIRCLE_Y = (SCREEN_HEIGHT - RADIUS)
 
     # fill screen background
     screen.fill( (150, 200, 215) )
 
-    # draw circle on screen and reassign to global variable circle
-    # creating a circle also returns a RECT
+    # draw circle on screen
+    # creating a circle also returns a RECT object
     pygame.draw.circle(
         screen,
         CIRCLE_BACKGROUND,
@@ -77,4 +86,5 @@ while running:
     # update game window with new objects states
     pygame.display.flip()
 
+# exit the game
 pygame.quit()
