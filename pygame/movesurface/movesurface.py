@@ -74,9 +74,21 @@ while running:
 
     # create a new surface
     new_surface = pygame.Surface((SURF_WIDTH, SURF_HEIGHT))
-
-    # fill new curface with white color (treat just as a regular surface at this point)
+        # fill new curface with white color (treat just as a regular surface at this point)
     new_surface.fill( (255,255,255) )
+
+    # keep surface within the bounds of the game window
+    if SURF_X < 0:        
+        SURF_X = 0
+
+    if SURF_X > (SCREEN_WIDTH - SURF_WIDTH):
+        SURF_X = (SCREEN_WIDTH - SURF_WIDTH)
+
+    if SURF_Y < 0:
+        SURF_Y = 0
+
+    if SURF_Y > (SCREEN_HEIGHT - SURF_HEIGHT):
+        SURF_Y = (SCREEN_HEIGHT - SURF_HEIGHT)
 
     # to see the new surface on the screen, I have to blit it
     # to the screen at a specified location.
