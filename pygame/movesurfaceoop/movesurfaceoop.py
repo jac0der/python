@@ -22,7 +22,7 @@ pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 # set screen title
-pygame.display.set_caption("Blit Surfaces")
+pygame.display.set_caption("Blit Surfaces OOP")
 
 player = p.Player()
 
