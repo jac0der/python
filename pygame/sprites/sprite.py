@@ -14,6 +14,7 @@ from pygame.locals import (
 SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 500
 
+
 # initialize pygame
 pygame.init()
 

@@ -9,6 +9,15 @@ from pygame.locals import (
     K_RIGHT,
 )
 
+# Setup for sounds. Defaults are good.
+pygame.mixer.init()
+
+# Load all sound files
+# Sound sources: Jon Fincher
+move_up_sound = pygame.mixer.Sound("../assets/Rising_putter.ogg")
+move_down_sound = pygame.mixer.Sound("../assets/Falling_putter.ogg")
+
+
 # Define a Character object by extending pygame.sprite.Sprite
 # Instead of a surface, use an image for a better-looking sprite
 class Character(pygame.sprite.Sprite):
@@ -34,9 +43,12 @@ class Character(pygame.sprite.Sprite):
 
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
+            move_up_sound.play()
 
         if pressed_keys[K_DOWN]:
             self.rect.move_ip(0, 5)
+            move_down_sound.play()
+
 
         if pressed_keys[K_LEFT]:
             self.rect.move_ip(-5, 0)
