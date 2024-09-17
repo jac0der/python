@@ -24,3 +24,15 @@ try:
 
 except Exception:
     print('Invalid input, please enter a number.')
+
+
+# exiting while loop using break statement.
+while True:
+
+    fruit = input("Enter a favorite fruit: ")
+
+    if fruit == 'q':
+        print('Stop fruit survey.')
+        break
+
+    print(f'I like: {fruit}')
