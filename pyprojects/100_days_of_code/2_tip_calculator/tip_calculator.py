@@ -21,19 +21,28 @@ def calculate_pay_amounts():
         @input: none
         @output: float -> amount payable by each patron.
     '''
-    print("Welcome to the tip calculator!")
+    try:
+        print("Welcome to the tip calculator!")
 
-    bill_total = float(input("What was the total bill? $"))
-    tip = int(input("How much tip would you like to give? 10, 12, or 15? "))
-    split = int(input("How many people to split the bill? "))
+        # accept inputs from user and convert the string data type entries
+        #to float and int data types (explicit type convertion).
+        bill_total = float(input("What was the total bill? $"))
+        tip = int(input("How much tip would you like to give? 10, 12, or 15? "))
+        split = int(input("How many people to split the bill? "))
 
-    # bill total plus added tip
-    grand_total = bill_total + (bill_total * (tip/100))
-    print(grand_total)
+        # bill total plus added tip percentage
+        grand_total = bill_total + (bill_total * (tip/100))
+        print(grand_total)
 
-    split_amount = grand_total / split
+        split_amount = grand_total / split
 
-    print(f"Each person should pay: ${round(split_amount, 2)}")
+        print(f"Each person should pay: ${round(split_amount, 2)}")
+
+    except ValueError:
+        print("ValueError occured, check data type conversions. Possible converting from a string to either a float or int datatype.")
+
+    except Exception:
+        print("Error occured.")
 
 
 if __name__ == "__main__":
