@@ -26,17 +26,16 @@ def calculate_pay_amounts():
 
         # accept inputs from user and convert the string data type entries
         #to float and int data types (explicit type convertion).
-        bill_total = float(input("What was the total bill? $"))
-        tip = int(input("How much tip would you like to give? 10, 12, or 15? "))
-        split = int(input("How many people to split the bill? "))
+        bill = float(input("What was the total bill? $"))
+        tip = int(input("What percentage tip would you like to give? 10, 12, or 15? "))
+        people = int(input("How many people to split the bill? "))
 
         # bill total plus added tip percentage
-        grand_total = bill_total + (bill_total * (tip/100))
-        print(grand_total)
+        grand_total = bill + (bill * (tip/100))
 
-        split_amount = grand_total / split
+        split_amount = round(grand_total / people, 2)
 
-        print(f"Each person should pay: ${round(split_amount, 2)}")
+        print(f"Each person should pay: ${split_amount}")
 
     except ValueError:
         print("ValueError occured, check data type conversions. Possible converting from a string to either a float or int datatype.")
