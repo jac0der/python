@@ -1,6 +1,6 @@
 '''
-    Create a simple program automatically calculate the
-    bill for the pizza ordered by a client based on a 
+    Create a simple program to automatically calculate the
+    bill for a pizza ordered by a client based on a 
     number of options.
 
     Small pizza (S): $15
@@ -27,22 +27,21 @@ def get_pizza_bill():
         options for pizza selected by the client. 
     '''
     bill = 0
-    sizes = ('s', 'm', 'l')
     valid_entry = False
 
     while not valid_entry:
         size = input("What size pizza do you want? S, M, L or q to quit: ").lower()
 
         # amount to pay based on the pizza size choice.
-        if size == 's' and size in sizes:
+        if size == 's':
             bill += 15
             valid_entry = True
 
-        elif size == 'm' and size in sizes:
+        elif size == 'm':
             bill += 20
             valid_entry = True
 
-        elif size == 'l' and size in sizes:
+        elif size == 'l':
             bill += 25
             valid_entry = True
 
