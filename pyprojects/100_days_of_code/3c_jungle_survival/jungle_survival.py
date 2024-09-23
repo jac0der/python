@@ -52,8 +52,16 @@ def survive_jungle():
                 15. Saw
                 16. Warm Sleeping bag (for very cold weathers)
                 17. Map
+                18. First Aid Kit
 
     \n''')
+
+    signaling_items_dict = {
+        '6': 'Flashlight',
+        '8': 'Horn',
+        '9': 'Flare',
+        '12': 'Rifle'
+    }
 
     while True:
 
@@ -219,14 +227,47 @@ def survive_jungle():
             defend = input("        Type 'defend' or 'run'.\n")
 
             if defend == "defend":
-                pass
+                if '0' not in chosen_items and '12' not in chosen_items and '15' not in chosen_items:
+                    print("You have nothing to defend rourself with so the wolves devoured you. Game Over!")
+                    return 0 
+                
+                else:
+                    print("You have successfully ran off the wolves with either your rifle, knife or saw.\n")
+                    print("While walking you slipped and cut your leg on an old rusty tiger poucher trap.")
+                    firstaid = input("      Do you have first aid medicine to clean wound? 'yes' or 'no'\n").rstrip().lower()
+
+                    if firstaid == "yes" and '18' in chosen_items:
+                        print("Wound cleaned and wrapped successfully.\n")
+                        print("Though hopping, you have finally reached the top of the mountain at night.")
+                        print("To be rescude you must signal the rescuers who have been searching for you in a Hellicoptor with beam lights.")
+                        rescueitems = input("        Type 'view' to view your rescue items.").rstrip().lower()
+
+                        has_signaling_item = False
+
+                        for signaling_key, signaling_item in signaling_items_dict.values():
+                            if signaling_key in rescueitems:
+                                has_signaling_item = True
+                                print(f"     {signaling_key}. {signaling_item}")
+
+                        if has_signaling_item == False:
+                            print("You have no items to signal the recure Helicopter, so you are left alone in the Jungle with a bad wound.")
+                            printy("With no more medicine, you die of infection and dehydration from being abondon in the Jungle. Game Over!")
+                            return 0
+
+                        signalitem = input("     Select rescue item(s) to signal the Helicopter (6,8,9...).\n")
+# 6,8,9,12
+                        if signalitem == '6':
+                            pass
+
+                        
+
+                    else:
+                        print("Your wound was badly infected causing blood poisen. Game Over!")
+                        return 0
 
             elif defend == "run":
-                pass
-
-
-        
-        
+                print("You cannot out run a pack of wolves, you have been wolf meat. Game Over!")
+                return 0
 
 
 if __name__ == "__main__":
