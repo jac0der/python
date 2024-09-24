@@ -63,11 +63,17 @@ def survive_jungle():
         '12': 'Rifle'
     }
 
+    chosen_items = None
+
     while True:
 
-        choice = input("Choose only '5' items (0,1,2...) or type 'none' to leave backpack:   ").rstrip().lower()
+        choice = input("Choose only '5' items (0,1,2...) or type 'none' to leave backpack or 'q' to quit:   ").rstrip().lower()
         
-        if choice == "none":
+        if choice == "q":
+            print("Bye...")
+            return 0
+
+        elif choice == "none":
             break
 
         elif len(choice) == 0:
@@ -76,15 +82,19 @@ def survive_jungle():
         elif len(choice) > 0:
             chosen_items = choice.split(",")
 
-            if len(chosen_items) > 7:
+            if len(chosen_items) > 5:
                 print("Too many resource items selected. Please reselect items.\n")
             else:
                 break
         
 
-    direction = input("Let's Go! You can go 'North' or 'South':\n").rstrip().lower() 
+    direction = input("Let's Go! You can go 'North' or 'South' or 'q' to quit:\n").rstrip().lower() 
 
-    if direction == "south":
+    if direction == "q":
+        print("Bye...")
+        return 0
+    
+    elif direction == "south":
 
         print("After walking for many hours you come to a cliff approximately 50 feet.")
         cliff_decision = input("    Type 'down' to go down the cliff or 'up' to return to starting point.\n").rstrip().lower()
@@ -215,18 +225,26 @@ def survive_jungle():
         
         print("Up north is a steep mountain that if you get to the top you will be rescude or eaten by tigers.")
         print("You come to an old broken down hut, do you enter to rest or keep walking?")
-        enter = input("     Type 'enter' to rest or 'walk' to keep going.\n").rstrip().lower()
+        enter = input("     Type 'enter' to rest or 'walk' to keep going or 'q' to quit.\n").rstrip().lower()
 
-        if enter == "enter":
-            print("You have been bitten by a large King Cobra that was resting at the door of the hut.")
-            print("You have been poisoned by the snake's Venom. Game Over!")
+        if enter == "q":
+            print("Bye...")
             return 0
 
         elif enter == "walk":
             print("A pack of wolves have picked up your trail, do you defend yourself or run?")
-            defend = input("        Type 'defend' or 'run'.\n")
+            defend = input("        Type 'defend' or 'run' or 'q' to quit.\n")
 
-            if defend == "defend":
+            if defend == "q":
+                print("Bye...")
+                return 0
+            
+            elif defend == "defend":
+
+                if chosen_items == None:
+                    print("You cannot survive this jungle with nothing. Game Over!".upper())
+                    return 0
+
                 if '0' not in chosen_items and '12' not in chosen_items and '15' not in chosen_items:
                     print("You have nothing to defend rourself with so the wolves devoured you. Game Over!")
                     return 0 
@@ -234,53 +252,74 @@ def survive_jungle():
                 else:
                     print("You have successfully ran off the wolves with either your rifle, knife or saw.\n")
                     print("While walking you slipped and cut your leg on an old rusty tiger poucher trap.")
-                    firstaid = input("      Do you have first aid medicine to clean wound? 'yes' or 'no'?\n").rstrip().lower()
+                    firstaid = input("      Do you have first aid medicine to clean wound? 'y' or 'n' or 'q' to quit.\n").rstrip().lower()
 
-                    if firstaid == "yes" and '18' in chosen_items:
+                    if firstaid == "q":
+                        print("Bye...")
+                        return 0
+                    
+                    elif firstaid == "y" and '18' in chosen_items:
+
                         print("Wound cleaned and wrapped successfully.\n\n")
                         print("Though hopping, you have finally reached the top of the mountain at night.")
                         print("To be rescude you must signal the rescuers who have been searching for you in a Hellicoptor with beam lights.")
-                        rescueitems = input("        Type 'view' to view your rescue items.\n").rstrip().lower()
+                        rescueitems = input("        Type 'view' to view your rescue items or 'q' to quit.\n").rstrip().lower()
 
-                        has_signaling_item = False
+                        if rescueitems == "view":
+                            has_signaling_item = False
 
-                        for signaling_key, signaling_item in signaling_items_dict.items():
+                            for signaling_key, signaling_item in signaling_items_dict.items():
 
-                            if signaling_key in chosen_items:
-                                has_signaling_item = True
-                                print(f"     {signaling_key}. {signaling_item}")
+                                if signaling_key in chosen_items:
+                                    has_signaling_item = True
+                                    print(f"     {signaling_key}. {signaling_item}")
 
-                        if has_signaling_item == False:
-                            print("You have no items to signal the recure Helicopter, so you are left alone in the Jungle with a bad wound.")
-                            print("With no more medicine, you die either of infection and dehydration or you are eaten by the moutain Tigers. Game Over!")
-                            return 0
+                            if has_signaling_item == False:
+                                print("You have no items to signal the recure Helicopter, so you are left alone in the Jungle with a bad wound.")
+                                print("With no more medicine, you die either of infection and dehydration or you are eaten by the moutain Tigers. Game Over!")
+                                return 0
 
-                        signalitem = input("Select rescue item(s) to signal the Helicopter (6,8,9...).\n")
+                            signalitem = input("Select rescue item(s) to signal the Helicopter (6,8,9...) or 'q' to quit.\n")
 
-                        if signalitem == '6':
-                            print("Your Flashlight beam has been spotted by the helicopter. You have been rescued and survived the Jungle.")
-                                 
-                        elif signalitem == '8':
-                            print("Your Horn has been heard by the helicopter pilots who have pinpointed your location and using their spot light have found you.")
-                            print("You have been rescued and survived the Jungle.")
+                            if signalitem == "q":
+                                print("Bye...")
+                                return 0
+                            
+                            elif signalitem == '6':
+                                print("Your Flashlight beam has been spotted by the helicopter. You have been rescued and survived the Jungle.")
+                                    
+                            elif signalitem == '8':
+                                print("Your Horn has been heard by the helicopter pilots who have pinpointed your location and using their spot light have found you.")
+                                print("You have been rescued and survived the Jungle.")
 
-                        elif signalitem == '9':
-                            print("The bright light from your Flare has caused the helicopter Pilots to quickly locate you're location. You have been rescued and survived the Jungle.")
+                            elif signalitem == '9':
+                                print("The bright light from your Flare has caused the helicopter Pilots to quickly locate you're location. You have been rescued and survived the Jungle.")
 
-                        elif signalitem == '12':
-                            print("Your Rifle has been heard by the helicopter pilots who have pinpointed your location and using their spot light have found you.")
-                            print("You have been rescued and survived the Jungle.")
+                            elif signalitem == '12':
+                                print("Your Rifle has been heard by the helicopter pilots who have pinpointed your location and using their spot light have found you.")
+                                print("You have been rescued and survived the Jungle.")
 
+                            else:
+                                print("You do not know how to use your resource items, you have missed the helicopter. Have fun with the Tigers. Game Over!")         
+                        
                         else:
-                            print("You do not know how to use your resource items, you have missed the helicopter. Have fun with the Tigers. Game Over!")         
+                            print("Bye...")
+                            return 0
 
                     else:
                         print("Your wound was badly infected causing blood poison. Game Over!")
                         return 0
 
-            elif defend == "run":
+            else:
                 print("You cannot out run a pack of wolves, you have been wolf meat. Game Over!")
                 return 0
+
+        else:
+            print("You have been bitten by a large King Cobra that was resting at the door of the hut.")
+            print("You have been poisoned by the snake's Venom. Game Over!")
+            return 0
+    else:
+        print("Invalid selection. Game over!")
 
 
 if __name__ == "__main__":
