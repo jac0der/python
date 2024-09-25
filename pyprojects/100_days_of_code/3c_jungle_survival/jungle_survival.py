@@ -87,8 +87,7 @@ def survive_jungle():
             else:
                 break
         
-
-    direction = input("Let's Go! You can go 'North' or 'South' or 'q' to quit:\n").rstrip().lower() 
+    direction = input("Let's Go! You can go 'North' or 'South' or 'q' to quit:\n").rstrip().lower()
 
     if direction == "q":
         print("Bye...")
@@ -96,35 +95,56 @@ def survive_jungle():
     
     elif direction == "south":
 
-        print("After walking for many hours you come to a cliff approximately 50 feet.")
-        cliff_decision = input("    Type 'down' to go down the cliff or 'up' to return to starting point.\n").rstrip().lower()
+        if chosen_items == None:
+            print("You cannot survive this jungle with nothing. A Black Momba has poisoned you with venom. Game Over!".upper())
+            return 0
 
-        if cliff_decision == 'down':
+        print("After walking for many hours you come to a cliff approximately 50 feet.")
+        cliff_decision = input("    Type 'down' to go down the cliff or 'up' to return to starting point. or 'q' to quit\n").rstrip().lower()
+
+        if cliff_decision == "q":
+            print("Bye...")
+            return 0
+        
+        elif cliff_decision == 'down':
 
             # check if the Rope or Parashoot was packed.
             if '1' in chosen_items or '14' in chosen_items:
                 print("You have made it to the bottom of the cliff safely where there is now a flowing river.")
-                river_decision = input("     Type 'swim' to swim accross the river or 'walk' to walk to a shallow section to walk across.\n").rstrip().lower()
+                river_decision = input("     Type 'swim' to swim accross the river or 'walk' to walk to a shallow section to walk across or 'q' to quit.\n").rstrip().lower()
 
-                if(river_decision == "swim"):
+                if river_decision == "q":
+                    print("Bye...")
+                    return 0
+                
+                elif river_decision == "swim":
 
                     # check if scoba diving gears were packed.
                     if '2' in chosen_items:
                         print("You have crossed the river safely. Do you now stop to eat and rest before night fall?")
-                        eat_decision = input(" Type 'eat' to eat and rest or 'walk' to continue.\n")
+                        eat_decision = input(" Type 'eat' to eat and rest or 'walk' to continue or 'q' to quit.\n")
 
-                        if eat_decision == "eat":
+                        if eat_decision == "q":
+                            print("Bye...")
+                            return 0
+                        
+                        elif eat_decision == "eat":
                             
                             if '3' in chosen_items or '4' in chosen_items or '5' in chosen_items or '11' in chosen_items:
 
                                 print("Your feast has lasted into the night but you are full and replenished.")
-                                                                    # check if flashlight was packed
+                                
+                                # check if flashlight was packed
                                 if '6' in chosen_items:
                                     print("Do you wish to turn on your flashlight?")
-                                    flashlight = input("        yes/no\n")
+                                    flashlight = input("        yes/no or 'q' to quit\n")
 
                                     if flashlight == "yes":
                                         print("Light has brought unnecessary attention by wild animals to kill you in your sleep. Game Over!")
+                                        return 0
+
+                                    elif flashlight == "q":
+                                        print("Bye...")
                                         return 0
 
                                 # check if warm sleeping bag was not packed
@@ -139,17 +159,25 @@ def survive_jungle():
                             elif '3' not in chosen_items and '4' not in chosen_items and '5' not in chosen_items and '11' not in chosen_items:
 
                                 print("You packed nothing to eat or drink. It is now night time, do you want to make camp now?")
-                                make_camp = input(" Type 'yes' or 'no'\n").rstrip().lower()
+                                make_camp = input(" Type 'yes' or 'no' or 'q' to quit.\n").rstrip().lower()
 
-                                if make_camp =="yes":
+                                if make_camp == "q":
+                                    print("Bye...")
+                                    return 0
+                                
+                                elif make_camp =="yes":
                                     print("You have successfully made camp.")
 
                                     # check if flashlight was packed
                                     if '6' in chosen_items:
-                                        print("Do you wish to turn on your flashlight?")
-                                        flashlight = input("        yes/no\n")
+                                        print("Do you wish ao turn on your flashlight?")
+                                        flashlight = input("        yes/no or 'q' to quit\n")
 
-                                        if flashlight == "yes":
+                                        if flashlight == "q":
+                                            print("Bye...")
+                                            return 0
+                                        
+                                        elif flashlight == "yes":
                                             print("Light has brought unnecessary attention by wild animals to kill you in your sleep. Game Over!")
                                             return 0
 
@@ -172,17 +200,24 @@ def survive_jungle():
                             print("Game Over!")
                             return 0
 
+                        else:
+                            print("Inhaling excessive toxic gas from the jungle air has fried your lungs and you suffocate. Game Over!")
+                            return 0
                     else:
-                        print("You have been drowned by the depth of the water an its current without the scoba diving gears with oxygen tank. Game Over!")
+                        print("You have been drowned by the depth of the water an its current without proper resource gears. Game Over!")
                         return 0
 
                 elif(river_decision == "walk"):
 
                     print("You have successfully crossed the river with more strenght to spare compared to if you had swam across.")
                     print("In the distance you can finally see civilization. You keep walking to reach before nightfall or make camp for the night then continue tomorrow?")
-                    camp  = input("     Type 'camp' or 'walk'\n").rstrip().lower()
+                    camp  = input("     Type 'camp' or 'walk' or 'q' to quit.\n").rstrip().lower()
 
-                    if camp == "walk":
+                    if camp == "q":
+                        print("Bye...")
+                        return 0
+                    
+                    elif camp == "walk":
                         print("Congratualtions, persistence with reserved energy from the river crossing decision has made you survived the Jungle before nightfall")
 
                     elif camp == "camp":       
@@ -198,17 +233,28 @@ def survive_jungle():
                         # check if flashlight was packed
                         if '6' in chosen_items:
                             print("Do you wish to turn on your flashlight?")
-                            flashlight = input("        yes/no\n")
+                            flashlight = input("        yes/no or 'q' to quit.\n")
 
-                            if flashlight == "yes":
+                            if flashlight == "q":
+                                print("Bye...")
+                                return 0
+                            
+                            elif flashlight == "yes":
                                 print("Light has brought unnecessary attention by wild animals to kill you in your sleep. Game Over!")
                                 return 0
 
                         print("You have survived the night and can now walk safely to civilization just a few miles away.")
                         print("You have survived the Jungle!")
 
+                    else:
+                        print("A large Gorilla has bashed your head in. Game Over!")
+                        return 0
+                else:
+                    print("A 15 foot CROC has had its belly full today. You are no match for the mighty Nile man eating CROC. Game Over!")
+                    return 0
+
             elif '1' not in chosen_items and '14' not in chosen_items:
-                print("You have fallen 50 feet to your death from the cliff. You have no rope or parashoot. Game Over!")
+                print("You have fallen 50 feet to your death from the cliff. You have no resource item to go down the cliff. Game Over!")
                 return 0
 
         elif cliff_decision == "up":
@@ -218,8 +264,13 @@ def survive_jungle():
                 print("The Lions attacked you and killed you for the meat. Game Over!")
                 return 0
 
-            
+            else:
+                print("The thunder of scattering preys due to a Tiger attack has cause a bowlder to roll down and crush you. Game Over!")
+                return 0   
 
+        else:
+            print("As the rain pour down on the jungle, lightening stroke you. Game Over!")
+            return 0
 
     elif direction == "north":
         
@@ -242,7 +293,7 @@ def survive_jungle():
             elif defend == "defend":
 
                 if chosen_items == None:
-                    print("You cannot survive this jungle with nothing. Game Over!".upper())
+                    print("You cannot survive this jungle with nothing. A Rhino has punched your chest. Game Over!".upper())
                     return 0
 
                 if '0' not in chosen_items and '12' not in chosen_items and '15' not in chosen_items:
