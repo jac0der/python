@@ -424,7 +424,7 @@ if __name__ == "__main__":
     info_logger.info('Configured logging and log level files.')
 
     create_destination_directories()
-    info_logger.info('Created destination directories.')  
+    info_logger.info('Created destination directories.')
 
     info_logger.info('Start create and run/start Watcher object.')
     download_watcher = Watcher(SOURCE_DIR, MonitorDocumentCreation())
