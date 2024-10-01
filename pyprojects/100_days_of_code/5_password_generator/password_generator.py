@@ -35,9 +35,11 @@ def main():
     print()
     sequence_pwd = generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers)
     random_pwd = generate_random_pwd(nr_letters, nr_symbols, nr_numbers)
+    random_shuffle = generate_random_pwd_with_shuffle(nr_letters, nr_symbols, nr_numbers)
 
     print(f'sequential password is: {sequence_pwd}', end='\n')
-    print(f'randomized random password is: {random_pwd}', end='\n\n')
+    print(f'randomized random password is: {random_pwd}', end='\n')
+    print(f'randomized random shuffled password is: {random_shuffle}', end='\n\n')
 
 
 def generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers):
@@ -56,28 +58,19 @@ def generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers):
 
         @output:: str -> password: the randomly generated password.
     '''
-    # create an empty list to put randome selctions in.
-    selection = list()
     password = ''
 
     # looping the letters list to pull out nr_letters amount of letters.
     for number in range(0, nr_letters):
-        letter = random.choice(letters)
-        selection.append(letter)
+        password += random.choice(letters)
 
     # looping the symbols list to pull out nr_symbols amount of letters.
     for number in range(0, nr_symbols):
-        symbol = random.choice(symbols)
-        selection.append(symbol)
+        password += random.choice(symbols)
 
     # looping the numbers list to pull out nr_numbers amount of numbers.
     for number in range(0, nr_numbers):
-        num = random.choice(numbers)
-        selection.append(num)
-
-    # formulating the final random password string
-    for item in selection:
-        password = password + item
+        password += random.choice(numbers)
 
     return password
 
@@ -98,30 +91,72 @@ def generate_random_pwd(nr_letters, nr_symbols, nr_numbers):
         @output:: str -> password: the randomly generated password.
     '''
     # create an empty list to put randome selctions in.
-    selection = list()
+    password_list = list()
     password = ''
 
     # first set up the selection list with randomly selected letters.
-    for number in range(0, nr_letters):
+    for char in range(0, nr_letters):
         letter = random.choice(letters)
-        selection.append(letter)
+        password_list.append(letter)
 
     # select random symbols and insert at a random spot in selection list
-    for number in range(0, nr_symbols):
-        index = random.randint(0, len(selection))
-        selection.insert(index, random.choice(symbols))
+    for char in range(0, nr_symbols):
+        index = random.randint(0, len(password_list))
+        password_list.insert(index, random.choice(symbols))
 
     # select random numbers and insert at a random spot in selection list
-    for number in range(0, nr_numbers):
-        index = random.randint(0, len(selection))
-        selection.insert(index, random.choice(numbers))
+    for char in range(0, nr_numbers):
+        index = random.randint(0, len(password_list))
+        password_list.insert(index, random.choice(numbers))
 
     # formulating the final random password string
-    for item in selection:
-        password = password + item
+    for char in password_list:
+        password = password + char
+
+    return password
+
+
+def generate_random_pwd_with_shuffle(nr_letters, nr_symbols, nr_numbers):
+    '''
+        Using shuffle() method of the random module, create
+        Function to generate a random password comprised of letters and/or
+        symbols and/or numbers, in a random order.
+        Hard Level - Order of characters randomised: e.g. 4 letter, 2 symbol, 2 number = g^2jk8&P
+
+        @input: int -> nr_letters: number of letters to be randomly selected
+                                   for the password.
+                int -> nr_symbols: int:: number of symbols to be randomly selected
+                                   for the password.
+                int -> nr_numbers: int:: number of numbers to be randomly selected
+                                   for the password.
+
+        @output:: str -> password: the randomly generated password.
+    '''
+    # create an empty list to put randome selctions in.
+    password_list = list()
+    password = ''
+
+    # get nr_letter amount of random letters, adding each to password list
+    for char in range(0, nr_letters):
+        password_list.append(random.choice(letters))
+
+    # get nr_symbols amount of random symbols, adding each to password list
+    for char in range(0, nr_symbols):
+        password_list.append(random.choice(symbols))
+
+    # get nr_number amount of random numbers, adding each to password list
+    for char in range(0, nr_numbers):
+        password_list.append(random.choice(numbers))
+
+    # randomly re-arrange the password list
+    random.shuffle(password_list)
+
+    # formulating the final random password string
+    for char in password_list:
+        password += char
 
     return password
 
 
 if __name__ == "__main__":
-    main()
+    main() 
