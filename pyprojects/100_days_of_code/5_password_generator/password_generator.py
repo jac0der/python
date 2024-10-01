@@ -14,15 +14,30 @@ numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 def main():
     print("Welcome to the Jacoder Password Generator!")
-    nr_letters= int(input("How many letters would you like in your password?\n"))
-    nr_symbols = int(input(f"How many symbols would you like?\n"))
-    nr_numbers = int(input(f"How many numbers would you like?\n"))
 
+    # ensures that user enters a valid integer whole number
+    while True:
+
+        try:
+
+            nr_letters = int(input("How many letters would you like in your password?\n"))
+            nr_symbols = int(input(f"How many symbols would you like?\n"))
+            nr_numbers = int(input(f"How many numbers would you like?\n"))
+
+            if nr_letters >= 0 and nr_symbols >= 0 and nr_numbers >= 0:
+                break
+            else:
+                print("Enter only positive whole numbers.\n")
+
+        except ValueError:
+            print("Invalid entry, please try again\n")
+
+    print()
     sequence_pwd = generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers)
     random_pwd = generate_random_pwd(nr_letters, nr_symbols, nr_numbers)
 
     print(f'sequential password is: {sequence_pwd}', end='\n')
-    print(f'randomized random password is: {random_pwd}', end='\n')
+    print(f'randomized random password is: {random_pwd}', end='\n\n')
 
 
 def generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers):
