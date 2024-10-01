@@ -56,28 +56,19 @@ def generate_sequential_pwd(nr_letters, nr_symbols, nr_numbers):
 
         @output:: str -> password: the randomly generated password.
     '''
-    # create an empty list to put randome selctions in.
-    selection = list()
     password = ''
 
     # looping the letters list to pull out nr_letters amount of letters.
     for number in range(0, nr_letters):
-        letter = random.choice(letters)
-        selection.append(letter)
+        password += random.choice(letters)
 
     # looping the symbols list to pull out nr_symbols amount of letters.
     for number in range(0, nr_symbols):
-        symbol = random.choice(symbols)
-        selection.append(symbol)
+        password += random.choice(symbols)
 
     # looping the numbers list to pull out nr_numbers amount of numbers.
     for number in range(0, nr_numbers):
-        num = random.choice(numbers)
-        selection.append(num)
-
-    # formulating the final random password string
-    for item in selection:
-        password = password + item
+        password += random.choice(numbers)
 
     return password
 
