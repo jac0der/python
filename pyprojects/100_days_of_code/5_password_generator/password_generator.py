@@ -91,12 +91,12 @@ def generate_random_pwd(nr_letters, nr_symbols, nr_numbers):
         letter = random.choice(letters)
         selection.append(letter)
 
-    # select a symbol and insert at a random spot in selection list
+    # select random symbols and insert at a random spot in selection list
     for number in range(0, nr_symbols):
         index = random.randint(0, len(selection))
         selection.insert(index, random.choice(symbols))
 
-    # select a number and insert at a random spot in selection list
+    # select random numbers and insert at a random spot in selection list
     for number in range(0, nr_numbers):
         index = random.randint(0, len(selection))
         selection.insert(index, random.choice(numbers))
