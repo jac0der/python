@@ -1,6 +1,6 @@
 '''
     Exploring variable scope in python.
-    A variable scope specifies the region where I can access avariable.
+    A variable scope specifies the region where I can access a variable.
 
     Python has 3 variable scopes:
         1. local        (local variables)
