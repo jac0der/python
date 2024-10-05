@@ -42,11 +42,8 @@ print("After tab at end.")
 print("November 5", "is the biggest election", "for the USA.", "asdfg",sep=' | ')
 
 
-
-
-# Code for printing to a file
-#sample = open('samplefile.txt', 'w')
+#*** 4 => print() with the file= parameter to output to a file
+sample = open('samplefile.txt', 'w')
  
-#print('Print to a file', file = sample)
-#sample.close()
-
+print('Print to a file', file= sample)
+sample.close()
