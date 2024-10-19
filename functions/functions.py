@@ -207,7 +207,44 @@ print()
 
 
 
+#*** 7 => lambda functions
+multiply = lambda x, y: x * y
+
+# lambda function to return the product of two numbers.
+result = multiply(4, 5)
+print(result)  # Output: 20
+
+#------------------------------------------------------------------
+# lambda function for returning the even numbers from a list.
+lam2 = lambda numbers: list(filter(lambda x: x % 2 == 0, numbers))
+print(lam2([2,3,4,5,6,7,8]))
 
 
 
+#*** 8 => higher-order functions
+def increment(x):
+    return x + 1
 
+# higher-order function used to call another function twice and return the result.
+def apply_twice(func, value):
+    return func(func(value))
+
+result = apply_twice(increment, 5)
+print(result)  # Output: 7
+
+#------------------------------------------------------------------
+
+def say_hello():
+    print("Hello!")
+
+# higher-order function to execute another function n times.
+def repeat_n_times(func, n):
+
+    def talk():
+        for i in range(n):
+            func()
+
+    return talk
+
+retfunc = repeat_n_times(say_hello, 3)
+retfunc()
