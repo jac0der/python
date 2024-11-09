@@ -219,6 +219,11 @@ print(result)  # Output: 20
 lam2 = lambda numbers: list(filter(lambda x: x % 2 == 0, numbers))
 print(lam2([2,3,4,5,6,7,8]))
 
+# The filter() function takes two arguments: a function and an iterable. 
+# It applies the function to each item in the iterable and returns only 
+# the items for which the function returns True.
+
+
 
 
 #*** 8 => higher-order functions
