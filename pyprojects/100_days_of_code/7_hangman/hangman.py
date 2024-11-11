@@ -5,73 +5,15 @@
     @author:: jacoder
 '''
 import random as r
+import hangman_words as hmwords
+import hangman_art as hmart
 
-stages = ['''
-+---+
-  |   |
-  0   |
- /|\\  |
- / \\  |
-      |
-========
-''', '''
-+---+
-  |   |
-  0   |
- /|\\  |
- /    |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
- /|\\  |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
- /|   |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
-  |   |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
-      |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-      |
-      |
-      |
-      |
-========
-'''
-]
-
-WORD_LIST = [
-    "aardvark", "baboon", "camel"
-]
-
+WORD_LIST = hmwords.list_of_words
+stages = hmart.stages
 
 def main():
-   generate_random_word()
+    print(hmart.banner_logo)
+    generate_random_word()
 
 
 def generate_random_word():
@@ -91,17 +33,22 @@ def generate_random_word():
     for position in range(len(chosen_word)):
         placeholder += "_"
 
-    print(placeholder)
+    print(placeholder, end='\n\n')
 
     game_over = False
     correct_letters = []
 
     # Use a while loop to let the user guess again.
     while not game_over:
+
+        print(f"***********************************{lives}/{6} left***********************************")
             
         # Ask the user to guess a letter and assign their answer to a variable 
         # called guess. Make guess lowercase.
         guess = input("Guess a letter:  ").lower().strip()
+
+        if guess in correct_letters:
+            print(f"You have already guessed letter '{guess}'.")
 
         # Create a "display" that puts the guess letter in the right position and blank (_) in rest of string
         display = ""
@@ -126,9 +73,13 @@ def generate_random_word():
         if guess not in chosen_word:
             lives -= 1
 
+            print(f"You guseed letter '{guess}', which is not in the word. You lose a life.")
+
             if lives == 0:
                 game_over = True
-                print("You Lose.")
+                print('\n\n')
+                print("Game over, You Lose.".upper())
+                print(f"The word was '{chosen_word}'")
 
         if "_" not in display:
             game_over = True
