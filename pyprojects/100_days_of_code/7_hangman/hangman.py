@@ -6,6 +6,64 @@
 '''
 import random as r
 
+stages = ['''
++---+
+  |   |
+  0   |
+ /|\\  |
+ / \\  |
+      |
+========
+''', '''
++---+
+  |   |
+  0   |
+ /|\\  |
+ /    |
+      |
+========
+''','''
++---+
+  |   |
+  0   |
+ /|\\  |
+      |
+      |
+========
+''','''
++---+
+  |   |
+  0   |
+ /|   |
+      |
+      |
+========
+''','''
++---+
+  |   |
+  0   |
+  |   |
+      |
+      |
+========
+''','''
++---+
+  |   |
+  0   |
+      |
+      |
+      |
+========
+''','''
++---+
+  |   |
+      |
+      |
+      |
+      |
+========
+'''
+]
 
 WORD_LIST = [
     "aardvark", "baboon", "camel"
@@ -13,7 +71,7 @@ WORD_LIST = [
 
 
 def main():
-    generate_random_word()
+   generate_random_word()
 
 
 def generate_random_word():
@@ -21,6 +79,8 @@ def generate_random_word():
         Function to generate a random word from WORD_LIST
         for user to guess.
     '''
+    lives = 6
+
     # Randomly choose a word from the WORD_LIST and assign it to a variable
     # called chosen_word. Then print it.
     chosen_word = r.choice(WORD_LIST)
@@ -38,12 +98,12 @@ def generate_random_word():
 
     # Use a while loop to let the user guess again.
     while not game_over:
-
+            
         # Ask the user to guess a letter and assign their answer to a variable 
         # called guess. Make guess lowercase.
         guess = input("Guess a letter:  ").lower().strip()
 
-        # Create a "display" that puts the guess letter in the right position and blank in rest of string
+        # Create a "display" that puts the guess letter in the right position and blank (_) in rest of string
         display = ""
 
         # Change the for loop so that you keep the previous correct guess in previous string
@@ -63,9 +123,18 @@ def generate_random_word():
 
         print(display)
 
+        if guess not in chosen_word:
+            lives -= 1
+
+            if lives == 0:
+                game_over = True
+                print("You Lose.")
+
         if "_" not in display:
             game_over = True
             print("You win.")
+
+        print(stages[lives])
 
     
 if __name__ == "__main__":
