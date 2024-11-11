@@ -5,73 +5,15 @@
     @author:: jacoder
 '''
 import random as r
+import hangman_words as hmwords
+import hangman_art as hmart
 
-stages = ['''
-+---+
-  |   |
-  0   |
- /|\\  |
- / \\  |
-      |
-========
-''', '''
-+---+
-  |   |
-  0   |
- /|\\  |
- /    |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
- /|\\  |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
- /|   |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
-  |   |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-  0   |
-      |
-      |
-      |
-========
-''','''
-+---+
-  |   |
-      |
-      |
-      |
-      |
-========
-'''
-]
-
-WORD_LIST = [
-    "aardvark", "baboon", "camel"
-]
-
+WORD_LIST = hmwords.list_of_words
+stages = hmart.stages
 
 def main():
-   generate_random_word()
+    print(hmart.banner_logo)
+    generate_random_word()
 
 
 def generate_random_word():
@@ -113,7 +55,11 @@ def generate_random_word():
 
             if letter == guess:
                 display += letter
-                correct_letters.append(guess)
+
+                if letter in correct_letters:
+                    print(f"You have already guessed letter {letter}.")
+                else:
+                     correct_letters.append(guess)
 
             elif letter in correct_letters:
                 display += letter
