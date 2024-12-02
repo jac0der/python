@@ -1,3 +1,10 @@
+"""
+    The Love Calculator program to calculate the love score from 
+    two provided names.
+    
+    @datetime:: December 01, 2024 11:55 pm (UTC-5)
+    @author:: jac0der
+"""
 
 TRUE_SEARCH = "true"
 LOVE_SEARCH = "love"
@@ -9,6 +16,8 @@ def main():
 
 def calculate_love_score(name1, name2):
     '''
+        Function to calculate the love score from two
+        provided name.
     '''
     # set up counter variables tp 0 initially
     true_counter = 0
