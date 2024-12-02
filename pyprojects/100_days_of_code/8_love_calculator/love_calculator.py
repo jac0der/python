@@ -15,6 +15,10 @@ def main():
     name1 = input("Enter first name: ")
     name2 = input("Enter second name: ")
 
+    if len(name1) == 0 or len(name2) == 0:
+        print("Please enter a name for both first and second names.")
+        return 0
+
     love_score = calculate_love_score(name1, name2)
     print(f"Your love score is: {love_score}")
 
