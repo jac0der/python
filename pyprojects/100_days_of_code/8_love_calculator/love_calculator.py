@@ -6,20 +6,27 @@
     @author:: jac0der
 """
 
-
+# set up constants to be used for searching
 TRUE_SEARCH = "true"
 LOVE_SEARCH = "love"
 
 
 def main():
-    love_score = calculate_love_score("Angela Yu", "Jack Bauer")
-    print(love_score)
+    name1 = input("Enter first name: ")
+    name2 = input("Enter second name: ")
+
+    love_score = calculate_love_score(name1, name2)
+    print(f"Your love score is: {love_score}")
 
 
 def calculate_love_score(name1, name2):
     '''
         Function to calculate the love score from two
         provided name.
+
+        @input:: name1-> str: The first input name to search.
+                 name2-> str: The second input name to search.
+        @output:: str -> the love calculated score.
     '''
     # set up counter variables to 0 initially
     true_counter = 0
