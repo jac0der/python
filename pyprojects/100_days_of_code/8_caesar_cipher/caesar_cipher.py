@@ -31,6 +31,16 @@ def main():
         else:
             print('Error occured during cipher generation.')
 
+    elif direction == "decode":
+
+        plain_text = decrypt(text, shift)
+
+        if plain_text != '':
+            print(f'Here is the decoded result: {plain_text}')
+        else:
+            print('Error occured during decrypting cipher.')
+
+
 
 # by the shift amount and print the encrypted text.
 def encrypt(original_text, shift_amount):
@@ -66,6 +76,41 @@ def encrypt(original_text, shift_amount):
         return ''
 
     return cipher
+
+
+def decrypt(original_text, shift_amount):
+    '''
+        function to create a caesar cipher decrypt function to decrypt caesar cipher
+        encrypted texts based on a specified amount of shifts.
+
+        @inputs:: original_text-> str: the caesar cipher encrypted text entered by user to be decrypted.
+                  shift_amounbt-> int: the amount of shifts to be appied to the cipher for decrypting.
+        
+        @output:: plain_text-> str: the decrypted plain text of the encrypted caesar cipher.
+    '''
+    plain_text = ''
+
+    try:
+        
+        for letter in original_text:
+
+            # get the current index position for letter
+            index = ALPHABET.index(letter)
+            shift_index = index - shift_amount
+
+            # check if the shift amount plus current index of letter out range of 25 (z)
+            # if so find the modulus of that number with length of ALPHABET list (26)
+            if abs(shift_index) >= len(ALPHABET):
+                shift_index = (abs(shift_index) % len(ALPHABET)) * -1 # ensure stay withjin range of 0-25
+
+            shift_letter = ALPHABET[shift_index]
+            plain_text += shift_letter
+
+    except Exception:
+        # error occured during decrypting cipher, so log message and return empty string
+        return ''
+
+    return plain_text
 
 
 if __name__ == "__main__":
