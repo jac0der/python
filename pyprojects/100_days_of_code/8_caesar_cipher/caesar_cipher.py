@@ -13,33 +13,63 @@ import alphabet as a
 # constant alphabet list of letters
 ALPHABET = a.ALPHABET
 
+
 def main():
     '''
         Entry point to the caesar cipher program.
         Accepts user inputs and decide whether to encode or decode text.
     '''
-    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower().strip()
     text = input("Type your message:\n").lower()
-    shift = int(input("Type the shift number:\n"))
-    
-    if direction == "encode":
 
-        cipher_result = encrypt(text, shift)
+    try:
+        shift = int(input("Type the shift number:\n"))
+        
+    except ValueError:
+        print("Invalid shift amount entered.")
+        return 0
+
+    response = caesar(direction, text, shift)
+
+    print(response)
+
+
+
+def caesar(direction, original_text, shift_amount):
+    '''
+        function to perform a caesar encrypt or decrypt based on the
+        direction variable of either encode or decode.
+
+        @inputs:: direction-> string: indicator to either perform encrypt or
+                                      decrypt.
+                  original_text-> str: the text entered by user to be encrypted/decrypted.
+                  shift_amounbt-> int: the amount of shifts to be appied to original_text.
+        
+        @output:: message-> str: the encrypted caesar cipher by specified shift amount or
+                                 the plain_text decrypted cipher or an error message.
+    '''
+    message = ''
+
+    if direction == "encode":
+        cipher_result = encrypt(original_text, shift_amount)
 
         if cipher_result != '':
-            print(f'Here is the encoded result: {cipher_result}')
+            message = f'Here is the encoded result: {cipher_result}'
         else:
-            print('Error occured during cipher generation.')
-
+            message = 'Error occured during cipher generation.'
+            
     elif direction == "decode":
-
-        plain_text = decrypt(text, shift)
+        plain_text = decrypt(original_text, shift_amount) 
 
         if plain_text != '':
-            print(f'Here is the decoded result: {plain_text}')
+            message = f'Here is the decoded result: {plain_text}'
         else:
-            print('Error occured during decrypting cipher.')
+            message = 'Error occured during decrypting cipher.'
 
+    else:
+        message = 'Invalid option entered.'
+
+    return message
 
 
 # by the shift amount and print the encrypted text.
