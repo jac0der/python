@@ -9,6 +9,7 @@
 """
 # import the alphabet list
 import alphabet as a
+from art import logo
 
 # constant alphabet list of letters
 ALPHABET = a.ALPHABET
@@ -19,32 +20,41 @@ def main():
         Entry point to the caesar cipher program.
         Accepts user inputs and decide whether to encode or decode text.
     '''
-    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower().strip()
-    text = input("Type your message:\n").lower()
+    print(logo)
+    running = True
 
-    try:
-        shift = int(input("Type the shift number:\n"))
+    while running:
 
-    except ValueError:
-        print("Invalid shift amount entered. Only Numeric values allowed.")
-        return 0
+        direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower().strip()
+        text = input("Type your message:\n").lower()
 
-    if direction not in ('encode', 'decode'):
-        print('Invalid operation option entered.')
-        return 0
+        try:
+            shift = int(input("Type the shift number:\n"))
 
-    if text == '':
-        print('No text entered to encrypt/decrypt.')
-        return 0
+        except ValueError:
+            print("Invalid shift amount entered. Only Numeric values allowed.")
+            continue
 
-    response = caesar(direction, text, shift)
+        if direction not in ('encode', 'decode'):
+            print('Invalid operation option entered.')
+            continue
 
-    if response == '':
-        print("Error occured.")
-        return 0
+        if text == '':
+            print('No text entered to encrypt/decrypt.')
+            continue
 
-    print(f'The {direction}d value is: {response}')
+        response = caesar(direction, text, shift)
 
+        if response == '':
+            print("Error occured.")
+            continue
+
+        print(f'Here\'s the {direction}d result: {response}', end='\n')
+        goagain = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n\t").strip().lower()
+
+        if goagain != 'yes':
+            print("Bye! Bye!")
+            running = False
 
 def caesar(direction, original_text, shift_amount):
     '''
