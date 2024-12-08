@@ -50,7 +50,7 @@ def encrypt(original_text, shift_amount):
         for letter in original_text:
 
             # get the current index position for letter
-            index = ALPHABET.index(lette)
+            index = ALPHABET.index(letter)
             shift_index = index + shift_amount
 
             # check if the shift amount plus current index of letter out range of 25 (z)
