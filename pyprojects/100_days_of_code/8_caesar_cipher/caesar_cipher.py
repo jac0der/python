@@ -8,47 +8,52 @@
     @author:: jac0der
 """
 
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+# constant alphabet list of letters
+ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 
 def main():
+    '''
+        Entry point to the caesar cipher program.
+        Accepts user inputs and decide whether to encode or decode text.
+    '''
     direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
     text = input("Type your message:\n").lower()
     shift = int(input("Type the shift number:\n"))
 
-    print(encrypt(text, shift))
+    if direction == "encode":
+        print(f'Here is the encoded result: {encrypt(text, shift)}')
 
 
-# TODO-1: Create a function called 'encrypt()' that takes original_text and shift_amount as 2 inputs.
-def encrypt(original_text, shift_amount):
-    pass
-
-
-# TODO-2: Inside the 'encrypt()' function, shift each letter of the 'original_text' forwards in the alphabet
 # by the shift amount and print the encrypted text.
 def encrypt(original_text, shift_amount):
+    '''
+        function to create a caesar cipher encrypted text based on a specified
+        amount of shifts.
 
+        @inputs:: original_text-> str: the text entered by user to be encrypted.
+                  shift_amounbt-> int: the amount of shifts to be appied to original_text.
+        
+        @output:: cipher-> str: the encrypted caesar cipher by specified shift amount.
+    '''
     cipher = ''
     
     for letter in original_text:
         # get the index position for letter
-        index = alphabet.index(letter)
+        index = ALPHABET.index(letter)
         shift_index = index + shift_amount
 
-        if shift_index > 25:
-            shift_index = shift_index % 25
+        # check if the shift amount plus current index of letter out range of 25 (z)
+        # if so find the modulus of that number with length of ALPHABET list (26)
+        if shift_index > len(ALPHABET):
+            shift_index %= len(ALPHABET) # ensure stay withjin range of 0-25
 
-        shift_letter = alphabet[shift_index]
+        shift_letter = ALPHABET[shift_index]
         cipher += shift_letter
 
     return cipher
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     main()
-
-# TODO-4: What happens if I try to shift z forwards by 9? Can I fix the code?
-
-  
-# TODO-3: Call the 'encrypt()' function and pass in the user inputs. I should be able to test the code and
-# encrypt a message
