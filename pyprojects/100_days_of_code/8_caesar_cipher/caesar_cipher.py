@@ -7,11 +7,11 @@
     @datetime:: December 08, 2024 8:47 pm (UTC-5)
     @author:: jac0der
 """
-
+# import the alphabet list
+import alphabet as a
 
 # constant alphabet list of letters
-ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
+ALPHABET = a.ALPHABET
 
 def main():
     '''
@@ -38,19 +38,25 @@ def encrypt(original_text, shift_amount):
         @output:: cipher-> str: the encrypted caesar cipher by specified shift amount.
     '''
     cipher = ''
-    
-    for letter in original_text:
-        # get the index position for letter
-        index = ALPHABET.index(letter)
-        shift_index = index + shift_amount
 
-        # check if the shift amount plus current index of letter out range of 25 (z)
-        # if so find the modulus of that number with length of ALPHABET list (26)
-        if shift_index > len(ALPHABET):
-            shift_index %= len(ALPHABET) # ensure stay withjin range of 0-25
+    try:
+        
+        for letter in original_text:
 
-        shift_letter = ALPHABET[shift_index]
-        cipher += shift_letter
+            # get the current index position for letter
+            index = ALPHABET.index(letter)
+            shift_index = index + shift_amount
+
+            # check if the shift amount plus current index of letter out range of 25 (z)
+            # if so find the modulus of that number with length of ALPHABET list (26)
+            if shift_index >= len(ALPHABET):
+                shift_index %= len(ALPHABET) # ensure stay withjin range of 0-25
+
+            shift_letter = ALPHABET[shift_index]
+            cipher += shift_letter
+
+    except Exception:
+        pass
 
     return cipher
 
