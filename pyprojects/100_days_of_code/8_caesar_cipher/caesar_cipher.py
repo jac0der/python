@@ -21,9 +21,15 @@ def main():
     direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
     text = input("Type your message:\n").lower()
     shift = int(input("Type the shift number:\n"))
-
+    
     if direction == "encode":
-        print(f'Here is the encoded result: {encrypt(text, shift)}')
+
+        cipher_result = encrypt(text, shift)
+
+        if cipher_result != '':
+            print(f'Here is the encoded result: {cipher_result}')
+        else:
+            print('Error occured during cipher generation.')
 
 
 # by the shift amount and print the encrypted text.
@@ -44,7 +50,7 @@ def encrypt(original_text, shift_amount):
         for letter in original_text:
 
             # get the current index position for letter
-            index = ALPHABET.index(letter)
+            index = ALPHABET.index(lette)
             shift_index = index + shift_amount
 
             # check if the shift amount plus current index of letter out range of 25 (z)
@@ -56,7 +62,8 @@ def encrypt(original_text, shift_amount):
             cipher += shift_letter
 
     except Exception:
-        pass
+        # error occured during cipher generation, so log message and return empty string
+        return ''
 
     return cipher
 
