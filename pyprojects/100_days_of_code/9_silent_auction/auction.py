@@ -13,8 +13,27 @@ BIDS = dict()
 
 def main():
     print(art.logo)
-    bid()
-    print(BIDS)
+    
+    Running = True
+
+    while Running:
+        bid()
+        morebids = input("Are there any other bidders? Type 'yes' or 'no'.\n\t").strip().lower()
+
+        if morebids != "yes":
+            Running = False
+            
+        print("\n" * 10)
+
+    max_bid = 0
+    winner = ''
+
+    for name, bidd in BIDS.items():
+        if bidd > max_bid:
+            max_bid = bidd
+            winner = name
+
+    print(f"The winner is {winner} with a bid of ${max_bid}")
 
 
 def bid():
@@ -25,7 +44,6 @@ def bid():
     try:
         name = input("What is your name?: ")
         bid = int(input("What is your bid?: $"))
-        print('\n' * 50)
 
         BIDS[name] = bid
 
