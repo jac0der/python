@@ -78,11 +78,18 @@ def find_highest_bidder(bidder_dictionary):
     '''
     max_bid = 0
     winner = ''
-
+    
     for bidder, bid_price in bidder_dictionary.items():
         if bid_price > max_bid:
             max_bid = bid_price
             winner = bidder
+
+    '''
+        Another short way of retrieving the maximun item from a dictionary
+        
+    winner = max(bidder_dictionary, key=bidder_dictionary.get)
+    max_bid = bidder_dictionary[winner]
+    '''
 
     print(f"The winner is {winner} with a bid of ${max_bid}.")
 
