@@ -38,8 +38,12 @@ def bid():
             bid = int(input("What is your bid?: $"))
 
             if len(name) == 0:
-                print('Name is required.')
-                return None
+                print('Name is required.', end='\n\n')
+                continue
+
+            if bid <= 0:
+                print('Bid must be greater than 0.', end='\n\n')
+                continue
 
             bids[name] = bid
 
