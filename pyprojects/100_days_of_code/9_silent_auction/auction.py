@@ -21,8 +21,12 @@ def main():
 
 def bid():
     '''
-        function to retrieve user bids and store bid in global
-        BIDS dictionary.
+        function to retrieve user bids and store bid in
+        dictionary of bid prices.
+
+        @input:: none
+        @output:: dict-> bids: dictionary holding all the 
+                         entered bid prices.
     '''
     continue_bidding = True
     bids = dict()
@@ -60,7 +64,13 @@ def bid():
 
 def find_highest_bidder(bidder_dictionary):
     '''
+        function to find the highest bidder from the
+        dictionary of bidders and their respective bid
+        prices.
 
+        @input:: dict->bidder_dictionary: dictionary holding all
+                                the entered bid prices.
+        @output:: none
     '''
     max_bid = 0
     winner = ''
