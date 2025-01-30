@@ -31,7 +31,7 @@ def bid():
     continue_bidding = True
     bids = dict()
 
-    try:
+    try: 
 
         while continue_bidding:
             name = input("What is your name?: ")
@@ -53,7 +53,7 @@ def bid():
                 continue_bidding = False                
        
             elif morebids == "yes":
-                print("\n" * 20)
+                print("\n" *70)
 
         return bids
 
