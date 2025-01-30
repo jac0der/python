@@ -8,39 +8,41 @@ import art
 
 
 def main():
-    print(art.logo) 
 
-    is_continue_calculating = True
-
-    first_number = float(input("What's the first number?: "))
-
-    while is_continue_calculating:
+    while True:
             
-        operation = get_operation()
+        print(art.logo) 
 
-        if operation == None:
-            print("No math operation selected.")
-            return 0
+        is_continue_calculating = True
 
-        second_number = float(input("What's the next number?:"))
+        first_number = float(input("What's the first number?: "))
 
-        first_number = str(first_number)
-        second_number = str(second_number)
+        while is_continue_calculating:
+                
+            operation = get_operation()
 
-        evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
+            if operation == None:
+                print("No math operation selected.")
+                return 0
 
-        result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
-        print(result)
+            second_number = float(input("What's the next number?:"))
 
-        keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
+            first_number = str(first_number)
+            second_number = str(second_number)
 
-        if keep_calculating != 'y':
-            is_continue_calculating = False
-            main()
-        else:
-            # reset first number as current evaluation to be used to continue
-            # calculating with nex second number.
-            first_number = evaluation
+            evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
+
+            result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
+            print(result)
+
+            keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
+
+            if keep_calculating != 'y':
+                is_continue_calculating = False
+            else:
+                # reset first number as current evaluation to be used to continue
+                # calculating with nex second number.
+                first_number = evaluation
 
 
 def get_operation():
@@ -71,8 +73,6 @@ def get_operation():
         return None
 
     return operation
-
-    
 
 
 if __name__ == "__main__":
