@@ -8,14 +8,39 @@ import art
 
 
 def main():
-    print(art.logo)
+    print(art.logo) 
 
-    first_number = int(input("What's the first number?: "))
-    operation = get_operation()
+    is_continue_calculating = True
 
-    if operation == None:
-        print("No math operation selected.")
-        return 0
+    first_number = float(input("What's the first number?: "))
+
+    while is_continue_calculating:
+            
+        operation = get_operation()
+
+        if operation == None:
+            print("No math operation selected.")
+            return 0
+
+        second_number = float(input("What's the next number?:"))
+
+        first_number = str(first_number)
+        second_number = str(second_number)
+
+        evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
+
+        result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
+        print(result)
+
+        keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
+
+        if keep_calculating != 'y':
+            is_continue_calculating = False
+            main()
+        else:
+            # reset first number as current evaluation to be used to continue
+            # calculating with nex second number.
+            first_number = evaluation
 
 
 def get_operation():
