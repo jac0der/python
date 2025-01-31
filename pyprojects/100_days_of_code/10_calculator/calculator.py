@@ -9,40 +9,48 @@ import art
 
 def main():
 
-    while True:
+    try:
+        while True:
             
-        print(art.logo) 
+            print(art.logo) 
 
-        is_continue_calculating = True
+            is_continue_calculating = True
 
-        first_number = float(input("What's the first number?: "))
+            first_number = float(input("What's the first number?: "))
 
-        while is_continue_calculating:
-                
-            operation = get_operation()
+            while is_continue_calculating:
+                    
+                operation = get_operation()
 
-            if operation == None:
-                print("No math operation selected.")
-                return 0
+                if operation == None:
+                    print("No math operation selected.")
+                    return 0
 
-            second_number = float(input("What's the next number?:"))
+                second_number = float(input("What's the next number?:"))
 
-            first_number = str(first_number)
-            second_number = str(second_number)
+                first_number = str(first_number)
+                second_number = str(second_number)
 
-            evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
+                try:
+                    evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
 
-            result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
-            print(result)
+                except ZeroDivisionError as ex:
+                    print(f"Cannot divide {first_number} by zero.")
+                    continue # prevent crashing program and go back to loop to ask for operation               
 
-            keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
+                result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
 
-            if keep_calculating != 'y':
-                is_continue_calculating = False
-            else:
-                # reset first number as current evaluation to be used to continue
-                # calculating with nex second number.
-                first_number = evaluation
+                keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
+
+                if keep_calculating != 'y':
+                    is_continue_calculating = False
+                else:
+                    # reset first number as current evaluation to be used to continue
+                    # calculating with nex second number.
+                    first_number = evaluation
+
+    except Exception as ex:
+        print("Error occuredfd." + '\n' + str(ex))
 
 
 def get_operation():
