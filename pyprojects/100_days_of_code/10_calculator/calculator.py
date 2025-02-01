@@ -24,7 +24,7 @@ def main():
 
                 if operation == None:
                     print("No math operation selected.")
-                    return 0
+                    continue
 
                 second_number = float(input("What's the next number?: "))
 
@@ -57,8 +57,7 @@ def main():
 
 def get_operation():
     ''' 
-        function used to list the available operations 
-        for the calculator.
+        function used to list the available operations for the calculator.
         @input:: none
         @output:: selected math operation, otherwise, None - indicating
                   math operation was not successfully selected.
