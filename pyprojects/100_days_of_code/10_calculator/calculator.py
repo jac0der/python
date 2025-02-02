@@ -7,6 +7,7 @@
 import art
 import os
 
+
 def main():
 
     try:
@@ -16,7 +17,15 @@ def main():
 
             is_continue_calculating = True
 
-            first_number = float(input("What's the first number?: "))
+            # ensure input is numeric
+            try:
+                first_number = float(input("What's the first number?: "))
+
+            except ValueError as ex:
+                # log print("Error casting first number intut to float")
+                print("Invalid first number entered." + "\n" + str(ex))
+                continue
+            
 
             while is_continue_calculating:
                     
@@ -26,8 +35,15 @@ def main():
                     print("No math operation selected.")
                     continue
 
-                second_number = float(input("What's the next number?: "))
+                # ensure input is numeric
+                try:                    
+                    second_number = float(input("What's the next number?: "))
 
+                except ValueError as ex:
+                    print('Invalid second number entered.' + '\n' + str(ex) + '\n')
+                    continue
+                
+                # convert float values back to string for the eval function
                 first_number = str(first_number)
                 second_number = str(second_number)
 
@@ -45,14 +61,15 @@ def main():
 
                 if keep_calculating != 'y':
                     os.system('cls||clear')
-                    is_continue_calculating = False                    
+                    is_continue_calculating = False     
+
                 else:
                     # reset first number as current evaluation to be used to continue
-                    # calculating with nex second number.
+                    # calculating with next second number inputted.
                     first_number = evaluation
 
     except Exception as ex:
-        print("Error occuredfd." + '\n' + str(ex))
+        print("Error occured." + '\n' + str(ex))
 
 
 def get_operation():
