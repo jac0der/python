@@ -5,7 +5,7 @@
     @author:: jacoder
 '''
 import art
-
+import os
 
 def main():
 
@@ -24,9 +24,9 @@ def main():
 
                 if operation == None:
                     print("No math operation selected.")
-                    return 0
+                    continue
 
-                second_number = float(input("What's the next number?:"))
+                second_number = float(input("What's the next number?: "))
 
                 first_number = str(first_number)
                 second_number = str(second_number)
@@ -39,11 +39,13 @@ def main():
                     continue # prevent crashing program and go back to loop to ask for operation               
 
                 result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
+                print(result)
 
                 keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
 
                 if keep_calculating != 'y':
-                    is_continue_calculating = False
+                    os.system('cls||clear')
+                    is_continue_calculating = False                    
                 else:
                     # reset first number as current evaluation to be used to continue
                     # calculating with nex second number.
@@ -55,8 +57,7 @@ def main():
 
 def get_operation():
     ''' 
-        function used to list the available operations 
-        for the calculator.
+        function used to list the available operations for the calculator.
         @input:: none
         @output:: selected math operation, otherwise, None - indicating
                   math operation was not successfully selected.
