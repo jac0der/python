@@ -15,7 +15,7 @@ def main():
             
             print(art.logo) 
 
-            is_continue_calculating = True
+            continue_calculating = True
 
             # ensure input is numeric
             try:
@@ -27,7 +27,7 @@ def main():
                 continue
             
 
-            while is_continue_calculating:
+            while continue_calculating:
                     
                 operation = get_operation()
 
@@ -61,7 +61,7 @@ def main():
 
                 if keep_calculating != 'y':
                     os.system('cls||clear')
-                    is_continue_calculating = False     
+                    continue_calculating = False     
 
                 else:
                     # reset first number as current evaluation to be used to continue
@@ -75,24 +75,28 @@ def main():
 def get_operation():
     ''' 
         function used to list the available operations for the calculator.
-        @input:: none
-        @output:: selected math operation, otherwise, None - indicating
-                  math operation was not successfully selected.
+        
+        Args:
+            none
+
+        Returns: 
+            str/None:   selected math operation, otherwise, None - indicating
+                        math operation was not successfully selected.
     '''
     operation = None
 
     try:
-        is_choose_operation = True
+        choose_operation = True
         operations = ['+', '-', '*', '/']
 
         for op in operations:
             print(op)
         
-        while is_choose_operation:
+        while choose_operation:
             operation = input("Pick an operation: ").strip()
 
             if operation in operations:
-                is_choose_operation = False
+                choose_operation = False
                 
     except Exception as ex:
         print("Error choosing math operation. " + '\n' + str(ex))
