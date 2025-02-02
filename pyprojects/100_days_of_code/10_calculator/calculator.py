@@ -66,16 +66,19 @@ def calculate(first_number, second_number, operation):
     try:
         return OPERATIONS[operation](first_number, second_number)
     except ZeroDivisionError as ex:
-        print("Error: Cannot divide by zero." + "\n" + str(ex))
+        print(f"Error: Cannot divide {first_number} by {second_number}.")
+        print(f"Error details: {ex}")
         return None
     except Exception as ex:
-        print("Error performing calculation." + "\n" + str(ex))
+        print(f"An unexpected error occurred while performing '{first_number} {operation} {second_number}'.")
+        print(f"Error details: {ex}")
+        print("Please verify your inputs and try again.")
         return None
 
 
 def main():
     ''' main function to run the calculator'''
-    print(art.logo) 
+    print(art.logo)
     print("Welcome to the Calculator App!")
 
     try:
