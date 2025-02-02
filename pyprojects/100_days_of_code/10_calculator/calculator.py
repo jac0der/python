@@ -4,105 +4,109 @@
     @datetime:: January 29, 2025 6:37 am (UTC-5)
     @author:: jacoder
 '''
-import art
-import os
+import os, operator, art
 
 
-def main():
+OPERATIONS = {
+    '+': operator.add,
+    '-': operator.sub,
+    '*': operator.mul,
+    '/': operator.truediv
+}
 
-    try:
-        while True:
-            
-            print(art.logo) 
 
-            continue_calculating = True
+def get_number(prompt):
+    '''
+        Handles numeric input with validation.
 
-            # ensure input is numeric
-            try:
-                first_number = float(input("What's the first number?: "))
-
-            except ValueError as ex:
-                # log print("Error casting first number intut to float")
-                print("Invalid first number entered." + "\n" + str(ex))
-                continue
-            
-
-            while continue_calculating:
-                    
-                operation = get_operation()
-
-                if operation == None:
-                    print("No math operation selected.")
-                    continue
-
-                # ensure input is numeric
-                try:                    
-                    second_number = float(input("What's the next number?: "))
-
-                except ValueError as ex:
-                    print('Invalid second number entered.' + '\n' + str(ex) + '\n')
-                    continue
-                
-                # convert float values back to string for the eval function
-                first_number = str(first_number)
-                second_number = str(second_number)
-
-                try:
-                    evaluation = eval(first_number + ' ' + operation + ' ' + second_number)
-
-                except ZeroDivisionError as ex:
-                    print(f"Cannot divide {first_number} by zero.")
-                    continue # prevent crashing program and go back to loop to ask for operation               
-
-                result =  first_number + ' ' + operation + ' ' + second_number + ' = ' + str(evaluation)
-                print(result)
-
-                keep_calculating = input(f"Type 'y' to continue calculating with {evaluation}, or type 'n' to start a new calculation: ")
-
-                if keep_calculating != 'y':
-                    os.system('cls||clear')
-                    continue_calculating = False     
-
-                else:
-                    # reset first number as current evaluation to be used to continue
-                    # calculating with next second number inputted.
-                    first_number = evaluation
-
-    except Exception as ex:
-        print("Error occured." + '\n' + str(ex))
+        Args:
+                prompt (str): text to instruct user on which number to enter.
+        Returns:
+                float: the converted number from the entered user number.
+    '''
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid number. Please enter a valid numeric value.")
 
 
 def get_operation():
     ''' 
-        function used to list the available operations for the calculator.
+        Function used to list the available operations for the calculator.
         
         Args:
             none
 
         Returns: 
-            str/None:   selected math operation, otherwise, None - indicating
-                        math operation was not successfully selected.
+            str:  selected math operation.
     '''
-    operation = None
+    print("\nAvailable operations:")
+    for op in OPERATIONS:
+        print(op)
 
+    while True:
+        operation = input("Pick an operation: ").strip()
+        if operation in OPERATIONS:
+            return operation
+        print("Invalid operation. Please choose from the list.")
+
+
+def calculate(first_number, second_number, operation):
+    '''
+        Performs the calculation based on the selected operation.
+
+        Args:
+                 first_number (float): First number of the equation.
+                 second_number (float): Second number of the equation.
+                 operation (str): The math operation to  perform.
+        Returns: 
+                 float: The result of the math operation selected.
+    '''
     try:
-        choose_operation = True
-        operations = ['+', '-', '*', '/']
-
-        for op in operations:
-            print(op)
-        
-        while choose_operation:
-            operation = input("Pick an operation: ").strip()
-
-            if operation in operations:
-                choose_operation = False
-                
+        return OPERATIONS[operation](first_number, second_number)
+    except ZeroDivisionError as ex:
+        print("Error: Cannot divide by zero." + "\n" + str(ex))
+        return None
     except Exception as ex:
-        print("Error choosing math operation. " + '\n' + str(ex))
+        print("Error performing calculation." + "\n" + str(ex))
         return None
 
-    return operation
+
+def main():
+    ''' main function to run the calculator'''
+    print(art.logo) 
+    print("Welcome to the Calculator App!")
+
+    try:
+        while True:           
+            first_number = get_number("What's the first number?: ")
+            continue_calculating = True         
+
+            while continue_calculating:
+
+                operation = get_operation()
+                second_number = get_number("What's the next number?: ")
+                    
+                result = calculate(first_number, second_number, operation)
+
+                if result is not None:
+                    print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
+
+                    # Continue or restart
+                    choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation: ").lower()
+                    if choice == 'y':
+                        # reset first number as current evaluation to be used to continue
+                        # calculating with next second number inputted.
+                        first_number = result
+                    else:
+                        os.system('cls||clear')  # Clear screen
+                        continue_calculating = False
+                else:
+                    continue  # Skip result display if calculation failed
+           
+    except Exception as ex:
+        print("Error occured." + '\n' + str(ex))
 
 
 if __name__ == "__main__":
