@@ -96,17 +96,15 @@ def main():
             first_number = get_number("What's the first number?: ")
             continue_calculating = True         
 
-            while continue_calculating:
-                
+            while continue_calculating:                
                 operation = get_operation()
-
                 logger.info('Getting second number.') 
                 second_number = get_number("What's the next number?: ")
                     
                 result = calculate(first_number, second_number, operation)
+                logger.info(f'Result is: {round(result, 2)}.')
 
-                if result is not None:
-                    logger.info(f'Result is: {result}.')
+                if result is not None:                    
                     print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
 
                     # Continue or restart
