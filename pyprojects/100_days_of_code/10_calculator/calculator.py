@@ -33,7 +33,7 @@ def get_number(prompt):
         try:
             return float(input(prompt))
         except ValueError:
-            logger.error('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
+            logger.exception('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
 
 
 def get_operation():
@@ -47,7 +47,7 @@ def get_operation():
             str:  selected math operation.
     '''
     logger.info('Getting math operation.') 
-
+    
     print("\nAvailable Math operations:")
     for op in OPERATIONS:
         print(op)
@@ -76,12 +76,10 @@ def calculate(first_number, second_number, operation):
         logger.info(f'Calculating {first_number} {operation} {second_number}') 
         return OPERATIONS[operation](first_number, second_number)
     except ZeroDivisionError as ex:
-        logger.error(f'Error: Cannot divide {first_number} by {second_number}.')
-        logger.error(f'Error details: {ex}')        
+        logger.exception(f'Error: Cannot divide {first_number} by {second_number}.')        
         return None
     except Exception as ex:
-        logger.error(f'An unexpected error occurred while calculating {first_number} {operation} {second_number}.')
-        logger.error(f'Error details: {ex}')  
+        logger.exception(f'An unexpected error occurred while calculating {first_number} {operation} {second_number}.')
         logger.error('Please verify your inputs and try again.')
         return None
 
@@ -125,7 +123,8 @@ def main():
                     continue  # Skip result display if calculation failed
            
     except Exception as ex:
-        logger.error("Error occured in main calculator function." + '\n' + str(ex))
+        logger.critical("Error occured in main calculator function.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
