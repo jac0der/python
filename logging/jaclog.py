@@ -7,7 +7,7 @@
 import logging
 
 
-def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"):
+def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s"):
     '''
         Function use to set up the logger.
 
