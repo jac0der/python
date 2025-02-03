@@ -5,10 +5,16 @@
     @datetime:: December 10, 2024 11:01 pm (UTC-5)
     @author:: jacoder
 '''
-import art
+import art, os, sys
+
+# Add the 'logging' folder to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
+import jaclog
+logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 
 def main():
+    logger.info('Started silent auction program.')
     print(art.logo)
     print("Welcome to the secret auction program.")
     
