@@ -69,30 +69,34 @@ def find_highest_bidder(bidder_dictionary):
         Args:
             bidder_dictionary (dict): A dictionary containing bidders' names and their bids.
     '''
-    logger.info('Finding the highest bidder from list of bidders.')
-    max_bid = 0
-    winner = ''
+    try:
+        logger.info('Finding the highest bidder from list of bidders.')
+        max_bid = 0
+        winner = ''
 
-    # checking if bidder_dictionary is empty
-    if not bidder_dictionary:
-        logger.warning("No bids recorded.")
-        return
-    
-    for bidder, bid_price in bidder_dictionary.items():
-        if bid_price > max_bid:
-            max_bid = bid_price
-            winner = bidder
-
-    '''
-        Another short way of retrieving the maximun item from a dictionary
+        # checking if bidder_dictionary is empty
+        if not bidder_dictionary:
+            logger.warning("No bids recorded.")
+            return
         
-    winner = max(bidder_dictionary, key=bidder_dictionary.get)
-    max_bid = bidder_dictionary[winner]
-    '''
+        for bidder, bid_price in bidder_dictionary.items():
+            if bid_price > max_bid:
+                max_bid = bid_price
+                winner = bidder
 
-    print(f"The winner is {winner} with a bid of ${max_bid}.")
-    logger.info(f'The winner is {winner} with a bid of ${max_bid}.')
+        '''
+            Another short way of retrieving the maximun item from a dictionary
+            
+        winner = max(bidder_dictionary, key=bidder_dictionary.get)
+        max_bid = bidder_dictionary[winner]
+        '''
 
+        print(f"The winner is {winner} with a bid of ${max_bid}.")
+        logger.info(f'The winner is {winner} with a bid of ${max_bid}.')
+
+    except Exception:
+        logger.exception('Error occured determining the highest bidder.')
+    
 
 def main():
     ''' 
