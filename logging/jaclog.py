@@ -24,18 +24,20 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)  # Set the base logging level for the logger
 
-    # Create a file handler (for DEBUG and above)
-    file_handler = logging.FileHandler(log_file)
-    # DEBUG, INFO, WARNING, ERROR, and CRITICAL messages go to the file
-    file_handler.setLevel(logging.DEBUG)  
+    # Prevent duplicate handlers
+    if not logger.handlers:
+        # Create a file handler (for DEBUG and above)
+        file_handler = logging.FileHandler(log_file)
+        # DEBUG, INFO, WARNING, ERROR, and CRITICAL messages go to the file
+        file_handler.setLevel(logging.DEBUG)  
 
-    # Create a formatter
-    formatter = logging.Formatter(log_formatter)
+        # Create a formatter
+        formatter = logging.Formatter(log_formatter)
 
-    # Add the formatter to the handler
-    file_handler.setFormatter(formatter)
+        # Add the formatter to the handler
+        file_handler.setFormatter(formatter)
 
-    # Add the handler to the logger
-    logger.addHandler(file_handler)
+        # Add the handler to the logger
+        logger.addHandler(file_handler)
 
     return logger
