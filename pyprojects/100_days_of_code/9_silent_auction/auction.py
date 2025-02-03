@@ -13,62 +13,53 @@ import jaclog
 logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 
-def main():
-    logger.info('Started silent auction program.')
-    print(art.logo)
-    print("Welcome to the secret auction program.")
-    
-    bids = bid()
-
-    # print highest bidder once there were no errors.
-    if bids != None:
-        find_highest_bidder(bids)
-
-
 def bid():
     '''
         function to retrieve user bids and store bid in
         dictionary of bid prices.
 
-        @input:: none
-        @output:: dict-> bids: dictionary holding all the 
-                         entered bid prices.
+        Args:
+                none
+        Returns:
+                dict(): bids dictionary holding all the entered bid prices and bidders.
     '''
+    logger.info('Getting bids from bidders.') 
     continue_bidding = True
     bids = dict()
 
     try: 
-
         while continue_bidding:
             name = input("What is your name?: ")
-            bid = int(input("What is your bid?: $"))
-
             if len(name) == 0:
-                print('Name is required.', end='\n\n')
+                logger.warning("Name is required for the bidding process.")
                 continue
 
-            if bid <= 0:
-                print('Bid must be greater than 0.', end='\n\n')
+            try:
+                bid = float(input("What is your bid?: $"))
+                if bid <= 0:
+                    logger.warning(f"Bid value for {name} must be greater than 0.")
+                    continue
+            except ValueError:
+                logger.exception(f'Invalid bid entered for {name}.' + '\n' + 'Please enter a valid numeric value.')
                 continue
 
+            logger.info(f'{name} has placed a bid of {bid}.')
             bids[name] = bid
 
             morebids = input("Are there any other bidders? Type 'yes' or 'no'.\n").strip().lower()
 
             if morebids == "no":
+                logger.info('Biding has ended.')
                 continue_bidding = False                
        
             elif morebids == "yes":
-                print("\n" *70)
+                logger.info('Continue bidding - there are more bidders.')
+                os.system('cls||clear')  # Clear screen
 
         return bids
 
-    except ValueError:
-        print("Invalid bid price entered, only numeric values allowed.")
-        return None
-
     except Exception:
-        print("Errror occured retrieving user bids.")
+        logger.exception('Errror occured retrieving bidders and their bid prices.')
         return None
 
 
@@ -78,10 +69,12 @@ def find_highest_bidder(bidder_dictionary):
         dictionary of bidders and their respective bid
         prices.
 
-        @input:: dict->bidder_dictionary: dictionary holding all
-                                the entered bid prices.
-        @output:: none
+        Args:
+                bidder_dictionary (dict()): dictionary holding all the entered bid prices.
+        Returns:
+                none
     '''
+    logger.info('Finding the highest bidder from list of bidders.')
     max_bid = 0
     winner = ''
     
@@ -98,6 +91,26 @@ def find_highest_bidder(bidder_dictionary):
     '''
 
     print(f"The winner is {winner} with a bid of ${max_bid}.")
+    logger.info(f'The winner is {winner} with a bid of ${max_bid}.')
+
+
+def main():
+    try:
+        logger.info('Started silent auction program.')
+        print(art.logo)
+        print("Welcome to the secret auction program.")
+        
+        bids = bid()
+
+        if bids is not None:
+            logger.info(f'Bids: {bids}.')
+            find_highest_bidder(bids)
+        else:
+            logger.warning('No bids recorded. Error geting bidders with bid prices.')
+
+    except Exception:
+        logger.exception('Error occured in main auction function.')
+        sys.exit(1)
 
 
 if __name__ == "__main__":
