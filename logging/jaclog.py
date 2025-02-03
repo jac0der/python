@@ -1,5 +1,5 @@
 '''
-    Create a logging module to be used throughout my python applications.
+    Create a reusable logging module to be used throughout my python applications.
 
     @datetime:: February 02, 2025 6:05 am (UTC-5)
     @author:: jacoder
@@ -28,9 +28,9 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
     # Prevent duplicate handlers
     if not logger.handlers:
         # Create a file handler (for DEBUG and above)
-        file_handler = logging.FileHandler(log_file)
+        #file_handler = logging.FileHandler(log_file)
         file_handler = RotatingFileHandler(log_file, maxBytes=5*1024*1024, backupCount=3)
-        
+
         # DEBUG, INFO, WARNING, ERROR, and CRITICAL messages go to the file
         file_handler.setLevel(logging.DEBUG)  
 
@@ -42,5 +42,12 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
 
         # Add the handler to the logger
         logger.addHandler(file_handler)
+
+        '''# Console handler for real-time output
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
+        '''
 
     return logger
