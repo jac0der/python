@@ -1,6 +1,8 @@
 '''
-    Create a silent auction program, allowing
-    bidders to bid once for an item.
+    Silent Auction Program
+
+    This program allows bidders to place bids on an item silently.
+    The highest bidder is declared as the winner at the end of the auction.
 
     @datetime:: December 10, 2024 11:01 pm (UTC-5)
     @author:: jacoder
@@ -15,45 +17,42 @@ logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 def bid():
     '''
-        function to retrieve user bids and store bid in
-        dictionary of bid prices.
+        Retrieve user bids and store them in a dictionary.
 
-        Args:
-                none
         Returns:
-                dict(): bids dictionary holding all the entered bid prices and bidders.
+            dict: A dictionary containing bidders' names as keys and their bids as values.
+                  Returns None if an error occurs.
     '''
     logger.info('Getting bids from bidders.') 
-    continue_bidding = True
+    is_bidding_active = True
     bids = dict()
 
     try: 
-        while continue_bidding:
+        while is_bidding_active:
             name = input("What is your name?: ")
             if len(name) == 0:
                 logger.warning("Name is required for the bidding process.")
                 continue
 
             try:
-                bid = float(input("What is your bid?: $"))
-                if bid <= 0:
+                bid_amount = float(input("What is your bid?: $"))
+                if bid_amount <= 0:
                     logger.warning(f"Bid value for {name} must be greater than 0.")
                     continue
             except ValueError:
                 logger.exception(f'Invalid bid entered for {name}.' + '\n' + 'Please enter a valid numeric value.')
                 continue
 
-            logger.info(f'{name} has placed a bid of {bid}.')
-            bids[name] = bid
+            logger.info(f'{name} has placed a bid of {bid_amount}.')
+            bids[name] = bid_amount
 
-            morebids = input("Are there any other bidders? Type 'yes' or 'no'.\n").strip().lower()
+            has_more_bidders = input("Are there any other bidders? Type 'yes' or 'no'.\n").strip().lower()
 
-            if morebids == "no":
+            if has_more_bidders == "no":
                 logger.info('Biding has ended.')
-                continue_bidding = False                
+                is_bidding_active = False                
        
-            elif morebids == "yes":
-                logger.info('Continue bidding - there are more bidders.')
+            else:
                 os.system('cls||clear')  # Clear screen
 
         return bids
@@ -65,18 +64,19 @@ def bid():
 
 def find_highest_bidder(bidder_dictionary):
     '''
-        function to find the highest bidder from the
-        dictionary of bidders and their respective bid
-        prices.
+        Find the highest bidder from the dictionary of bids.
 
         Args:
-                bidder_dictionary (dict()): dictionary holding all the entered bid prices.
-        Returns:
-                none
+            bidder_dictionary (dict): A dictionary containing bidders' names and their bids.
     '''
     logger.info('Finding the highest bidder from list of bidders.')
     max_bid = 0
     winner = ''
+
+    # checking if bidder_dictionary is empty
+    if not bidder_dictionary:
+        logger.warning("No bids recorded.")
+        return
     
     for bidder, bid_price in bidder_dictionary.items():
         if bid_price > max_bid:
@@ -95,6 +95,9 @@ def find_highest_bidder(bidder_dictionary):
 
 
 def main():
+    ''' 
+    Main function to run the silent auction program.
+    '''
     try:
         logger.info('Started silent auction program.')
         print(art.logo)
@@ -102,15 +105,15 @@ def main():
         
         bids = bid()
 
-        if bids is not None:
+        if bids:
             logger.info(f'Bids: {bids}.')
             find_highest_bidder(bids)
         else:
-            logger.warning('No bids recorded. Error geting bidders with bid prices.')
+            logger.warning('No bids recorded. Error getting bidders with bid prices.')
 
     except Exception:
         logger.exception('Error occured in main auction function.')
-        sys.exit(1)
+        sys.exit("An error occurred. Please check the logs for details.")
 
 
 if __name__ == "__main__":
