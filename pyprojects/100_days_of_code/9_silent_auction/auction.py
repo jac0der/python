@@ -7,7 +7,7 @@
     @datetime:: December 10, 2024 11:01 pm (UTC-5)
     @author:: jacoder
 '''
-import art, os, sys
+import art, os, sys, bidding_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
@@ -28,6 +28,7 @@ def bid():
     bids = dict()
 
     try: 
+        float(input("What is your bid?: $"))
         while is_bidding_active:
             name = input("What is your name?: ")
             if len(name) == 0:
@@ -57,9 +58,9 @@ def bid():
 
         return bids
 
-    except Exception:
+    except Exception as e:
         logger.exception('Errror occured retrieving bidders and their bid prices.')
-        return None
+        raise bidding_error.BiddingError("An error occurred during the bidding process.") from e
 
 
 def find_highest_bidder(bidder_dictionary):
@@ -106,14 +107,14 @@ def main():
         logger.info('Started silent auction program.')
         print(art.logo)
         print("Welcome to the secret auction program.")
-        
-        bids = bid()
 
-        if bids:
-            logger.info(f'Bids: {bids}.')
-            find_highest_bidder(bids)
-        else:
-            logger.warning('No bids recorded. Error getting bidders with bid prices.')
+        bids = bid()  # This may raise a BiddingError
+        logger.info(f'Bids: {bids}.')
+        find_highest_bidder(bids)
+        
+    except bidding_error.BiddingError as e:
+        logger.error(f'Bidding error: {e}')
+        sys.exit(f"Error: {e}. Please check the logs for details.")
 
     except Exception:
         logger.exception('Error occured in main auction function.')
