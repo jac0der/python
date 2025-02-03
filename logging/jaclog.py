@@ -7,7 +7,7 @@
 import logging
 
 
-def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"):
     '''
         Function use to set up the logger.
 
@@ -18,9 +18,8 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
                 log_formatter (str): default parameter used to specify the format of the
                                      log messages.
         Returns:
-                none
+                logger: loger object writting log messages.
     '''
-    
     # Create a logger with name logger_name
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)  # Set the base logging level for the logger
@@ -38,4 +37,5 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
 
     # Add the handler to the logger
     logger.addHandler(file_handler)
-    
+
+    return logger
