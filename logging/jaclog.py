@@ -5,6 +5,7 @@
     @author:: jacoder
 '''
 import logging
+from logging.handlers import RotatingFileHandler
 
 
 def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s"):
@@ -28,6 +29,8 @@ def configure(logger_name, log_file, log_formatter = "%(asctime)s - %(name)s - %
     if not logger.handlers:
         # Create a file handler (for DEBUG and above)
         file_handler = logging.FileHandler(log_file)
+        file_handler = RotatingFileHandler(log_file, maxBytes=5*1024*1024, backupCount=3)
+        
         # DEBUG, INFO, WARNING, ERROR, and CRITICAL messages go to the file
         file_handler.setLevel(logging.DEBUG)  
 
