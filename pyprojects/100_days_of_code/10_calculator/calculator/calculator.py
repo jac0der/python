@@ -7,7 +7,7 @@
 import os, sys, operator, art
 
 # Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
 import jaclog
 logger = jaclog.configure('calculator_100days', './calculator.log')
 
