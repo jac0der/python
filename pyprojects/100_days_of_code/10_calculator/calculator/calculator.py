@@ -39,10 +39,6 @@ def get_number(prompt):
 def get_operation():
     ''' 
         Function used to list the available operations for the calculator.
-        
-        Args:
-            none
-
         Returns: 
             str:  selected math operation.
     '''
