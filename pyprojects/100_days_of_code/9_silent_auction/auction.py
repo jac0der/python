@@ -7,7 +7,7 @@
     @datetime:: December 10, 2024 11:01 pm (UTC-5)
     @author:: jacoder
 '''
-import art, os, sys
+import art, os, sys, bidding_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
@@ -28,6 +28,7 @@ def bid():
     bids = dict()
 
     try: 
+        float(input("What is your bid?: $"))
         while is_bidding_active:
             name = input("What is your name?: ")
             if len(name) == 0:
@@ -57,9 +58,9 @@ def bid():
 
         return bids
 
-    except Exception:
+    except Exception as e:
         logger.exception('Errror occured retrieving bidders and their bid prices.')
-        return None
+        raise bidding_error.BiddingError("An error occurred during the bidding process.") from e
 
 
 def find_highest_bidder(bidder_dictionary):
@@ -69,30 +70,34 @@ def find_highest_bidder(bidder_dictionary):
         Args:
             bidder_dictionary (dict): A dictionary containing bidders' names and their bids.
     '''
-    logger.info('Finding the highest bidder from list of bidders.')
-    max_bid = 0
-    winner = ''
+    try:
+        logger.info('Finding the highest bidder from list of bidders.')
+        max_bid = 0
+        winner = ''
 
-    # checking if bidder_dictionary is empty
-    if not bidder_dictionary:
-        logger.warning("No bids recorded.")
-        return
-    
-    for bidder, bid_price in bidder_dictionary.items():
-        if bid_price > max_bid:
-            max_bid = bid_price
-            winner = bidder
-
-    '''
-        Another short way of retrieving the maximun item from a dictionary
+        # checking if bidder_dictionary is empty
+        if not bidder_dictionary:
+            logger.warning("No bids recorded.")
+            return
         
-    winner = max(bidder_dictionary, key=bidder_dictionary.get)
-    max_bid = bidder_dictionary[winner]
-    '''
+        for bidder, bid_price in bidder_dictionary.items():
+            if bid_price > max_bid:
+                max_bid = bid_price
+                winner = bidder
 
-    print(f"The winner is {winner} with a bid of ${max_bid}.")
-    logger.info(f'The winner is {winner} with a bid of ${max_bid}.')
+        '''
+            Another short way of retrieving the maximun item from a dictionary
+            
+        winner = max(bidder_dictionary, key=bidder_dictionary.get)
+        max_bid = bidder_dictionary[winner]
+        '''
 
+        print(f"The winner is {winner} with a bid of ${max_bid}.")
+        logger.info(f'The winner is {winner} with a bid of ${max_bid}.')
+
+    except Exception:
+        logger.exception('Error occured determining the highest bidder.')
+    
 
 def main():
     ''' 
@@ -102,14 +107,14 @@ def main():
         logger.info('Started silent auction program.')
         print(art.logo)
         print("Welcome to the secret auction program.")
-        
-        bids = bid()
 
-        if bids:
-            logger.info(f'Bids: {bids}.')
-            find_highest_bidder(bids)
-        else:
-            logger.warning('No bids recorded. Error getting bidders with bid prices.')
+        bids = bid()  # This may raise a BiddingError
+        logger.info(f'Bids: {bids}.')
+        find_highest_bidder(bids)
+        
+    except bidding_error.BiddingError as e:
+        logger.error(f'Bidding error: {e}')
+        sys.exit(f"Error: {e}. Please check the logs for details.")
 
     except Exception:
         logger.exception('Error occured in main auction function.')
