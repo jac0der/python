@@ -4,7 +4,7 @@
     @datetime:: February 05, 2025 8:43 am (UTC-5)
     @author:: jac0der
 '''
-import os, sys
+import os, sys, leap_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
@@ -33,14 +33,29 @@ def is_leap_year(year):
                 return True
         else:
             return False
-    except Exception:
+    except Exception as ex:
         logger.exception(f'An error occured determining if {year} is a leap year.')
+        raise leap_error.LeapYearError(f'An error occured during the leap year determination process for year {year}.') from ex
 
 
 
 def main():
-    if is_leap_year(2000):
-        print(f'Year {2000} was a leap year.')
+    '''
+    Main function to trigger the leap year program.
+    '''
+    try:
+        if is_leap_year(2001):
+            print(f'Year {2001} was a leap year.')
+        else:
+            print(f'Year {2001} was NOT a leap year.')
+
+    except leap_error.LeapYearError as ex:
+        logger.error(f'Leap Year error: {ex}')
+        sys.exit(f'Error: {ex}. Please check the logs for details')
+
+    except Exception:
+        logger.exception('Error occured in main() leap year function.')
+        sys.exit('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
