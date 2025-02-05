@@ -4,7 +4,9 @@
     @datetime:: February 05, 2025 8:43 am (UTC-5)
     @author:: jac0der
 '''
-import os, sys, leap_error
+import os 
+import sys
+import leap_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
@@ -19,24 +21,13 @@ def is_leap_year(year):
     Args:
              year (int): Year to determine whether it is a leap year or not.
     Returns: 
-             bool: True if year is a leap year, otherwise, False, year is not a leap year.
+             bool: True if year is a leap year, otherwise, False.
     '''
-    try:
-        logger.info(f'Determining leap year status for year {year}.')
-        if year % 4 == 0:
-            if year % 100 == 0:
-                if year % 400 == 0:
-                    return True
-                else:
-                    return False
-            else:
-                return True
-        else:
-            return False            
-    except Exception as ex:
-        logger.exception(f'An error occured determining if {year} is a leap year.')
-        raise leap_error.LeapYearError(f'An error occured during the leap year determination process for year {year}.') from ex
+    logger.info(f'Determining leap year status for year {year}.')
+    if not isinstance(year, int):
+        raise leap_error.LeapYearError(f'Invalid year type: {year}. Expected an integer.')
 
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
 def get_year():
@@ -45,59 +36,58 @@ def get_year():
 
     Returns:
             int: The year to check for leap year status.
-    '''
-    try:
-        while True:
-            try:
-                year = int(input('\nEnter year(0 to quit): '))
+    '''    
+    while True:
+        try:
+            year = int(input('\nEnter year(0 to quit): '))
 
-                if year == 0:
-                    logger.info('Bye...User exited program.')
-                    sys.exit('Bye...')
+            if year == 0:
+                exit_program('Goodbye!')
 
-                if len(str(year)) != 4:
-                    logger.warning('Invalid year entered.' + '\n' + 'Year must be 4 digits.')
-                    continue
-
-                logger.info(f'Entered year is: {year}.')
-                return year
-            except ValueError:
-                logger.warning('Invalid year entered.' + '\n' + 'Please enter a valid numeric value.')
+            if year < 1000 or year > 9999:
+                logger.warning('Invalid year entered.' + '\n' + 'Year must be a four-digit number.')
                 continue
 
-    except Exception:
-        logger.exception('Error occurred while getting year from user.')
-        return None
+            logger.info(f'Entered year is: {year}.')
+            return year
+        except ValueError:
+            logger.warning('Invalid year entered.' + '\n' + 'Please enter a valid numeric value.')
+
+
+def exit_program(message, code=0):
+    '''
+    Centralized exit function to handle program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    sys.exit(message)
 
 
 def main():
     '''
     Main function to trigger the leap year program.
     '''
-    try:
-        while True:
+    while True:
+        try:            
             year = get_year()
 
-            if year is not None:
-
-                if is_leap_year(year):
-                    print(f'Year {year} is a leap year.')
-                    logger.info(f'Year {year} is a leap year.')
-                else:
-                    print(f'Year {year} is NOT a leap year.')
-                    logger.info(f'Year {year} is NOT a leap year.')
+            if is_leap_year(year):
+                print(f'Year {year} is a leap year.')
+                logger.info(f'Year {year} is a leap year.')
             else:
-                logger.warning('No year retrieved from user.')
-                sys.exit('No year retrieved from user. Please check the logs for more details.')
+                print(f'Year {year} is NOT a leap year.')
+                logger.info(f'Year {year} is NOT a leap year.')
 
+        except leap_error.LeapYearError as ex:
+            logger.error(f'Leap Year error: {ex}')
+            exit_program(f'Error: {ex}. Please check the logs for details')
 
-    except leap_error.LeapYearError as ex:
-        logger.error(f'Leap Year error: {ex}')
-        sys.exit(f'Error: {ex}. Please check the logs for details')
-
-    except Exception:
-        logger.exception('Error occured in main() leap year function.')
-        sys.exit('An error occured. Please check the logs for details.')
+        except Exception:
+            logger.exception('Error occured in main() leap year function.')
+            exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
