@@ -70,8 +70,8 @@ def main():
     '''
     Main function to trigger the leap year program.
     '''
-    while True:
-        try:            
+    try:
+        while True:           
             year = get_year()
 
             if is_leap_year(year):
@@ -81,13 +81,13 @@ def main():
                 print(f'Year {year} is NOT a leap year.')
                 logger.info(f'Year {year} is NOT a leap year.')
 
-        except leap_error.LeapYearError as ex:
-            logger.error(f'Leap Year error: {ex}')
-            exit_program(f'Error: {ex}. Please check the logs for details')
+    except leap_error.LeapYearError as ex:
+        logger.error(f'Leap Year error: {ex}')
+        exit_program(f'Error: {ex}. Please check the logs for details')
 
-        except Exception:
-            logger.exception('Error occured in main() leap year function.')
-            exit_program('An error occured. Please check the logs for details.')
+    except Exception:
+        logger.exception('Error occured in main() leap year function.')
+        exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
