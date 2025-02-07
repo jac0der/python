@@ -42,7 +42,7 @@ def get_number(prompt):
         try:
             return float(input(prompt))
         except ValueError:
-            logger.exception('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
+            logger.warning('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
 
 
 def get_operation():
@@ -68,25 +68,38 @@ def get_operation():
 
 def calculate(first_number, second_number, operation):
     '''
-        Performs the calculation based on the selected operation.
+    Performs the calculation based on the selected operation.
 
-        Args:
-                 first_number (float): First number of the equation.
-                 second_number (float): Second number of the equation.
-                 operation (str): The math operation to  perform.
-        Returns: 
-                 float: The result of the math operation selected.
+    Args:
+            first_number (float): First number of the equation.
+            second_number (float): Second number of the equation.
+            operation (str): The math operation to  perform.
+    Returns: 
+            float: The result of the math operation selected.
     '''
-    try:
-        logger.info(f'Calculating {first_number} {operation} {second_number}') 
-        return OPERATIONS[operation](first_number, second_number)
-    except ZeroDivisionError as ex:
-        logger.exception(f'Error: Cannot divide {first_number} by {second_number}.')        
-        return None
-    except Exception as ex:
-        logger.exception(f'An unexpected error occurred while calculating {first_number} {operation} {second_number}.')
-        logger.error('Please verify your inputs and try again.')
-        return None
+    if not isinstance(first_number, float):
+        raise ValueError(f'Invalid type for first number. Expected a float.')
+
+    if not isinstance(second_number, float):
+        raise ValueError(f'Invalid type for second number. Expected a float.')
+
+    if operation.strip() == '/' and second_number == 0:
+        raise ZeroDivisionError
+        
+    logger.info(f'Calculating {first_number} {operation} {second_number}')
+    return OPERATIONS[operation](first_number, second_number)
+ 
+
+def exit_program(message, code=0):
+    '''
+    Centralized exit function to handle program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    sys.exit(message)
 
 
 def main():
@@ -99,35 +112,43 @@ def main():
         while True:
             logger.info('Getting first number.')           
             first_number = get_number("What's the first number?: ")
+            logger.info(f'first_number is {first_number}.')
+
             continue_calculating = True         
 
             while continue_calculating:                
                 operation = get_operation()
+
                 logger.info('Getting second number.') 
                 second_number = get_number("What's the next number?: ")
-                    
-                result = calculate(first_number, second_number, operation)
-                logger.info(f'Result is: {round(result, 2)}.')
+                logger.info(f'second_number is {second_number}.')
 
-                if result is not None:                    
-                    print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
+                try:
+                    result = calculate(first_number, second_number, operation)
 
-                    # Continue or restart
-                    choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation: ").lower()
-                    if choice == 'y':
-                        # reset first number as current evaluation to be used to continue
-                        # calculating with next second number inputted.
-                        first_number = result
-                    else:
-                        os.system('cls||clear')  # Clear screen
-                        continue_calculating = False
+                except ValueError:
+                    logger.warning('Invalid inputs to calculate function.')
+                    continue
+                except ZeroDivisionError as ex:
+                    logger.warning(f'Cannot divide {first_number} by {second_number}.')
+                    continue
+
+                logger.info(f'Result is: {round(result, 2)}.')                  
+                print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
+
+                # Continue or restart
+                choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation: ").lower()
+                if choice == 'y':
+                    # reset first number as current evaluation to be used to continue
+                    # calculating with next second number inputted.
+                    first_number = result
                 else:
-                    logger.warning(f'No result from calculation of {first_number} {operation} {second_number}.')
-                    continue  # Skip result display if calculation failed
-           
+                    os.system('cls||clear')  # Clear screen
+                    continue_calculating = False
+
     except Exception as ex:
-        logger.critical("Error occured in main calculator function.")
-        sys.exit(1)
+        logger.exception("Error occured in main calculator function.")
+        exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
