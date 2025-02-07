@@ -3,7 +3,41 @@ from calculator.calculator import calculate, get_number, get_operation
 
 class TestCalculator(unittest.TestCase):
 
-    def test_calculate_valid_inputs(self):         
+    def test_calculate_invalid_first_number_inputs(self):
+        ''' Test invalid inputs for first number. '''
+        # invalid first number   
+        with self.assertRaises(ValueError):                     
+            calculate(6, 2.0, '/')          # integer
+        with self.assertRaises(ValueError):  
+            calculate('6', 2.0, '/')        # string
+
+            # other invalid inputs
+        with self.assertRaises(ValueError):  
+            calculate(None, 2.0, '/')
+        with self.assertRaises(ValueError):  
+            calculate(True, 2.0, '/')
+        with self.assertRaises(ValueError):  
+            calculate(dict(), 2.0, '/')
+
+
+    def test_calculate_invalid_second_number_inputs(self):
+        ''' Test invalid inputs for second number.'''
+        with self.assertRaises(ValueError):  
+            calculate(6.0, 2, '/')          # integer
+        with self.assertRaises(ValueError):  
+            calculate(6, '2.0', '/')        # string
+
+            # other invalid inputs
+        with self.assertRaises(ValueError):  
+            calculate(8.9, None, '/')
+        with self.assertRaises(ValueError):  
+            calculate(4.358, False, '/')
+        with self.assertRaises(ValueError):  
+            calculate(75.45, [], '/')
+
+
+    def test_calculate_valid_inputs(self):  
+        ''' Test valid inputs to the calculate function.'''       
         self.assertEqual(calculate(6.0, 2.0, '/'), 3.0)
         self.assertEqual(calculate(3.0, 2.4, '/'), 1.25)
         
