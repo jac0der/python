@@ -1,8 +1,9 @@
-from leap.leap_year import is_leap_year
-from leap.leap_error import LeapYearError
 import unittest
+from unittest.mock import patch
+from leap.leap_year import is_leap_year, get_year, exit_program
+from leap.leap_error import LeapYearError
 
-class TesLeapYear(unittest.TestCase):
+class TestLeapYear(unittest.TestCase):
     def test_leap_years(self):
         """Test known leap years."""
         self.assertTrue(is_leap_year(2000))  # Divisible by 400
@@ -17,7 +18,7 @@ class TesLeapYear(unittest.TestCase):
 
     def test_invalid_input(self):
         """Test invalid inputs raising LeapYearError."""
-        with self.assertRaises(LeapYearError) as contex:            
+        with self.assertRaises(LeapYearError):            
             is_leap_year("2024")  # String input
         with self.assertRaises(LeapYearError):
             is_leap_year(2024.5)  # Float input
@@ -25,7 +26,34 @@ class TesLeapYear(unittest.TestCase):
             is_leap_year(None)  # None input
         with self.assertRaises(LeapYearError):
             is_leap_year([])  # List input
+        with self.assertRaises(LeapYearError):
+            is_leap_year('')  # empty string
+            
+    @patch("builtins.input", side_effect=["2024"]) # Simulate user entering 2024
+    def test_get_year_valid_input(self, mock_input):
+        """Test that get_year() correctly returns a valid year."""     
+        self.assertEqual(get_year(), 2024) # Expect 2024 to be returned
+        # Ensures it was called exactly once since I am testing one imput
+        mock_input.assert_called_once()
+    
+    @patch("builtins.input", side_effect=["abcd", "2024"])
+    def test_get_year_invalid_then_valid_inputs(self, mock_input):
+        """Test invalid input followed by a valid year."""
+        self.assertEqual(get_year(), 2024)  # First input fails, second succeeds
+    
+    @patch("builtins.input", side_effect=["0"]) # Simulate user entering '0'
+    @patch("leap.leap_year.exit_program")       # Mocking exit_program
+    def test_get_year_calls_exit_program(self, mock_exit, mock_input):
+        """Test that get_year() calls exit_program when 0 is entered."""
+        try:
+            get_year()
+        except StopIteration:
+            pass
 
+        # Ensure exit_program() was called with "Goodbye!"
+        mock_exit.assert_called_once_with("Goodbye!")
+
+    
 
 if __name__ == "__main__":
     unittest.main()
