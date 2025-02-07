@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from calculator.calculator import calculate, get_number, get_operation
 
 class TestCalculator(unittest.TestCase):
@@ -55,6 +56,11 @@ class TestCalculator(unittest.TestCase):
 
         self.assertEqual(calculate(7.3, 8.9, '-'), -1.6)
         self.assertEqual(calculate(33.33, 4.0, '-'), 29.33)
+
+    
+    @patch("builtins.input", side_effect=["7"])
+    def test_get_number_valid_input(self, mock_input):
+        self.assertEqual(get_number(''), 7.0)
 
 
 if __name__ == '__main__':
