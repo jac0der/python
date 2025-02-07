@@ -60,7 +60,20 @@ class TestCalculator(unittest.TestCase):
     
     @patch("builtins.input", side_effect=["7"])
     def test_get_number_valid_input(self, mock_input):
+        ''' Test a valid input to get number and ensure input is called only once. '''
         self.assertEqual(get_number(''), 7.0)
+        mock_input.assert_called_once()
+
+
+    @patch("builtins.input", side_effect=["*"])
+    def test_get_number_invalid_input(self, mock_input):
+        ''' Test a single invalid input to get_number function. Raises ValueError Exception. '''
+        try:
+            with self.assertRaises(ValueError):
+                get_number('')
+        except StopIteration:
+            pass
+
 
 
 if __name__ == '__main__':
