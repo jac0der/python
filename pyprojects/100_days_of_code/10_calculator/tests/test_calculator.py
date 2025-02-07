@@ -21,7 +21,7 @@ class TestCalculator(unittest.TestCase):
 
 
     def test_calculate_invalid_second_number_inputs(self):
-        ''' Test invalid inputs for second number.'''
+        ''' Test invalid inputs for second number. '''
         with self.assertRaises(ValueError):  
             calculate(6.0, 2, '/')          # integer
         with self.assertRaises(ValueError):  
@@ -34,6 +34,12 @@ class TestCalculator(unittest.TestCase):
             calculate(4.358, False, '/')
         with self.assertRaises(ValueError):  
             calculate(75.45, [], '/')
+
+    
+    def test_calculate_division_by_zero(self):
+        ''' Test division by zero raising ZeroDivisionError. '''
+        with self.assertRaises(ZeroDivisionError):  
+            calculate(8.9, 0.0, '/')
 
 
     def test_calculate_valid_inputs(self):  
