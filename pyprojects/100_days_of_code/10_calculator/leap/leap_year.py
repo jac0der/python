@@ -6,7 +6,12 @@
 '''
 import os 
 import sys
-import leap_error
+try:
+    # When running as a module (for unittest)
+    from leap.leap_error import LeapYearError  
+except ImportError:
+    # When running the script directly
+    from leap_error import LeapYearError 
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
@@ -25,7 +30,7 @@ def is_leap_year(year):
     '''
     logger.info(f'Determining leap year status for year {year}.')
     if not isinstance(year, int):
-        raise leap_error.LeapYearError(f'Invalid year type: {year}. Expected an integer.')
+        raise LeapYearError(f'Invalid year type: {year}. Expected an integer.')
 
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
@@ -81,7 +86,7 @@ def main():
                 print(f'Year {year} is NOT a leap year.')
                 logger.info(f'Year {year} is NOT a leap year.')
 
-    except leap_error.LeapYearError as ex:
+    except LeapYearError as ex:
         logger.error(f'Leap Year error: {ex}')
         exit_program(f'Error: {ex}. Please check the logs for details')
 
