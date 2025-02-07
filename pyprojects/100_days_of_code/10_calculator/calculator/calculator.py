@@ -40,7 +40,12 @@ def get_number(prompt):
     '''
     while True:
         try:
-            return float(input(prompt))
+            number = float(input(prompt))
+
+            if number == 0:
+                exit_program("Goodbye!")
+
+            return number
         except ValueError:
             logger.warning('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
 
@@ -58,7 +63,11 @@ def get_operation():
         print(op)
 
     while True:
-        operation = input("Pick an operation: ").strip()
+        operation = input("Pick an operation (0 to quit): ").strip()
+        
+        if operation == '0':
+            exit_program('Goodbye!')            
+
         if operation in OPERATIONS:
             logger.info(f'Selected operation is {operation}.')
             return operation
@@ -111,7 +120,7 @@ def main():
     try:
         while True:
             logger.info('Getting first number.')           
-            first_number = get_number("What's the first number?: ")
+            first_number = get_number("What's the first number? (0 to quit): ")
             logger.info(f'first_number is {first_number}.')
 
             continue_calculating = True         
@@ -120,7 +129,7 @@ def main():
                 operation = get_operation()
 
                 logger.info('Getting second number.') 
-                second_number = get_number("What's the next number?: ")
+                second_number = get_number("What's the next number? (0 to quit): ")
                 logger.info(f'second_number is {second_number}.')
 
                 try:
@@ -130,6 +139,7 @@ def main():
                     logger.warning('Invalid inputs to calculate function.')
                     continue
                 except ZeroDivisionError as ex:
+                    print('Cannot divide {first_number} by {second_number}.')
                     logger.warning(f'Cannot divide {first_number} by {second_number}.')
                     continue
 
@@ -137,7 +147,11 @@ def main():
                 print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
 
                 # Continue or restart
-                choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation: ").lower()
+                choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation (0 to quit): ").lower()
+                
+                if choice == '0':
+                    exit_program('Goodbye!')
+
                 if choice == 'y':
                     # reset first number as current evaluation to be used to continue
                     # calculating with next second number inputted.
@@ -145,6 +159,9 @@ def main():
                 else:
                     os.system('cls||clear')  # Clear screen
                     continue_calculating = False
+
+    except KeyboardInterrupt as ex:
+        exit_program('\nUser exited program...')
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
