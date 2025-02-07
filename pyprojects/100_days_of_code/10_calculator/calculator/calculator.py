@@ -96,7 +96,7 @@ def calculate(first_number, second_number, operation):
         raise ZeroDivisionError
         
     logger.info(f'Calculating {first_number} {operation} {second_number}')
-    return OPERATIONS[operation](first_number, second_number)
+    return round(OPERATIONS[operation](first_number, second_number), 2)
  
 
 def exit_program(message, code=0):
@@ -143,8 +143,8 @@ def main():
                     logger.warning(f'Cannot divide {first_number} by {second_number}.')
                     continue
 
-                logger.info(f'Result is: {round(result, 2)}.')                  
-                print(f"{first_number} {operation} {second_number} = {round(result, 2)}")
+                logger.info(f'Result is: {result}.')                  
+                print(f"{first_number} {operation} {second_number} = {result}")
 
                 # Continue or restart
                 choice = input("Type 'y' to continue with this result, or 'n' to start a new calculation (0 to quit): ").lower()
