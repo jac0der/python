@@ -4,7 +4,16 @@
     @datetime:: January 29, 2025 6:37 am (UTC-5)
     @author:: jacoder
 '''
-import os, sys, operator, art
+import os 
+import sys
+import operator
+
+try:
+    # When running as a module (for unittest)
+    from calculator.art import logo  
+except ImportError:
+    # When running the script directly
+    from art import logo 
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
@@ -83,7 +92,7 @@ def calculate(first_number, second_number, operation):
 def main():
     ''' main function to run the calculator'''
     logger.info('Starting calculator.')
-    print(art.logo)
+    print(logo)
     print("Welcome to the Calculator App!")
 
     try:
