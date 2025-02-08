@@ -93,7 +93,7 @@ class TestCalculator(unittest.TestCase):
     @patch("builtins.input", side_effect=["0"])
     @patch("calculator.calculator.exit_program")
     def test_get_number_calls_exit_program(self, mock_exit ,mock_input):
-        ''' Test get_number exits program with Goodvye! when 0 is entered. '''
+        ''' Test get_number exits program with Goodbye! when 0 is entered. '''
         get_number('')
         mock_exit.assert_called_once_with("Goodbye!")
 
@@ -105,6 +105,13 @@ class TestCalculator(unittest.TestCase):
 
         # Assert that sys.exit() was called once with "Goodbye!"
         mock_sys_exit.assert_called_once_with("Goodbye!") 
+
+    
+    @patch("builtins.input", side_effect=["0"])
+    def test_get_operation_calls_exit_program(self, mock_input):
+        ''' Test get_operation exits program with Goodbye! when 0 is entered. '''
+        get_operation()
+        mock_input.assert_called_once_with("Goodbye!") 
 
 
 if __name__ == '__main__':
