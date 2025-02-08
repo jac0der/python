@@ -41,6 +41,30 @@ def get_conversion_type():
         logger.warning(f'Invalid conversion option "{choice}" selected. Expecting 1 or 2.')
 
 
+def get_temperature():
+    ''' 
+    Get the temperature value to be converted.
+
+    Returns:
+            float: Converted temperature value.
+    '''
+    logger.info('Getting temperature value for conversion.')
+    while True:
+        try:
+            temperature = float(input("\nEnter temperature value (0 to quit):"))
+
+            if temperature == 0:
+                exit_program('Goodbye!')
+
+            print(f'Temperature entered is: {temperature}.')
+            logger.info(f'Temperature entered is: {temperature}.')
+            return temperature
+
+        except ValueError as ex:
+            print('Invalid number entered for temperature.' + '\n' + 'Please enter a valid numeric value.')
+            logger.warning('Invalid number entered for temperature.' + '\n' + 'Please enter a valid numeric value.' + ex)
+
+
 def perform_conversion(conversion_type_code=CELCIUS_TO_FAHRENHEIT):
     pass
 
@@ -67,6 +91,7 @@ def main():
 
         while True:
             get_conversion_type()
+            get_temperature()
 
     except Exception as ex:
         logger.exception("Error occured in main temperature conversion function.")
