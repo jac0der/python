@@ -37,8 +37,12 @@ def get_conversion_type():
             logger.info(f'Conversion type is: {FAHRENHEIT_TO_CELCIUS}.')
             return FAHRENHEIT_TO_CELCIUS            
 
-        print(f'Invalid conversion option {choice} selected. Expecting 1 or 2.')
-        logger.warning(f'Invalid conversion option {choice} selected. Expecting 1 or 2.')
+        print(f'Invalid conversion option "{choice}" selected. Expecting 1 or 2.')
+        logger.warning(f'Invalid conversion option "{choice}" selected. Expecting 1 or 2.')
+
+
+def perform_conversion(conversion_type_code=CELCIUS_TO_FAHRENHEIT):
+    pass
 
 
 def exit_program(message, code=0):
