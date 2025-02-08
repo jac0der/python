@@ -7,7 +7,13 @@
     @author:: jacoder
 """
 import random
+import os 
+import sys
 
+# Add the 'logging' folder to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
+import jaclog
+logger = jaclog.configure('rps', './rps.log')
 
 # declare global variables
 # store computer choices as a tuple - immutable (unchangable throughtout game)
@@ -21,6 +27,7 @@ WINNER = {
 
 
 def main():
+    logger.info('Starting game...')
     print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
     print("Start by entering the number of rounds to play.")
 
