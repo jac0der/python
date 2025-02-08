@@ -6,6 +6,7 @@
 '''
 import os 
 import sys
+import tempconv_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../logging')))
@@ -23,6 +24,10 @@ def get_conversion_type():
             str: Conversion type code, CTF or FTC.
     '''
     logger.info('Getting conversion type.')
+    print("\nChoose converstion type: ", end='\n')
+    print("\t1 -> Celsious to Fahrenheit (CTF)",  end='\n')
+    print("\t2 -> Fahrenheit to Celsious (FTC)",  end='\n')
+
     while True:
         choice = input('\nChoose convertion type (0 to quit): ')
 
@@ -62,12 +67,37 @@ def get_temperature():
 
         except ValueError as ex:
             print('Invalid number entered for temperature.' + '\n' + 'Please enter a valid numeric value.')
-            logger.warning('Invalid number entered for temperature.' + '\n' + 'Please enter a valid numeric value.' + ex)
+            logger.warning('Invalid number entered for temperature.' + '\n' + f'Please enter a valid numeric value. \n{ex}')
 
 
-def perform_conversion(conversion_type_code=CELCIUS_TO_FAHRENHEIT):
-    pass
+def perform_conversion(temperature, conversion_type_code=CELCIUS_TO_FAHRENHEIT):
+    '''
+    Perform temperature conversion of the specified temperature value and conversion code.
 
+    Args:
+            temperature (float): Temperature to be converted to another unit.
+    Returns:
+            float: Converted temperature.
+    '''
+    if not isinstance(temperature, float):
+        raise ValueError(f'Invalid type for temperatue. Expected a float.')
+
+    if conversion_type_code == CELCIUS_TO_FAHRENHEIT:
+        converted_temperature = ((temperature * 1.8) + 32)
+
+        print(f'Result: {temperature}°C is: {converted_temperature}°F.')
+        logger.info(f'Result: {temperature}°C is: {converted_temperature}°F.')
+        return converted_temperature
+
+    if conversion_type_code == FAHRENHEIT_TO_CELCIUS:
+        converted_temperature = ((temperature - 32) / 1.8)
+
+        print(f'Result: {temperature}°F is: {converted_temperature}°C.')
+        logger.info(f'Result: {temperature}°F is: {converted_temperature}°C.')
+        return converted_temperature
+
+    # raise exception if no match conversion type was found
+    raise tempconv_error.ConversionTypeCodeError('Invalid conversion type code entered.')
 
 def exit_program(message, code=0):
     '''
@@ -85,13 +115,21 @@ def main():
     try:
         logger.info("Starting Temperature Converter.")
         print("Welcome to TEMPREATURE CONVERTER")
-        print("Choose converstion type: ", end='\n')
-        print("\t1 -> Celsious to Fahrenheit (CTF)",  end='\n')
-        print("\t2 -> Fahrenheit to Celsious (FTC)",  end='\n')
 
         while True:
-            get_conversion_type()
-            get_temperature()
+            try:
+                conversion_type = get_conversion_type()
+                temperature = get_temperature()
+
+                perform_conversion(temperature, conversion_type)
+
+            except ValueError as ex:
+                print(f'Invalid Input: {ex}')
+                logger.warning(f'Invalid Input: {ex}')
+
+            except tempconv_error.ConversionTypeCodeError as ex:
+                print(f'Conversion Type Code Issue: {ex}')
+                logger.warning(f'Conversion Type Code Issue: {ex}')
 
     except Exception as ex:
         logger.exception("Error occured in main temperature conversion function.")
