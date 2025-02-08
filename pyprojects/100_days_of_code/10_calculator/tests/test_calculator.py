@@ -108,10 +108,32 @@ class TestCalculator(unittest.TestCase):
 
     
     @patch("builtins.input", side_effect=["0"])
-    def test_get_operation_calls_exit_program(self, mock_input):
+    @patch("calculator.calculator.exit_program")
+    def test_get_operation_calls_exit_program(self, mock_exit, mock_input):
         ''' Test get_operation exits program with Goodbye! when 0 is entered. '''
-        get_operation()
-        mock_input.assert_called_once_with("Goodbye!") 
+        try:
+            get_operation()
+        except StopIteration:
+            pass
+        
+        mock_exit.assert_called_once_with("Goodbye!") 
+
+    
+    @patch("builtins.input")
+    def test_get_operation_returns_valid_operation(self, mock_input):
+        ''' Test get_operation returns each valid operation once entered. '''
+
+        mock_input.side_effect = "+"        
+        self.assertEqual(get_operation(), "+")
+
+        mock_input.side_effect = "-"        
+        self.assertEqual(get_operation(), "-")
+
+        mock_input.side_effect = "*"        
+        self.assertEqual(get_operation(), "*")
+
+        mock_input.side_effect = "/"        
+        self.assertEqual(get_operation(), "/")
 
 
 if __name__ == '__main__':
