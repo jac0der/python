@@ -213,7 +213,7 @@ def main():
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
-        exit_program('An error occured. Please check the logs for details.')
+        exit_program(f'An error occured. Please check the logs for details. {ex}')
 
 
 if __name__ == '__main__':
