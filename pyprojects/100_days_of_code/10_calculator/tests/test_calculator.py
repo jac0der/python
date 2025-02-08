@@ -146,5 +146,14 @@ class TestCalculator(unittest.TestCase):
             get_operation()
 
 
+    @patch("builtins.input", side_effect=["f", "^","@", "d", "/"])
+    def test_get_operation_continue_prompt_until_valid_operation(self, mock_input):
+        ''' 
+        Test get_operation continues to prompt for operation until a valid 
+        operation is entered.
+        '''
+        self.assertEqual(get_operation(), "/")
+
+
 if __name__ == '__main__':
     unittest.main()
