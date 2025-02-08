@@ -42,9 +42,10 @@ def get_year():
     Returns:
             int: The year to check for leap year status.
     '''    
+    logger.info('Getting year from user.')
     while True:
         try:
-            year = int(input('\nEnter year(0 to quit): '))
+            year = int(input('\nEnter year (0 to quit): '))
 
             if year == 0:
                 exit_program('Goodbye!')
