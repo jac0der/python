@@ -97,6 +97,15 @@ class TestCalculator(unittest.TestCase):
         get_number('')
         mock_exit.assert_called_once_with("Goodbye!")
 
+    
+    @patch("sys.exit")
+    def test_exit_program_calls_sys_exit(self, mock_sys_exit):
+        ''' Test that exit_program() calls sys.exit() with the correct message. '''    
+        exit_program("Goodbye!")
+
+        # Assert that sys.exit() was called once with "Goodbye!"
+        mock_sys_exit.assert_called_once_with("Goodbye!") 
+
 
 if __name__ == '__main__':
     unittest.main()
