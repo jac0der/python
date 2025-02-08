@@ -9,6 +9,7 @@
 import random
 import os 
 import sys
+import rps_error
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
@@ -63,6 +64,9 @@ def play(rounds):
 
     if not isinstance(rounds, int):
         raise ValueError(f'Invalid type for rounds. Expected an integer.')
+
+    if rounds < 0:
+        raise rps_error.InvalidRoundsError(f'Invalid rounds entered. Expecting a positive number.')
 
     print()
 
