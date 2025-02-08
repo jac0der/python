@@ -28,16 +28,13 @@ WINNER = {
 
 def get_rounds():
     '''
-        Function to get the user's input for the number 
-        of rounds of rock paper sissors to play. 
-        User's input is also validated to prevent errors.
+    Get number of rounds from user to play rock paper sissors game. 
 
-        @input::  none
-        @output::int -> user's entered number of rounds to play
+    Returns:
+            int: The user's entered number of rounds to play.
     '''
-
     # loop as long as an invalid input is entered by user.
-    while(True):
+    while True:
 
         try:
             # try casts users input to integer
@@ -48,29 +45,69 @@ def get_rounds():
                 return rounds
             else:
                 print("Invalid Input, Please enter a positive number.")
+                logger.warning("Invalid Input, Please enter a positive number.")
 
         except ValueError:
-            print("Invalid Input, Please enter a numberic value.")
+            print("Invalid Input: Please enter a numberic value.")
+            logger.warning("Invalid Input: Please enter a numberic value.")
+
+
+def play(rounds):
+    '''
+    Start play the rock paper sissors game.
+
+    Args:
+            rounds (int): Number of rounds to play.
+    '''
+    logger.info('Start playing rounds.')
+
+    if not isinstance(rounds, int):
+        raise ValueError(f'Invalid type for rounds. Expected an integer.')
+
+    print()
+
+    for i in range(rounds):
+
+        # get user's choice
+        user_choice = get_user_choice()
+        logger.info(f"User's choice is {user_choice}")
+
+        # get the computer choice randomly
+        computer_choice = random.choice(COMPUTER_CHOICE)
+        print("Computer's choice is: ", computer_choice)
+        logger.info(f"Computer's choice is {computer_choice}")
+
+        # determine winner
+        who_wins_round(user_choice, computer_choice)
+    
+    # determine who won game
+    winner = who_wins_game()
+
+    if winner == 1:
+        print(f"After {rounds} rounds, User wins the game!")
+    elif winner == -1:
+        print(f"After {rounds} rounds, Computer wins the game!")
+    else:
+        print("No winner - tie game!")
 
 
 def get_user_choice():
     ''' 
-        function to accept users input of either rock (r),
-        paper (p) or scissors (s).
-
-        @input::  none
-        @output:: user's chose.
+    Get users' input of either rock (r), paper (p) or scissors (s).
+    Returns:
+            str: The user's choice.
     '''
-    running = True
-
-    while running:
+    logger.info('Getting user selection.')
+    while True:
          # get user's choice
         print("Enter [r/R - Rock | p/P - Paper | s/S - Sissors]")
-        user_choice = input("Your choice: ")
+        user_choice = input("Your choice: ").strip().lower()
 
-        if user_choice.strip().lower() in COMPUTER_CHOICE:
-            return user_choice.strip().lower()
+        if user_choice in COMPUTER_CHOICE:            
+            return user_choice
 
+        logger.warning(f'Invalid selection: User entered {user_choice} instead of either r/p/s.')
+            
 
 # Rock beats scissors, scissors beat paper, and paper beats rock.
 def who_wins_round(user_choice, computer_choice):
@@ -125,40 +162,6 @@ def who_wins_game():
         return 0 # tie
 
 
-def play(rounds):
-    '''
-        Function to start the rock paper sissors game for number
-        of rounds specified as input.
-
-        @input::int -> number of rounds to play.  
-        @output::  winner of game.
-    '''
-    print()
-
-    for i in range(rounds):
-
-        # get user's choice
-        user_choice = get_user_choice()
-
-        # get the computer choice randomly
-        computer_choice = random.choice(COMPUTER_CHOICE)
-        print("Computer's choice is: ", computer_choice)
-
-        # determine winner
-        who_wins_round(user_choice, computer_choice)
-
-    
-    # determine who won game
-    winner = who_wins_game()
-
-    if winner == 1:
-        print(f"After {rounds} rounds, User wins the game!")
-    elif winner == -1:
-        print(f"After {rounds} rounds, Computer wins the game!")
-    else:
-        print("No winner - tie game!")
-
-
 def exit_program(message, code=0):
     '''
     Centralized exit function to handle program termination.
@@ -170,15 +173,18 @@ def exit_program(message, code=0):
     logger.info(message)
     sys.exit(message)
 
-    
+
 def main():
     try:
-        logger.info('Starting game...')
+        logger.info('Starting Rock, Paper, Scissors Game...')
         print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
         print("Start by entering the number of rounds to play.")   
 
         rounds = get_rounds()
         play(rounds) 
+
+    except ValueError as ex:
+        logger.warning('Invalid input to get_rounds(rounds) function.')
 
     except KeyboardInterrupt as ex:
         exit_program('\nUser exited program...')
