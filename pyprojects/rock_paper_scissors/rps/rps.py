@@ -17,7 +17,7 @@ import jaclog
 logger = jaclog.configure('rps', './rps.log')
 
 # declare global variables
-# store computer choices as a tuple - immutable (unchangable throughtout game)
+# store computer choices as a tuple - immutable (unchangeable throughout the game)
 COMPUTER_CHOICE = ('r', 'p', 's')
 
 # track winner of each round, thus winner of game
@@ -39,18 +39,21 @@ def get_rounds():
 
         try:
             # try casts users input to integer
-            rounds = int(input("Number of rounds: "))
+            rounds = int(input("Number of rounds (0 to quit): "))
+
+            if rounds == 0:
+                exit_program("Goodbye!")
 
             # only accepts positive whole numbers
             if rounds > 0:
                 return rounds
             else:
-                print("Invalid Input, Please enter a positive number.")
-                logger.warning("Invalid Input, Please enter a positive number.")
+                print("Invalid Input: Please enter a positive number.")
+                logger.warning("Invalid Input: Please enter a positive number.")
 
-        except ValueError:
-            print("Invalid Input: Please enter a numberic value.")
-            logger.warning("Invalid Input: Please enter a numberic value.")
+        except ValueError as ex:
+            print(f"Invalid Input: {ex}. Please enter a numeric value.")
+            logger.warning(f"Invalid Input: {ex}. Expected an integer.")
 
 
 def play(rounds):
@@ -89,10 +92,13 @@ def play(rounds):
 
     if winner == 1:
         print(f"After {rounds} rounds, User wins the game!")
+        logger.info(f"After {rounds} rounds, User wins the game!")
     elif winner == -1:
         print(f"After {rounds} rounds, Computer wins the game!")
+        logger.info(f"After {rounds} rounds, Computer wins the game!")
     else:
         print("No winner - tie game!")
+        logger.info("No winner - tie game!")
 
 
 def get_user_choice():
@@ -103,33 +109,41 @@ def get_user_choice():
     '''
     logger.info('Getting user selection.')
     while True:
-         # get user's choice
-        print("Enter [r/R - Rock | p/P - Paper | s/S - Sissors]")
-        user_choice = input("Your choice: ").strip().lower()
+        try:
 
-        if user_choice in COMPUTER_CHOICE:            
-            return user_choice
+            # get user's choice
+            print("Enter [r/R - Rock | p/P - Paper | s/S - Scissors]")
+            user_choice = input("Your choice (0 to quit): ").strip().lower()
 
-        logger.warning(f'Invalid selection: User entered {user_choice} instead of either r/p/s.')
-            
+            if user_choice == '0':
+                exit_program('Goodbye!')
+
+            if user_choice in COMPUTER_CHOICE:            
+                return user_choice
+
+            logger.warning(f'Invalid selection: User entered {user_choice} instead of either r/p/s.')
+        
+        except EOFError:
+            exit_program("\nUser exited via EOF.")
+
+                
 
 # Rock beats scissors, scissors beat paper, and paper beats rock.
 def who_wins_round(user_choice, computer_choice):
     '''
-        function to determine winner of round based on 
-        user and computer inputs.
+    Determine winner of round based on user and computer selections.
 
-        @input::int user_choice 
-                    the user's entered choice
-        @input:: int computer_choice
-                     the randomly selected compouter choice.
-        @output::str
-                  message indicating who wins round, otherwise, print tie.              
+    Args:
+            user_choice (str): The user's entered choice.
+            computer_choice (str): The randomly selected compouter choice.
+    Returns:
+            str: Message indicating who wins round, otherwise, print tie.              
     '''
-
+    logger.info('Determining who wins round')
     if user_choice == computer_choice:
         print("Round Tie!")
         print()
+        logger.info('Round Tie!')
 
     elif (user_choice == "r" and computer_choice == "s") or \
          (user_choice == "s" and computer_choice == "p") or \
@@ -140,6 +154,7 @@ def who_wins_round(user_choice, computer_choice):
          
          print("User wins round!")
          print()
+         logger.info('User wins round!')
          
     else:
         # update computer's round count
@@ -147,17 +162,17 @@ def who_wins_round(user_choice, computer_choice):
          
          print("Computer wins round!")
          print()
+         logger.info('Computer wins round!')
 
 
 def who_wins_game():
     '''
-        Function to determine which player won the most rounds,
-        hence won the game, otherwise, a tie.
+    Determine which player won the most rounds, hence won the game, otherwise, a tie.
 
-        @input:: none
-        @output::str -> the player who won the game or string tie.
+    Returns:
+            str: The player who won the game or tie.
     '''
-
+    logger.info('Determining who wins game!.')
     if WINNER['user'] > WINNER['computer']:
         return 1 # user wins
     elif WINNER['computer'] > WINNER['user']:
@@ -181,7 +196,7 @@ def exit_program(message, code=0):
 def main():
     try:
         logger.info('Starting Rock, Paper, Scissors Game...')
-        print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
+        print("Ready! Set! Shhot! -> Rock!, Paper!, Scissors!")
         print("Start by entering the number of rounds to play.")   
 
         rounds = get_rounds()
@@ -189,6 +204,9 @@ def main():
 
     except ValueError as ex:
         logger.warning('Invalid input to get_rounds(rounds) function.')
+
+    except rps_error.InvalidRoundsError as ex:
+        logger.error(f'Invalid game rounds: {ex}')
 
     except KeyboardInterrupt as ex:
         exit_program('\nUser exited program...')
