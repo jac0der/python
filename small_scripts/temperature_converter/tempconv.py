@@ -34,8 +34,8 @@ def get_conversion_type():
             return CELCIUS_TO_FAHRENHEIT
 
         if choice == '2':
-            return FAHRENHEIT_TO_CELCIUS
             logger.info(f'Conversion type is: {FAHRENHEIT_TO_CELCIUS}.')
+            return FAHRENHEIT_TO_CELCIUS            
 
         print(f'Invalid conversion option {choice} selected. Expecting 1 or 2.')
         logger.warning(f'Invalid conversion option {choice} selected. Expecting 1 or 2.')
@@ -61,7 +61,8 @@ def main():
         print("\t1 -> Celsious to Fahrenheit (CTF)",  end='\n')
         print("\t2 -> Fahrenheit to Celsious (FTC)",  end='\n')
 
-        get_convertion_type()
+        while True:
+            get_conversion_type()
 
     except Exception as ex:
         logger.exception("Error occured in main temperature conversion function.")
