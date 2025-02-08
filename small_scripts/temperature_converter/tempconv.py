@@ -24,9 +24,9 @@ def get_conversion_type():
             str: Conversion type code, CTF or FTC.
     '''
     logger.info('Getting conversion type.')
-    print("\nChoose converstion type: ", end='\n')
-    print("\t1 -> Celsious to Fahrenheit (CTF)",  end='\n')
-    print("\t2 -> Fahrenheit to Celsious (FTC)",  end='\n')
+    print("\nChoose conversion type: ", end='\n')
+    print("\t1 -> Celsius to Fahrenheit (CTF)",  end='\n')
+    print("\t2 -> Fahrenheit to Celsius (FTC)",  end='\n')
 
     while True:
         choice = input('\nChoose convertion type (0 to quit): ')
@@ -80,7 +80,7 @@ def perform_conversion(temperature, conversion_type_code=CELCIUS_TO_FAHRENHEIT):
             float: Converted temperature.
     '''
     if not isinstance(temperature, float):
-        raise ValueError(f'Invalid type for temperatue. Expected a float.')
+        raise ValueError(f'Invalid type for temperature. Expected a float.')
 
     if conversion_type_code == CELCIUS_TO_FAHRENHEIT:
         converted_temperature = ((temperature * 1.8) + 32)
@@ -114,7 +114,7 @@ def exit_program(message, code=0):
 def main():
     try:
         logger.info("Starting Temperature Converter.")
-        print("Welcome to TEMPREATURE CONVERTER")
+        print("Welcome to TEMPERATURE CONVERTER")
 
         while True:
             try:
