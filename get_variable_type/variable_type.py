@@ -12,6 +12,8 @@ cost = 200.58
 number = 1 + 2j
 
 print(f'Type of age is {type(age)}')
+print(isinstance(age, int))
+print(isinstance(age, str))
 print(f'Type of cost is {type(cost)}')
 print(f'Type of number is {type(number)}')
 
