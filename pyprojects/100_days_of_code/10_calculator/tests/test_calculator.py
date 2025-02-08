@@ -136,5 +136,15 @@ class TestCalculator(unittest.TestCase):
         self.assertEqual(get_operation(), "/")
 
 
+    @patch("builtins.input", side_effect=["f", "^","@", "d"])
+    def test_get_operation_continue_prompt_on_invalid_operation(self, mock_input):
+        ''' 
+        Test get_operation continues to prompt for operation if no valid 
+        operation is entered. Raises a StopIteration Exception.
+        '''
+        with self.assertRaises(StopIteration):
+            get_operation()
+
+
 if __name__ == '__main__':
     unittest.main()
