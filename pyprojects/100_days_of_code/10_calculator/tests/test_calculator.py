@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from calculator.calculator import calculate, get_number, get_operation
+from calculator.calculator import calculate, get_number, get_operation, exit_program
 
 class TestCalculator(unittest.TestCase):
 
@@ -88,6 +88,14 @@ class TestCalculator(unittest.TestCase):
     def test_get_number_rejects_invalid_inputs(self, mock_input):
         ''' Test get_number rejects initial invalid inputs before a valid input '''
         self.assertEqual(get_number(''), 5.1)
+
+    
+    @patch("builtins.input", side_effect=["0"])
+    @patch("calculator.calculator.exit_program")
+    def test_get_number_calls_exit_program(self, mock_exit ,mock_input):
+        ''' Test get_number exits program when 0 is entered. '''
+        get_number('')
+        mock_exit.assert_called_once()
 
 
 if __name__ == '__main__':
