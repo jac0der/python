@@ -13,6 +13,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../l
 import jaclog
 logger = jaclog.configure('temperature_convertor', './tempconv.log')
 
+# connstants definitions
+EXIT_MESSAGE = 'Goodbye!'
+INVALID_INPUT = 'Invalid Input'
 CELCIUS_TO_FAHRENHEIT = 'CTF'
 FAHRENHEIT_TO_CELCIUS = 'FTC'
 
@@ -32,7 +35,7 @@ def get_conversion_type():
         choice = input('\nChoose convertion type (0 to quit): ')
 
         if choice == '0':
-            exit_program('Goodbye!')
+            exit_program(EXIT_MESSAGE)
 
         if choice == '1':
             logger.info(f'Conversion type is: {CELCIUS_TO_FAHRENHEIT}.')
@@ -40,7 +43,7 @@ def get_conversion_type():
 
         if choice == '2':
             logger.info(f'Conversion type is: {FAHRENHEIT_TO_CELCIUS}.')
-            return FAHRENHEIT_TO_CELCIUS            
+            return FAHRENHEIT_TO_CELCIUS   
 
         print(f'Invalid conversion option "{choice}" selected. Expecting 1 or 2.')
         logger.warning(f'Invalid conversion option "{choice}" selected. Expecting 1 or 2.')
@@ -59,7 +62,7 @@ def get_temperature():
             temperature = float(input("\nEnter temperature value (0 to quit):"))
 
             if temperature == 0:
-                exit_program('Goodbye!')
+                exit_program(EXIT_MESSAGE)
 
             print(f'Temperature entered is: {temperature}.')
             logger.info(f'Temperature entered is: {temperature}.')
@@ -124,8 +127,8 @@ def main():
                 perform_conversion(temperature, conversion_type)
 
             except ValueError as ex:
-                print(f'Invalid Input: {ex}')
-                logger.warning(f'Invalid Input: {ex}')
+                print(f'{INVALID_INPUT}: {ex}')
+                logger.warning(f'{INVALID_INPUT}: {ex}')
 
             except tempconv_error.ConversionTypeCodeError as ex:
                 print(f'Conversion Type Code Issue: {ex}')
