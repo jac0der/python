@@ -26,15 +26,6 @@ WINNER = {
 }
 
 
-def main():
-    logger.info('Starting game...')
-    print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
-    print("Start by entering the number of rounds to play.")
-
-    rounds = get_rounds()
-    play(rounds)
-
-
 def get_rounds():
     '''
         Function to get the user's input for the number 
@@ -166,6 +157,35 @@ def play(rounds):
         print(f"After {rounds} rounds, Computer wins the game!")
     else:
         print("No winner - tie game!")
+
+
+def exit_program(message, code=0):
+    '''
+    Centralized exit function to handle program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    sys.exit(message)
+
+    
+def main():
+    try:
+        logger.info('Starting game...')
+        print("Ready! Set! Shhot! -> Rock!, Paper!, Sissors!")
+        print("Start by entering the number of rounds to play.")   
+
+        rounds = get_rounds()
+        play(rounds) 
+
+    except KeyboardInterrupt as ex:
+        exit_program('\nUser exited program...')
+
+    except Exception as ex:
+        logger.exception("Error occured in main calculator function.")
+        exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == '__main__':
