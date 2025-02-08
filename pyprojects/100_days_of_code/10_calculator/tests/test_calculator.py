@@ -75,6 +75,15 @@ class TestCalculator(unittest.TestCase):
             pass
 
 
+    @patch("builtins.input", side_effect=["*", "%", "P"])
+    def test_get_number_multiple_invalid_inputs(self, mock_input):
+        ''' Test multiple invalid input to get_number function. Raises ValueError Exception. '''
+        try:
+            with self.assertRaises(ValueError):
+                get_number('')
+        except StopIteration:
+            pass
+
 
 if __name__ == '__main__':
     unittest.main()
