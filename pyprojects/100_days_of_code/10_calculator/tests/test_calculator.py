@@ -84,6 +84,11 @@ class TestCalculator(unittest.TestCase):
         except StopIteration:
             pass
 
+    @patch("builtins.input", side_effect=["#", "@", "$", "5.1", "7"])
+    def test_get_number_rejects_invalid_inputs(self, mock_input):
+        ''' Test get_number rejects initial invalid inputs before a valid input '''
+        self.assertEqual(get_number(''), 5.1)
+
 
 if __name__ == '__main__':
     unittest.main()
