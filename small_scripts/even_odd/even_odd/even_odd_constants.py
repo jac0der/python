@@ -1,0 +1,6 @@
+EVEN = 'EVEN'
+ODD = 'ODD'
+EXIT_MESSAGE = 'Goodbye!'
+RESULT_MESSAGE = 'Result: {0} is {1}.'
+ENTERED_NUMBER = 'Number entered is: {0}'
+GET_NUMBER_WARNING = 'Invalid input entered.' + '\n' + 'Please enter an integer value.'
