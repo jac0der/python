@@ -91,6 +91,9 @@ def main():
                 print(eoc.RESULT_MESSAGE.format(number, eoc.ODD))
                 logger.info(eoc.RESULT_MESSAGE.format(number, eoc.ODD))
         
+    except ValueError as ex:
+        logger.error(f"ValueError: {ex}")
+
     except KeyboardInterrupt as ex:
         exit_program(f"\n{eoc.EXIT_MESSAGE}")
 
