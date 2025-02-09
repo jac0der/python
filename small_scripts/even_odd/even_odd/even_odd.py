@@ -65,7 +65,7 @@ def is_even(number):
 
 def exit_program(message, code=0):
     '''
-    Centralized exit function to handle program termination.
+    Centralized exit function to handle the program termination.
 
     Args:
             message (str): Message to display and log when exiting.
