@@ -8,7 +8,7 @@ import sys
 import os
 try:
     # When running as a module (for unittest)
-    from even_odd.even_odd import is_even
+    import even_odd.even_odd_constants as eoc
 except ImportError:
     # When running the script directly
     import even_odd_constants as eoc
@@ -55,7 +55,7 @@ def is_even(number):
     Returns:
             bool: True if number is even, otherwise, False.
     '''
-    logger.info('Checking if number is even or odd.')
+    logger.info(f'Checking if {number} is even or odd.')
 
     if not isinstance(number, int):
         raise ValueError('Invalid Type: Expected an integer.')

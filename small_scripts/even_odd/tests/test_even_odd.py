@@ -9,6 +9,12 @@ class TestEvenOdd(unittest.TestCase):
             is_even(2.3)
         with self.assertRaises(ValueError):
             is_even('gd')
+        with self.assertRaises(ValueError):
+            is_even(None)  
+        with self.assertRaises(ValueError):
+            is_even([])    
+        with self.assertRaises(ValueError):
+            is_even({}) 
 
 
     def test_is_even_even(self):
@@ -18,7 +24,7 @@ class TestEvenOdd(unittest.TestCase):
 
 
     def test_is_even_odd(self):
-        """ Test even numbers returning False """
+        """ Test odd numbers returning False """
         self.assertFalse(is_even(5))
         self.assertFalse(is_even(99))
 
