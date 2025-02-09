@@ -66,8 +66,8 @@ def get_temperature():
             if temperature is None:
                 exit_program(tc.EXIT_MESSAGE)
 
-            print(f'Temperature entered is: {temperature}.')
-            logger.info(f'Temperature entered is: {temperature}.')
+            print(TEMPERATURE_MESSAGE.format(temperature))
+            logger.info(TEMPERATURE_MESSAGE.format(temperature))
             return temperature
 
         except ValueError as ex:
@@ -84,6 +84,7 @@ def perform_conversion(temperature, conversion_type_code=ConversionType.CELSIUS_
     Returns:
             float: Converted temperature.
     '''
+    logger.info('Start perfroming temperature conversion.')
     if not isinstance(temperature, (int,float)):
         raise ValueError(f'Invalid type for temperature. Expected a numeric value.')
 
@@ -127,9 +128,6 @@ def main():
             except ValueError as ex:
                 print(f'{tc.INVALID_INPUT}: {ex}')
                 logger.warning(f'{tc.INVALID_INPUT}: {ex}')
-
-            except KeyError as ex:
-                pass
 
             except tempconv_error.ConversionTypeCodeError as ex:
                 print(f'{tc.CONVERSION_ISSUE} \n {ex}')
