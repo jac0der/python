@@ -34,7 +34,7 @@ def get_conversion_type():
     print("\t2 -> Fahrenheit to Celsius (FTC)",  end='\n')
 
     while True:
-        choice = input('\nChoose convertion type (0 to quit): ')
+        choice = input('\nChoose conversion type (0 to quit): ')
 
         if choice == '0':
             exit_program(tc.EXIT_MESSAGE)
@@ -61,13 +61,14 @@ def get_temperature():
     logger.info('Getting temperature value for conversion.')
     while True:
         try:
-            temperature = float(input("\nEnter temperature value (q to quit):"))
-
-            if temperature is None:
+            user_input = input("\nEnter temperature value (q to quit): ")
+            if user_input.lower().strip() == 'q':
                 exit_program(tc.EXIT_MESSAGE)
 
-            print(TEMPERATURE_MESSAGE.format(temperature))
-            logger.info(TEMPERATURE_MESSAGE.format(temperature))
+            temperature = float(user_input)
+
+            print(tc.TEMPERATURE_MESSAGE.format(temperature))
+            logger.info(tc.TEMPERATURE_MESSAGE.format(temperature))
             return temperature
 
         except ValueError as ex:
@@ -84,12 +85,11 @@ def perform_conversion(temperature, conversion_type_code=ConversionType.CELSIUS_
     Returns:
             float: Converted temperature.
     '''
-    logger.info('Start perfroming temperature conversion.')
+    logger.info('Start performing temperature conversion.')
     if not isinstance(temperature, (int,float)):
         raise ValueError(f'Invalid type for temperature. Expected a numeric value.')
 
     try:
-
         converted_temperature = CONVERSIONS[conversion_type_code](temperature)
 
         print(f'Result: {temperature}° → {converted_temperature}°.')
@@ -126,15 +126,21 @@ def main():
                 perform_conversion(temperature, conversion_type)
 
             except ValueError as ex:
-                print(f'{tc.INVALID_INPUT}: {ex}')
-                logger.warning(f'{tc.INVALID_INPUT}: {ex}')
+                print(f"{tc.INVALID_INPUT}: {ex}")
+                logger.warning(f"{tc.INVALID_INPUT}: {ex}")
 
             except tempconv_error.ConversionTypeCodeError as ex:
-                print(f'{tc.CONVERSION_ISSUE} \n {ex}')
-                logger.warning(f'{tc.CONVERSION_ISSUE} \n {ex}')
+                print(f"{tc.CONVERSION_ISSUE} \n {ex}")
+                logger.warning(f"{tc.CONVERSION_ISSUE} \n {ex}")
+
+    except KeyboardInterrupt as ex:
+        exit_program(f"\n{tc.EXIT_MESSAGE}")
+
+    except EOFError as ex:
+        exit_program(f"\n{tc.EXIT_MESSAGE}")
 
     except Exception as ex:
-        logger.exception("Error occured in main temperature conversion function.")
+        logger.exception("Error occurred in main temperature conversion function.")
 
 
 if __name__ == "__main__":
