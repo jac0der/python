@@ -6,10 +6,15 @@
 '''
 import sys
 import os
-import even_odd_constants as eoc
+try:
+    # When running as a module (for unittest)
+    from even_odd.even_odd import is_even
+except ImportError:
+    # When running the script directly
+    import even_odd_constants as eoc
 
 # Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../logging')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
 import jaclog
 logger = jaclog.configure('even_odd', './even_odd.log')
 
@@ -41,6 +46,23 @@ def get_number():
             logger.warning(f'{eoc.GET_NUMBER_WARNING} \n {ex}')
 
 
+def is_even(number):
+    '''
+    Check if specified number is an even or an odd number.
+
+    Args:
+            number (int): Number to check status of either even or odd.
+    Returns:
+            bool: True if number is even, otherwise, False.
+    '''
+    logger.info('Checking if number is even or odd.')
+
+    if not isinstance(number, int):
+        raise ValueError('Invalid Type: Expected an integer.')
+
+    return number % 2 == 0
+
+
 def exit_program(message, code=0):
     '''
     Centralized exit function to handle program termination.
@@ -55,9 +77,19 @@ def exit_program(message, code=0):
 
 def main():
     """ Main function to start Even Odd Program. """
+    
     try:
         logger.info("Starting The Even Odd Program...")
-        get_number()
+
+        while True:
+            number = get_number()
+
+            if is_even(number):
+                print(eoc.RESULT_MESSAGE.format(number, eoc.EVEN))
+                logger.info(eoc.RESULT_MESSAGE.format(number, eoc.EVEN))
+            else:
+                print(eoc.RESULT_MESSAGE.format(number, eoc.ODD))
+                logger.info(eoc.RESULT_MESSAGE.format(number, eoc.ODD))
         
     except KeyboardInterrupt as ex:
         exit_program(f"\n{eoc.EXIT_MESSAGE}")
