@@ -14,6 +14,33 @@ import jaclog
 logger = jaclog.configure('even_odd', './even_odd.log')
 
 
+def get_number():
+    '''
+    Get number to check if it is Even or Odd.
+
+    Returns:
+            int: User entered number to check for even or odd status.
+    '''
+    logger.info('Getting number from user.')
+    while True:
+        try:
+            user_input = input("\nEnter number (q to quit): ").strip().lower()
+
+            if user_input == 'q':
+                exit_program(eoc.EXIT_MESSAGE)
+
+            number = int(user_input)
+
+            print(eoc.ENTERED_NUMBER.format(number))
+            logger.info(eoc.ENTERED_NUMBER.format(number))
+
+            return number
+
+        except ValueError as ex:
+            print(eoc.GET_NUMBER_WARNING)
+            logger.warning(f'{eoc.GET_NUMBER_WARNING} \n {ex}')
+
+
 def exit_program(message, code=0):
     '''
     Centralized exit function to handle program termination.
@@ -30,6 +57,7 @@ def main():
     """ Main function to start Even Odd Program. """
     try:
         logger.info("Starting The Even Odd Program...")
+        get_number()
         
     except KeyboardInterrupt as ex:
         exit_program(f"\n{eoc.EXIT_MESSAGE}")
