@@ -18,6 +18,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.
 import jaclog
 logger = jaclog.configure('leapyear_100days', './leapyear.log')
 
+EXIT_MESSAGE = 'Goodbye!'
+
 
 def is_leap_year(year):
     ''' 
@@ -90,6 +92,12 @@ def main():
     except LeapYearError as ex:
         logger.error(f'Leap Year error: {ex}')
         exit_program(f'Error: {ex}. Please check the logs for details')
+
+    except KeyboardInterrupt as ex:
+        exit_program(f"\n{EXIT_MESSAGE}")
+
+    except EOFError as ex:
+        exit_program(f"\n{EXIT_MESSAGE}")
 
     except Exception:
         logger.exception('Error occured in main() leap year function.')

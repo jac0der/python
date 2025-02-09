@@ -20,7 +20,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.
 import jaclog
 logger = jaclog.configure('calculator_100days', './calculator.log')
 
-
+EXIT_MESSAGE = 'Goodbye!'
 OPERATIONS = {
     '+': operator.add,
     '-': operator.sub,
@@ -161,7 +161,10 @@ def main():
                     continue_calculating = False
 
     except KeyboardInterrupt as ex:
-        exit_program('\nUser exited program...')
+        exit_program(f"\n{EXIT_MESSAGE}")
+
+    except EOFError as ex:
+        exit_program(f"\n{EXIT_MESSAGE}")
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
