@@ -22,6 +22,7 @@ def get_position():
     Returns:
             int: Fibonacci value for posirion.
     '''
+    logger.info('Getting fibonacii position from user.')
     while True:
         try:
             user_input = input('\nEnter Fibonacii position (q to quit): ').strip().lower()
@@ -30,12 +31,12 @@ def get_position():
 
             position = int(user_input)
 
-            print(fc.ENTERED_NUMBER.format(position))
-            logger.info(fc.ENTERED_NUMBER.format(position))
+            print(fc.ENTERED_POSITION.format(position))
+            logger.info(fc.ENTERED_POSITION.format(position))
 
             return position
 
-        except ValueError:
+        except ValueError as ex:
             print(fc.GET_NUMBER_WARNING)
             logger.warning(f'{fc.GET_NUMBER_WARNING} \n {ex}')
 
@@ -65,11 +66,24 @@ def fibonacci(position):
     return fibonacci(position - 1) + fibonacci(position - 2)
 
 
-def display_sequence(number):
-    for n in range(number):
+def display_nth_sequence(position):
+    '''
+    Print the nth numbers of the Fibonacii sequence.
+
+    Args:
+            position (int): The number of numbers of the 
+            Fibonacii sequence to print.
+    '''
+    if not isinstance(position, int):
+        raise ValueError('Invalid Type: Expected an integer.')
+
+    if position < 0:
+        raise fe.FibonacciError('Invalid Input: Expected positive whole numbers.')
+
+    logger.info(f"Displaying the first {position} Fibonacii numbers.")
+    for n in range(position):
         print(fibonacci(n))
     
-
 
 def exit_program(message, code=0):
     '''
@@ -86,14 +100,10 @@ def exit_program(message, code=0):
 def main():
     """ Main function to start the Fibonacci Program. """
     try:
-        logger.info("Starting Fibonacci Program...")
-
-        position = get_position()
-
-        logger.info('Getting fibonacci value from position.')
-        a = fibonacci(position)
-        display_sequence(position)
-
+        while True:
+                logger.info("Starting Fibonacci Program...")
+                display_nth_sequence(get_position())
+        
     except ValueError as ex:
         logger.error(f"ValueError: {ex}")
 
