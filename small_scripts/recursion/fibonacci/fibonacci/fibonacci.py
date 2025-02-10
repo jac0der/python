@@ -17,12 +17,12 @@ logger = jaclog.configure('fibonacci', './fibonacci.log')
 
 def get_position():
     '''
-    Get the position in the Fibinacci sequence to get value for.
+    Get the position in the Fibonacci sequence to get value for.
     
     Returns:
-            int: Fibonacci value for posirion.
+            int: Fibonacci value for position.
     '''
-    logger.info('Getting fibonacii position from user.')
+    logger.info('Getting fibonacci position from user.')
     while True:
         try:
             user_input = input('\nEnter Fibonacii position (q to quit): ').strip().lower()
@@ -57,11 +57,8 @@ def fibonacci(position):
     if position < 0:
         raise fe.FibonacciError('Invalid Input: Expected positive whole numbers.')
 
-    if position == 0:
-        return 0
-    
-    if position == 1:
-        return 1
+    if position in (0, 1):
+        position
 
     return fibonacci(position - 1) + fibonacci(position - 2)
 
@@ -81,8 +78,7 @@ def display_nth_sequence(position):
         raise fe.FibonacciError('Invalid Input: Expected positive whole numbers.')
 
     logger.info(f"Displaying the first {position} Fibonacii numbers.")
-    for n in range(position):
-        print(fibonacci(n))
+    print([fibonacci(n) for n in range(position)]) # list comprehension
     
 
 def exit_program(message, code=0):
@@ -110,11 +106,9 @@ def main():
     except fe.FibonacciError as ex:
         logger.error(f"FibonacciError: {ex}")
 
-    except KeyboardInterrupt as ex:
-        exit_program(f"\n{fc.EXIT_MESSAGE}")
-
-    except EOFError as ex:
-        exit_program(f"\n{fc.EXIT_MESSAGE}")
+    except (KeyboardInterrupt, EOFError) as ex:
+        print(f"\n{fc.EXIT_MESSAGE}")
+        return # Graceful exit instead of sys.exit()
 
     except Exception as ex:
         logger.exception("Error occurred in main Fibonacci function.")
