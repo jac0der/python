@@ -1,0 +1,3 @@
+class FibonacciError(Exception):
+    """ """
+    pass
