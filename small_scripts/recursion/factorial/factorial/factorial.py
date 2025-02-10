@@ -7,8 +7,9 @@
 """
 import sys
 import os
-import factorial_constants as fc
+import math
 import factorial_error as fe
+import factorial_constants as fc
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
@@ -70,6 +71,7 @@ def factorial(number):
         return 1
 
     return number * factorial(number - 1)
+    #return math.factorial(number)
 
 
 def factorial_iterative(number):
