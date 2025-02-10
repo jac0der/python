@@ -71,8 +71,8 @@ def display_nth_sequence(position):
     Print the nth numbers of the Fibonacii sequence.
 
     Args:
-            position (int): The number of numbers of the 
-            Fibonacii sequence to print.
+            position (int): The fibonacii value to print values
+            up to in the Fibonacii sequence.
     '''
     if not isinstance(position, int):
         raise ValueError('Invalid Type: Expected an integer.')
@@ -117,7 +117,6 @@ def main():
         exit_program(f"\n{fc.EXIT_MESSAGE}")
 
     except Exception as ex:
-        pass
         logger.exception("Error occurred in main Fibonacci function.")
 
 
