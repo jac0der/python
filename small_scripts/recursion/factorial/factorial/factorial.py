@@ -72,6 +72,19 @@ def factorial(number):
     return number * factorial(number - 1)
 
 
+def factorial_iterative(number):
+    if not isinstance(number, int):
+        raise ValueError('Invalid Type: Expected an integer.')
+    
+    if number < 0:
+        raise fe.FactorialError('Invalid input: Expecting only positive integers.')
+
+    result = 1
+    for i in range(2, number + 1):
+        result *= i
+    return result
+
+
 def exit_program(message, code=0):
     '''
     Centralized exit function to handle the program termination.
