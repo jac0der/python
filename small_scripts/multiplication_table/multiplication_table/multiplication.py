@@ -15,7 +15,7 @@ import jaclog
 logger = jaclog.configure('multiplication', './multiplication.log')
 
 
-def get_number():
+def get_number(prompt):
     '''
     Get a number to generate multiplication table.
     Returns:
@@ -24,7 +24,7 @@ def get_number():
     logger.info('Getting number from user.')
     while True:
         try:
-            user_input = input("\nEnter number (q to quit): ").strip().lower()
+            user_input = input(prompt).strip().lower()
 
             if user_input == 'q':
                 exit_program(pcc.EXIT_MESSAGE)
@@ -34,9 +34,6 @@ def get_number():
             if number < 0:
                 raise me.MultiplicationTableError(pcc.INVALID_NUMBER)
 
-            print(mc.ENTERED_NUMBER.format(number))
-            logger.info(mc.ENTERED_NUMBER.format(number))
-
             return number
 
         except ValueError as ex:
@@ -45,7 +42,7 @@ def get_number():
 
         except pce.MultiplicationTableError as ex:
             print(mc.INVALID_NUMBER)
-            logger.warning(f'{mc.INVALID_NUMBER} \n {ex}')
+            logger.warning(f'MultiplicationTableError: {ex}')
 
 
 def exit_program(message, code=0):
@@ -64,8 +61,15 @@ def main():
     """ Main function to start the multiplication table program. """
     try:
         logger.info('Starting the multiplication table program.')
+
         while True:            
-            number = get_number()
+            number = get_number("\nEnter number for multiplication table (q to quit): ")
+            print(mc.ENTERED_NUMBER.format('Number', number))
+            logger.info(mc.ENTERED_NUMBER.format('Number', number))
+
+            range_number = get_number("\nEnter range (up to 10 or 20, etc) (q to quit): ")
+            print(mc.ENTERED_NUMBER.format('Range', range_number))
+            logger.info(mc.ENTERED_NUMBER.format('Range', range_number))
 
     except (KeyboardInterrupt, EOFError):
         print(f"\n{mc.EXIT_MESSAGE}")
