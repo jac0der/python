@@ -17,10 +17,10 @@ logger = jaclog.configure('prime_checker', './prime_checker.log')
 
 def get_number():
     '''
-    Get number to check if it is Even or Odd.
+    Get a number from the user to check for primality.
 
     Returns:
-            int: User entered number to check for even or odd status.
+            int: User-entered number to check for primality.
     '''
     logger.info('Getting number from user.')
     while True:
@@ -32,8 +32,8 @@ def get_number():
 
             number = int(user_input)
 
-            if number < 2:
-                raise pce.PrimeCheckerError('Invalid input: Expecting a number >= 2.')
+            if number < 0:
+                raise pce.PrimeCheckerError(pcc.PRIME_NUMBER_INVALID)
 
             print(pcc.ENTERED_NUMBER.format(number))
             logger.info(pcc.ENTERED_NUMBER.format(number))
@@ -49,19 +49,81 @@ def get_number():
             logger.warning(f'{pcc.GET_PRIME_START_WARNING} \n {ex}')
 
 
+def is_prime(number):
+    '''
+    Check if number is a prime number.
+
+    Args:
+            number (int): The number to check for primality.
+    Returns:
+            bool: True if number is prime, otherwise, False.
+    '''
+    logger.info(f"Checking primality of {number}.")
+
+    if not isinstance(number, int):
+        raise ValueError('Invalid Type: Expected an integer.')
+    
+    if number < 0:
+        raise pce.PrimeCheckerError(pcc.PRIME_NUMBER_INVALID)
+
+    if number < 2:
+        return False
+
+    if number in (2,3):
+        return True
+
+    if number % 2 == 0 or number % 3 == 0:
+        return False
+
+    # Every prime number greater than 2 and 3 can be represented as 6n+1 or 6n-1.
+    # solve for n
+    i = 5
+    while i * i <= number:
+        if number % i == 0 or number % (i + 2) == 0:
+            return False
+        i += 6  # Check numbers in 6k ± 1 form
+
+    return True
+  
+
+def exit_program(message, code=0):
+    '''
+    Centralized exit function to handle the program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    sys.exit(message)
+
+
 def main():
     """ Main function to start the isPrime check Program. """
     try:
-        while True:
-            logger.info('Starting the Prime Checker Program.')
-            get_number()
+        logger.info('Starting the Prime Checker Program.')
+        while True:            
+            number = get_number()
+            
+            if is_prime(number):
+                print(f"Result: {number} is Prime")
+                logger.info(f"Result: {number} is Prime")
+            else:
+                print(f"Result: {number} is NOT Prime")
+                logger.info(f"Result: {number} is NOT Prime")
+
+    except ValueError as ex:
+        logger.error(f"ValueError: {ex}")
+    
+    except pce.PrimeCheckerError as ex:
+        logger.error(f"PrimeCheckerError: {ex}")
 
     except (KeyboardInterrupt, EOFError):
             print(f"\n{pcc.EXIT_MESSAGE}")
             return
 
     except Exception:
-        logger.exception("Error occurred in main factorial function.")
+        logger.exception("Error occurred in main Prime Checking function.")
 
 
 if __name__ == "__main__":
