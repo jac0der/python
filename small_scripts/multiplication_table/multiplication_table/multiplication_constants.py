@@ -1,3 +1,4 @@
+DEFAULT_RANGE = 12
 EXIT_MESSAGE = 'Goodbye!'
 ENTERED_NUMBER = '{0} entered is: {1}'
 INVALID_NUMBER = 'Invalid input: Expected a positive number.'
