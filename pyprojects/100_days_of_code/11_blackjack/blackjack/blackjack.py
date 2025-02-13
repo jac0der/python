@@ -59,9 +59,8 @@ def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[i
 
     logger.info(f"Performing deal for deal amount {deal_amount}.")
     
-    for n in range(1, deal_amount + 1):
-        card = random.choice(cards_list)
-        current_cards.append(card)
+    new_cards = random.sample(cards_list, deal_amount)  # Pick multiple cards at once
+    current_cards.extend(new_cards)  # Add to player's current cards
 
     return current_cards
     
