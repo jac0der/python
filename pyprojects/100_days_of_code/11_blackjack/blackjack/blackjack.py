@@ -39,7 +39,7 @@ def get_deal_amount()->int:
     Returns:
             int: The total amount of cards to deal.
     '''
-    logger.info("Getting a new deal amount.")
+    logger.info("Getting new deal amount.")
     return random.randint(1, 3)
 
 
@@ -113,9 +113,12 @@ def check_winner()->None:
 
         # no winner
         if player_total <= 21 and dealer_total <= 21:
-            choice = input("Type 'y' to get another card, type 'n' to pass: ").strip().lower()
+            choice = input("Type 'y' to get another card, type 'n' to pass (q to quit): ").strip().lower()
 
-            if choice == "y": # player hit
+            if choice == "q":
+                exit_program(bjc.EXIT_MESSAGE)
+
+            elif choice == "y": # player hit
                 players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
             
             else: # player stay current hand, dealer hit
@@ -146,21 +149,35 @@ def reset_card_lists()->None:
     players_cards[bje.PlayerType.DEALER][bjc.CARDS] .clear()
 
 
+def exit_program(message, code=0):
+    '''
+    Centralized exit function to handle the program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    sys.exit(message)
+
+
 def main()-> None:
     """ Main function to start the blackjack program. """
     try:
         logger.info('Starting the blackjack game.')
         while True: 
-            choice = input("\nDo you want to play a game of Blackjack? Type 'y' or 'n'").strip().lower()
+            choice = input("\nDo you want to play a game of Blackjack? Type 'y' or 'n' (q to quit): ").strip().lower()
 
-            if choice == "y":
+            if choice == "q":
+                exit_program(bjc.EXIT_MESSAGE)
+
+            elif choice == "y":
                 print(art.logo)                      
                 initial_deal()
                 check_winner()
+                reset_card_lists()
             else:
-                break
-
-            reset_card_lists()
+                return            
 
     except ValueError as ex:
         logger.error(f"ValueError: {ex}")
