@@ -67,13 +67,19 @@ def initial_deal()-> None:
     Perform initial card assignments to the player and the computer.
     '''
     # deal user two cards
-    player_cards = deal(2, bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+    players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(2, bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
 
     # deal computer one card
-    computer_cards = deal(1, bjc.CARDS_LIST, players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+    players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] = deal(1, bjc.CARDS_LIST, players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+    players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+    
+    print(f"Your cards: {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    print(f"Computer's first card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}")
 
-    print(f"Your cards: {player_cards}, current score: {sum(player_cards)}")
-    print(f"Computer's first card: {computer_cards}, current score: {sum(computer_cards)}")
+
+def check_winner():
+    pass
 
 
 def main()-> None:
@@ -81,6 +87,7 @@ def main()-> None:
     try:
         logger.info('Starting the blackjack game.')
         initial_deal()
+
 
     except ValueError as ex:
         logger.error(f"ValueError: {ex}")
