@@ -17,14 +17,14 @@ import jaclog
 logger = jaclog.configure('blackjack', './blackjack.log')
 
 
-# setup data structure to keep track of the player and computer cards and totals.
+# setup data structure to keep track of the player and dealer cards and totals.
 players_cards: dict[bje.PlayerType, dict] = {
     bje.PlayerType.PLAYER: {
         bjc.CARDS: [],
         bjc.CARD_TOTAL: 0
     },
 
-    bje.PlayerType.COMPUTER: {
+    bje.PlayerType.DEALER: {
         bjc.CARDS: [],
         bjc.CARD_TOTAL: 0
     }
@@ -34,7 +34,7 @@ players_cards: dict[bje.PlayerType, dict] = {
 def get_deal_amount()->int:
     '''
     Get a random number to be used to determine how many more cards
-    shoul;d be dealt wo either player or computer.
+    should be dealt to either player or dealer.
 
     Returns:
             int: The total amount of cards to deal.
@@ -44,14 +44,14 @@ def get_deal_amount()->int:
 
 def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[int]:
     '''
-    Update the cards list for either the player or computer with new dealt cards.
+    Update the cards list for either the player or dealer with newly dealt cards.
 
     Args:
-            deal_amount (int): The amount of cards to deal to player or computer.
+            deal_amount (int): The amount of cards to deal to player or dealer.
             cards_list list[int]: The valid cards to deal from.
-            current_cards list[int]: The current cards list for either player or computer.
+            current_cards list[int]: The current cards list for either player or dealer.
     Returns:
-            list[int]: The updated cards list for the player or computer with newly dealt cards.
+            list[int]: The updated cards list for the player or dealer with newly dealt cards.
     '''
     if not isinstance(deal_amount, int):
         raise ValueError('Invalid Type: Expected an integer for deal_amount.')
@@ -63,57 +63,60 @@ def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[i
     return current_cards
     
 
+def display_current_cards_and_totals(player_text:str, dealer_text:str)->None:
+    '''
+    Displays the current cards for player and dealer along with the card totals.
+
+    Args:
+            player_text (str): Text to display showing  players cards. e.g. Your Cards:
+            dealer_text (str): Text to display showing dealers cards. e.g. Dealers first cards:
+    '''
+    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+    players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.DEALER][bjc.CARDS])
+    print(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    print(f"{dealer_text} {players_cards[bje.PlayerType.DEALER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]}\n")
+
+
 def initial_deal()-> None:
     '''
-    Perform initial card assignments to the player and the computer.
+    Perform initial card assignments to the player and the dealer.
     '''
     # deal user two cards
     players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(2, bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
-    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
-
-    # deal computer one card
-    players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] = deal(1, bjc.CARDS_LIST, players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
-    players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
     
-    print(f"Your cards: {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
-    print(f"Computer's first card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}\n")
+    # deal dealer one card
+    players_cards[bje.PlayerType.DEALER][bjc.CARDS] = deal(1, bjc.CARDS_LIST, players_cards[bje.PlayerType.DEALER][bjc.CARDS])
+
+    display_current_cards_and_totals("Your cards: ", "Dealer's first cards: ")
 
 
-def display_current_cards_and_totals():
+def check_winner()->None:
     '''
-    '''
-    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
-    players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
-    print(f"Your cards: {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
-    print(f"Computer's card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}\n")
-
-
-def check_winner():
-    '''
+    Check the winner after each round of play.
     '''
     while True:
         player_total = players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]
-        computer_total = players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]
+        dealer_total = players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]
 
-        if player_total == 21 and computer_total == 21:
+        if player_total == 21 and dealer_total == 21:
             print('Draw!!!')
             break # draw - double blackjack
 
         # no winner
-        if player_total <= 21 and computer_total <= 21:
+        if player_total <= 21 and dealer_total <= 21:
             choice = input("Type 'y' to get another card, type 'n' to pass: ").strip().lower()
 
             if choice == "y": # player hit
                 players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
             
-            else: # player stay current hand, computer hit
-                players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+            else: # player stay current hand, dealer hit
+                players_cards[bje.PlayerType.DEALER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.DEALER][bjc.CARDS])
 
-            display_current_cards_and_totals()
+            display_current_cards_and_totals("Your Cards: ", "Dealer's Cards: ")
             continue
     
         if player_total > 21:
-            # computer wins
+            # dealer wins
             print('You went over. You lose. \U0001F923')
             break
         else:
@@ -124,11 +127,11 @@ def check_winner():
 
 def reset_card_lists()->None:
     '''
-    Clears the cards list for the player and computer to have empty list at the 
+    Clears the cards list for the player and dealer to have empty list at the 
     start of each new game of Blackjack.
     '''
     players_cards[bje.PlayerType.PLAYER][bjc.CARDS].clear()
-    players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] .clear()
+    players_cards[bje.PlayerType.DEALER][bjc.CARDS] .clear()
 
 
 def main()-> None:
