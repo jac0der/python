@@ -57,6 +57,12 @@ def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[i
     if not isinstance(deal_amount, int):
         raise ValueError('Invalid Type: Expected an integer for deal_amount.')
 
+    if not isinstance(cards_list, list) or not all(isinstance(card, int) for card in cards_list):
+        raise TypeError('Invalid Type: cards_list must be a list of integers.')
+
+    if not isinstance(current_cards, list) or not all(isinstance(card, int) for card in current_cards):
+        raise TypeError('Invalid Type: current_cards must be a list of integers.')
+
     logger.info(f"Performing deal for deal amount {deal_amount}.")
     
     new_cards = random.sample(cards_list, deal_amount)  # Pick multiple cards at once
@@ -190,6 +196,9 @@ def main()-> None:
 
     except ValueError as ex:
         logger.error(f"ValueError: {ex}")
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
 
     except (KeyboardInterrupt, EOFError):
         print(f"\n{bjc.EXIT_MESSAGE}")
