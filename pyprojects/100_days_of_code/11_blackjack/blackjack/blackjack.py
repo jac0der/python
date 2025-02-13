@@ -39,6 +39,7 @@ def get_deal_amount()->int:
     Returns:
             int: The total amount of cards to deal.
     '''
+    logger.info("Getting a new deal amount.")
     return random.randint(1, 3)
 
 
@@ -55,6 +56,8 @@ def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[i
     '''
     if not isinstance(deal_amount, int):
         raise ValueError('Invalid Type: Expected an integer for deal_amount.')
+
+    logger.info(f"Performing deal for deal amount {deal_amount}.")
     
     for n in range(1, deal_amount + 1):
         card = random.choice(cards_list)
@@ -76,12 +79,16 @@ def display_current_cards_and_totals(player_text:str, dealer_text:str)->None:
     print(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
     print(f"{dealer_text} {players_cards[bje.PlayerType.DEALER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]}\n")
 
+    logger.info(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    logger.info(f"{dealer_text} {players_cards[bje.PlayerType.DEALER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]}\n")
+
 
 def initial_deal()-> None:
     '''
     Perform initial card assignments to the player and the dealer.
     '''
     # deal user two cards
+    logger.info("Dealer performs initial deal.")
     players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(2, bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
     
     # deal dealer one card
@@ -94,12 +101,14 @@ def check_winner()->None:
     '''
     Check the winner after each round of play.
     '''
+    logger.info("Playing and checcking the winner.")
     while True:
         player_total = players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]
         dealer_total = players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]
 
         if player_total == 21 and dealer_total == 21:
             print('Draw!!!')
+            logger.info("Draw!!!")
             break # draw - double blackjack
 
         # no winner
@@ -118,10 +127,12 @@ def check_winner()->None:
         if player_total > 21:
             # dealer wins
             print('You went over. You lose. \U0001F923')
+            logger.info('You went over. You lose. \U0001F923')
             break
         else:
             # player wins
             print(f"Opponent went over. You win!!!. \U0001f600")
+            logger.info('You went over. You lose. \U0001f600')
             break
     
 
@@ -130,6 +141,7 @@ def reset_card_lists()->None:
     Clears the cards list for the player and dealer to have empty list at the 
     start of each new game of Blackjack.
     '''
+    logger.info("Resetting card lists.")
     players_cards[bje.PlayerType.PLAYER][bjc.CARDS].clear()
     players_cards[bje.PlayerType.DEALER][bjc.CARDS] .clear()
 
