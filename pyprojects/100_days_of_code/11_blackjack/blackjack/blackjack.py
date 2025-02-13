@@ -65,7 +65,7 @@ def deal(deal_amount:int, cards_list:list[int], current_cards:list[int])->list[i
     return current_cards
     
 
-def display_current_cards_and_totals(player_text:str, dealer_text:str)->None:
+def display_current_cards_and_totals(player_text:str, dealer_text:str, hide_dealer: bool=True)->None:
     '''
     Displays the current cards for player and dealer along with the card totals.
 
@@ -75,11 +75,21 @@ def display_current_cards_and_totals(player_text:str, dealer_text:str)->None:
     '''
     players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
     players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.DEALER][bjc.CARDS])
-    print(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
-    print(f"{dealer_text} {players_cards[bje.PlayerType.DEALER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]}\n")
 
-    logger.info(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
-    logger.info(f"{dealer_text} {players_cards[bje.PlayerType.DEALER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]}\n")
+    dealer_score = players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]
+    dealer_cards = players_cards[bje.PlayerType.DEALER][bjc.CARDS]
+    
+    if hide_dealer:
+        dealer_display = ['X'] + dealer_cards[1:]  # Hide first card
+        dealer_score = '??'
+    else:
+        dealer_display = dealer_cards        
+
+    print(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    print(f"{dealer_text} {dealer_display}, current score: {dealer_score}\n")
+
+    logger.info(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    logger.info(f"{dealer_text} {dealer_display}, current score: {dealer_score}\n")
 
 
 def initial_deal()-> None:
@@ -123,7 +133,7 @@ def check_winner()->None:
             else: # player stay current hand, dealer hit
                 players_cards[bje.PlayerType.DEALER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.DEALER][bjc.CARDS])
 
-            display_current_cards_and_totals("Your Cards: ", "Dealer's Cards: ")
+            display_current_cards_and_totals("Your Cards: ", "Dealer's Cards: ", hide_dealer=False)
             continue
     
         if player_total > 21:
@@ -134,7 +144,7 @@ def check_winner()->None:
         else:
             # player wins
             print(f"Opponent went over. You win!!!. \U0001f600")
-            logger.info('You went over. You lose. \U0001f600')
+            logger.info('Opponent went over. You win!!!. \U0001f600')
             break
     
 
