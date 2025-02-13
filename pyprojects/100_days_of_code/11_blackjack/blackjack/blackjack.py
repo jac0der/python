@@ -6,6 +6,7 @@
 '''
 import sys
 import os
+import art
 import random
 import blackjack_enum as bje
 import blackjack_constants as bjc
@@ -75,19 +76,76 @@ def initial_deal()-> None:
     players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
     
     print(f"Your cards: {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
-    print(f"Computer's first card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}")
+    print(f"Computer's first card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}\n")
+
+
+def display_current_cards_and_totals():
+    '''
+    '''
+    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+    players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+    print(f"Your cards: {players_cards[bje.PlayerType.PLAYER][bjc.CARDS] }, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    print(f"Computer's card: {players_cards[bje.PlayerType.COMPUTER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]}\n")
 
 
 def check_winner():
-    pass
+    '''
+    '''
+    while True:
+        player_total = players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]
+        computer_total = players_cards[bje.PlayerType.COMPUTER][bjc.CARD_TOTAL]
+
+        if player_total == 21 and computer_total == 21:
+            print('Draw!!!')
+            break # draw - double blackjack
+
+        # no winner
+        if player_total <= 21 and computer_total <= 21:
+            choice = input("Type 'y' to get another card, type 'n' to pass: ").strip().lower()
+
+            if choice == "y": # player hit
+                players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+            
+            else: # player stay current hand, computer hit
+                players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.COMPUTER][bjc.CARDS])
+
+            display_current_cards_and_totals()
+            continue
+    
+        if player_total > 21:
+            # computer wins
+            print('You went over. You lose. \U0001F923')
+            break
+        else:
+            # player wins
+            print(f"Opponent went over. You win!!!. \U0001f600")
+            break
+    
+
+def reset_card_lists()->None:
+    '''
+    Clears the cards list for the player and computer to have empty list at the 
+    start of each new game of Blackjack.
+    '''
+    players_cards[bje.PlayerType.PLAYER][bjc.CARDS].clear()
+    players_cards[bje.PlayerType.COMPUTER][bjc.CARDS] .clear()
 
 
 def main()-> None:
     """ Main function to start the blackjack program. """
     try:
         logger.info('Starting the blackjack game.')
-        initial_deal()
+        while True: 
+            choice = input("\nDo you want to play a game of Blackjack? Type 'y' or 'n'").strip().lower()
 
+            if choice == "y":
+                print(art.logo)                      
+                initial_deal()
+                check_winner()
+            else:
+                break
+
+            reset_card_lists()
 
     except ValueError as ex:
         logger.error(f"ValueError: {ex}")
