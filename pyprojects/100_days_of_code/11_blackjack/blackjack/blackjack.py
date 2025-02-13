@@ -14,7 +14,21 @@ import jaclog
 logger = jaclog.configure('blackjack', './blackjack.log')
 
 
-def main():
+# setup data structure to keep track of the player and computer cards and totals.
+players_cards: dict[str, dict] = {
+    'user': {
+        'cards': [],
+        'card_total': 0
+    },
+
+    'computer': {
+        'cards': [],
+        'card_total': 0
+    }
+}
+
+
+def main()-> None:
     """ Main function to start the blackjack program. """
     try:
         logger.info('Starting the blackjack game.')
