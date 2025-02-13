@@ -144,8 +144,8 @@ def reset_card_lists()->None:
     start of each new game of Blackjack.
     '''
     logger.info("Resetting card lists.")
-    players_cards[bje.PlayerType.PLAYER][bjc.CARDS].clear()
-    players_cards[bje.PlayerType.DEALER][bjc.CARDS] .clear()
+    players_cards[bje.PlayerType.PLAYER] = {bjc.CARDS: [], bjc.CARD_TOTAL: 0}
+    players_cards[bje.PlayerType.DEALER] = {bjc.CARDS: [], bjc.CARD_TOTAL: 0}
 
 
 def exit_program(message, code=0):
