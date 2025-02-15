@@ -69,6 +69,32 @@ def get_unique_items(words: list[str])->set[str]:
     return set(words)
 
 
+def generate_word_tally(unique_words: set[str], words: list[str])->dict[str, int]:
+    '''
+    Generate the word tally for each unique word in the words list.
+
+    Args:
+            unique_words (set[str]): All the unique words from the words list.
+            words (list[str]): All the words retrieved from the input.
+    Returns:
+            dict(): A dictionary storing each word as key and the word occurence in the
+                    words list as the value.
+    '''
+    logger.info('Generating word tally.')
+
+    if not isinstance(unique_words, set) or not isinstance(words, list):
+        raise TypeError('Invalid Type: Expected set[str] for unique_words and list[str] for words arguments.')
+
+    if len(unique_words) == 0 or len(words) == 0:
+        raise wfe.WordFrequencyError("Invalid input: Expected non-empty set 'unique_words' and non-empty list 'words'.")
+
+    return {
+        unique_word:words.count(unique_word) 
+        for unique_word in unique_words 
+        if len(unique_word.strip()) > 0
+    }
+
+   
 def exit_program(message, code=0)->None:
     '''
     Centralized exit function to handle the program termination.
@@ -93,6 +119,13 @@ def main()->None:
         unique_words: set[str] = get_unique_items(words)
         print(wfc.UNIQUE_WORDS.format(unique_words))
         logger.info(wfc.UNIQUE_WORDS.format(unique_words))
+
+        word_tally = generate_word_tally(unique_words, words)
+        print(wfc.WORD_TALLY.format(word_tally))
+        logger.info(wfc.WORD_TALLY.format(word_tally))
+
+    except KeyError as ex:
+        logger.error(f"KeyError: {ex}")
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
