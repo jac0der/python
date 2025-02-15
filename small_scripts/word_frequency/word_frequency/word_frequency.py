@@ -39,10 +39,34 @@ def formulate_word_list(text:str)->list[str]:
     """
     logger.info("Formulating words list from text input.")
 
+    if not isinstance(text, str):
+        raise TypeError("Invalid input, Expected Type str for input 'text'.")
+
     if len(text.strip()) == 0:
         raise wfe.WordFrequencyError("Invalid input, text cannot be empty.")
 
     return text.split(" ")
+
+
+def get_unique_items(words: list[str])->set[str]:
+    '''
+    Separate the unique words from the words list.
+    Raise WordFrequencyError if the words list is empty.
+
+    Args:
+            words (list[str]): The list of word items from which to pull only unique words.
+    Returns:
+            set[str]: The unique Set of words from the words list
+    '''
+    logger.info("Pulling unique items from words list.")
+
+    if not isinstance(words, list) or not all(isinstance(word, str) for word in words):
+        raise TypeError('Invalid Type: words must be a list of strings.')
+
+    if len(words) == 0:
+        raise wfe.WordFrequencyError("Invalid input, words list cannot be empty.")
+
+    return set(words)
 
 
 def exit_program(message, code=0)->None:
@@ -65,6 +89,13 @@ def main()->None:
         words = formulate_word_list(get_text())
         print(wfc.TOTAL_WORDS.format(len(words)))
         logger.info(wfc.TOTAL_WORDS.format(len(words)))
+
+        unique_words: set[str] = get_unique_items(words)
+        print(wfc.UNIQUE_WORDS.format(unique_words))
+        logger.info(wfc.UNIQUE_WORDS.format(unique_words))
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
 
     except wfe.WordFrequencyError as ex:
         print(f"WordFrequencyError: {ex}")
