@@ -1,0 +1,1 @@
+EXIT_MESSAGE: str = 'Goodbye!'
