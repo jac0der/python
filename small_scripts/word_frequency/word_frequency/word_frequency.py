@@ -15,6 +15,16 @@ import jaclog
 logger = jaclog.configure('word_frequency', './word_frequency.log')
 
 
+def get_text()->str:
+    """ 
+    Get the text input to count the word occurence. Text is trimmed at start
+    and end.
+    """
+    logger.info("Retrieving text input for word count.")
+    return input("Enter text: ").strip()
+
+
+
 def exit_program(message, code=0)->None:
     '''
     Centralized exit function to handle the program termination.
@@ -31,6 +41,7 @@ def main()->None:
     """ Main function to start the Word Frequency program. """
     try:
         logger.info('Starting Word Frequency Program.')
+        get_text()
     
     except (KeyboardInterrupt, EOFError):
         print(f"\n{wfc.EXIT_MESSAGE}")
