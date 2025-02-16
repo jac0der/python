@@ -10,25 +10,17 @@ import art
 import random
 import blackjack_enum as bje
 import blackjack_constants as bjc
+from models.dealer import Dealer
+from models.player import Player
 
 # Add the 'logging' folder to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
 import jaclog
 logger = jaclog.configure('blackjack', './blackjack.log')
 
-
-# setup data structure to keep track of the player and dealer cards and totals.
-players_cards: dict[bje.PlayerType, dict] = {
-    bje.PlayerType.PLAYER: {
-        bjc.CARDS: [],
-        bjc.CARD_TOTAL: 0
-    },
-
-    bje.PlayerType.DEALER: {
-        bjc.CARDS: [],
-        bjc.CARD_TOTAL: 0
-    }
-}
+# create dealer and player objects
+dealer:Dealer = Dealer()
+player:Player = Player()
 
 
 def get_deal_amount()->int:
@@ -78,12 +70,10 @@ def display_current_cards_and_totals(player_text:str, dealer_text:str, hide_deal
     Args:
             player_text (str): Text to display showing  players cards. e.g. Your Cards:
             dealer_text (str): Text to display showing dealers cards. e.g. Dealers first cards:
+            hide_dealer (bo0l): Disguise dealers card if True, otherwise False, show Dealers card.
     '''
-    players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
-    players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL] = sum(players_cards[bje.PlayerType.DEALER][bjc.CARDS])
-
-    dealer_score = players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]
-    dealer_cards = players_cards[bje.PlayerType.DEALER][bjc.CARDS]
+    dealer_score = str(dealer.get_cards_total())
+    dealer_cards = dealer.get_cards()
     
     if hide_dealer:
         dealer_display = ['X'] + dealer_cards[1:]  # Hide first card
@@ -91,10 +81,10 @@ def display_current_cards_and_totals(player_text:str, dealer_text:str, hide_deal
     else:
         dealer_display = dealer_cards        
 
-    print(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    print(f"{player_text} {player.get_cards()}, current score: {player.get_cards_total()}")
     print(f"{dealer_text} {dealer_display}, current score: {dealer_score}\n")
 
-    logger.info(f"{player_text} {players_cards[bje.PlayerType.PLAYER][bjc.CARDS]}, current score: {players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]}")
+    logger.info(f"{player_text} {player.get_cards()}, current score: {player.get_cards_total()}")
     logger.info(f"{dealer_text} {dealer_display}, current score: {dealer_score}\n")
 
 
@@ -104,10 +94,10 @@ def initial_deal()-> None:
     '''
     # deal user two cards
     logger.info("Dealer performs initial deal.")
-    players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(2, bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+    player.set_cards(deal(2, bjc.CARDS_LIST, player.get_cards()))
     
     # deal dealer one card
-    players_cards[bje.PlayerType.DEALER][bjc.CARDS] = deal(1, bjc.CARDS_LIST, players_cards[bje.PlayerType.DEALER][bjc.CARDS])
+    dealer.set_cards(deal(1, bjc.CARDS_LIST, dealer.get_cards()))
 
     display_current_cards_and_totals("Your cards: ", "Dealer's first cards: ")
 
@@ -118,8 +108,8 @@ def check_winner()->None:
     '''
     logger.info("Playing and checcking the winner.")
     while True:
-        player_total = players_cards[bje.PlayerType.PLAYER][bjc.CARD_TOTAL]
-        dealer_total = players_cards[bje.PlayerType.DEALER][bjc.CARD_TOTAL]
+        player_total = player.get_cards_total()
+        dealer_total = dealer.get_cards_total()
 
         if player_total == 21 and dealer_total == 21:
             print('Draw!!!')
@@ -134,10 +124,10 @@ def check_winner()->None:
                 exit_program(bjc.EXIT_MESSAGE)
 
             elif choice == "y": # player hit
-                players_cards[bje.PlayerType.PLAYER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.PLAYER][bjc.CARDS])
+                player.set_cards(deal(get_deal_amount(), bjc.CARDS_LIST, player.get_cards()))
             
             else: # player stay current hand, dealer hit
-                players_cards[bje.PlayerType.DEALER][bjc.CARDS] = deal(get_deal_amount(), bjc.CARDS_LIST, players_cards[bje.PlayerType.DEALER][bjc.CARDS])
+                dealer.set_cards(deal(get_deal_amount(), bjc.CARDS_LIST, dealer.get_cards()))
 
             display_current_cards_and_totals("Your Cards: ", "Dealer's Cards: ", hide_dealer=False)
             continue
@@ -160,8 +150,11 @@ def reset_card_lists()->None:
     start of each new game of Blackjack.
     '''
     logger.info("Resetting card lists.")
-    players_cards[bje.PlayerType.PLAYER] = {bjc.CARDS: [], bjc.CARD_TOTAL: 0}
-    players_cards[bje.PlayerType.DEALER] = {bjc.CARDS: [], bjc.CARD_TOTAL: 0}
+    player.reset()
+    dealer.reset()
+
+    logger.info(f"Player's cards: {player.get_cards()} | Player's cards total: {player.get_cards_total()} ")
+    logger.info(f"Dealer's cards: {dealer.get_cards()} | Dealer's cards total: {dealer.get_cards_total()} ")
 
 
 def exit_program(message, code=0):
