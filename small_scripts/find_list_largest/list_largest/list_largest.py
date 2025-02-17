@@ -19,7 +19,13 @@ def get_largest_item(list_items:list[int])->int:
                                     number to return.
     Returns:
             int: The largest number within the list_items argument.
-    """
+    """  
+    if not isinstance(list_items, list) or not all(isinstance(list_item, int) for list_item in list_items):
+        raise TypeError('Invalid Type: list_items must be a list of integers.')
+
+    if len(list_items) == 0:
+        raise ValueError('Invalid Input: list_items cannot be empty.')
+
     logger.info(f"Getting largest number from list: {list_items}")
     return max(list_items)
 
@@ -31,9 +37,12 @@ def process_list_collection(collection:list[list[int]])->None:
     Args:
             collection (list[list[int]]): The list collection comprising of a list of list of numbers.
     """
+    if not isinstance(collection, list):
+        raise TypeError('Invalid Input: collection must be a list')
+        
     logger.info("Processing list or list of numbers.")
 
-    largest_item_lines:list[str] = [f"Largest number in {list} is: {get_largest_item(list)}" for list in collection]
+    largest_item_lines:list[str] = [f"Largest number in {listt} is: {get_largest_item(listt)}" for listt in collection]
     result = "\n".join(largest_item_lines)
     print(result)
 
@@ -43,6 +52,12 @@ def main()->None:
     try:
         logger.info('Starting the largest list item program.')
         process_list_collection(llc.LIST_COLLECTION)
+
+    except ValueError as ex:
+        logger.error(f"ValueError: {ex}")
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
         
     except (KeyboardInterrupt, EOFError):
         print(f"\n{llc.EXIT_MESSAGE}")
