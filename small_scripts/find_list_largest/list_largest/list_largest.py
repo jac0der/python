@@ -23,10 +23,23 @@ def get_largest_item(list_items:list[int])->int:
     return max(list_items)
 
 
+def process_list_collection(collection:list[list[int]])->None:
+    """
+    Prints the largest numbers from each list of numbers within a specified list collection.
+
+    Args:
+            collection (list[list[int]]): The list collection comprising of a list of list of numbers.
+    """
+    largest_item_lines = [f"Largest number in {list} is: {get_largest_item(list)}" for list in collection]
+    result = "\n".join(largest_item_lines)
+    print(result)
+
+
 def main()->None:
     """ Main function to start the Largest List Item program.  """
     try:
         logger.info('Starting the largest list item program.')
+        process_list_collection(llc.LIST_COLLECTION)
         
     except (KeyboardInterrupt, EOFError):
         print(f"\n{llc.EXIT_MESSAGE}")
