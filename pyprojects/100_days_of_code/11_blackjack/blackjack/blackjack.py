@@ -12,10 +12,9 @@ import blackjack_enum as bje
 import blackjack_constants as bjc
 from models.dealer import Dealer
 from models.player import Player
+from logging_custom import jaclog
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
-import jaclog
+
 logger = jaclog.configure('blackjack', './blackjack.log')
 
 # create dealer and player objects
