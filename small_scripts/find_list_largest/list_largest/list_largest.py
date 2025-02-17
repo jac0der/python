@@ -20,6 +20,7 @@ def get_largest_item(list_items:list[int])->int:
     Returns:
             int: The largest number within the list_items argument.
     """
+    logger.info(f"Getting largest number from list: {list_items}")
     return max(list_items)
 
 
@@ -30,6 +31,8 @@ def process_list_collection(collection:list[list[int]])->None:
     Args:
             collection (list[list[int]]): The list collection comprising of a list of list of numbers.
     """
+    logger.info("Processing list or list of numbers.")
+    
     largest_item_lines = [f"Largest number in {list} is: {get_largest_item(list)}" for list in collection]
     result = "\n".join(largest_item_lines)
     print(result)
