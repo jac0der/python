@@ -21,10 +21,10 @@ def get_largest_item(list_items:list[int])->int:
             int: The largest number within the list_items argument.
     """  
     if not isinstance(list_items, list) or not all(isinstance(list_item, int) for list_item in list_items):
-        raise TypeError('Invalid Type: list_items must be a list of integers.')
+        raise TypeError(f"Invalid Type: list_items {list_items} must be a list of integers.")
 
     if len(list_items) == 0:
-        raise ValueError('Invalid Input: list_items cannot be empty.')
+        raise ValueError(f"Invalid Input: list_items {list_items} length is 0. list_items cannot be empty.")
 
     logger.info(f"Getting largest number from list: {list_items}")
     return max(list_items)
@@ -37,12 +37,12 @@ def process_list_collection(collection:list[list[int]])->None:
     Args:
             collection (list[list[int]]): The list collection comprising of a list of list of numbers.
     """
-    if not isinstance(collection, list):
+    if not isinstance(collection, list) or not all(isinstance(inner_list, list) for inner_list in collection):
         raise TypeError('Invalid Input: collection must be a list')
         
     logger.info("Processing list or list of numbers.")
 
-    largest_item_lines:list[str] = [f"Largest number in {listt} is: {get_largest_item(listt)}" for listt in collection]
+    largest_item_lines:list[str] = [f"Largest number in {inner_list} is: {get_largest_item(inner_list)}" for inner_list in collection]
     result = "\n".join(largest_item_lines)
     print(result)
 
