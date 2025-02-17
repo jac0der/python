@@ -4,8 +4,8 @@
     @datetime:: February 8, 2025 11:18 pm (UTC-5)
     @author:: jac0der
 '''
-import sys
-import os
+from logging_custom import jaclog
+
 try:
     # When running as a module (for unittest)
     import even_odd.even_odd_constants as eoc
@@ -13,9 +13,6 @@ except ImportError:
     # When running the script directly
     import even_odd_constants as eoc
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
-import jaclog
 logger = jaclog.configure('even_odd', './even_odd.log')
 
 
