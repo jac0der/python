@@ -10,12 +10,24 @@ import list_largest_constants as llc
 logger = jaclog.configure('list_largest', './list_largest.log')
 
 
+def get_largest_item(list_items:list[int])->int:
+    """
+    Returns the largest number from a given list of numbers.
+
+    Args:
+            list_items (list[int]): The list of numbers from which to pick the largest
+                                    number to return.
+    Returns:
+            int: The largest number within the list_items argument.
+    """
+    return max(list_items)
+
+
 def main()->None:
     """ Main function to start the Largest List Item program.  """
     try:
         logger.info('Starting the largest list item program.')
-
-
+        
     except (KeyboardInterrupt, EOFError):
         print(f"\n{llc.EXIT_MESSAGE}")
         return
