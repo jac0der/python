@@ -7,6 +7,7 @@
 import os 
 import sys
 import operator
+from logging_custom import jaclog
 
 try:
     # When running as a module (for unittest)
@@ -15,9 +16,6 @@ except ImportError:
     # When running the script directly
     from art import logo 
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
-import jaclog
 logger = jaclog.configure('calculator_100days', './calculator.log')
 
 EXIT_MESSAGE = 'Goodbye!'

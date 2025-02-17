@@ -4,8 +4,9 @@
     @datetime:: February 05, 2025 8:43 am (UTC-5)
     @author:: jac0der
 '''
-import os 
 import sys
+from logging_custom import jaclog
+
 try:
     # When running as a module (for unittest)
     from leap.leap_error import LeapYearError  
@@ -13,9 +14,6 @@ except ImportError:
     # When running the script directly
     from leap_error import LeapYearError 
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
-import jaclog
 logger = jaclog.configure('leapyear_100days', './leapyear.log')
 
 EXIT_MESSAGE = 'Goodbye!'

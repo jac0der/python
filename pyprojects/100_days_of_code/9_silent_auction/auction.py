@@ -8,10 +8,8 @@
     @author:: jacoder
 '''
 import art, os, sys, bidding_error
+from logging_custom import jaclog
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
-import jaclog
 logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 
