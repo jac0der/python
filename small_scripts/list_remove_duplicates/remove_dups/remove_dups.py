@@ -10,7 +10,7 @@ import remove_dups_constants as rdc
 logger = jaclog.configure('list_remove_dups', './list_remove_dups.log')
 
 
-def main():
+def main()->None:
     """ Main function to start the Remove Duplicates program """
     try:
         logger.info('Starting the remove dupliates program.')
