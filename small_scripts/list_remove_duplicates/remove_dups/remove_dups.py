@@ -10,6 +10,18 @@ import remove_dups_constants as rdc
 logger = jaclog.configure('list_remove_dups', './list_remove_dups.log')
 
 
+def remove_duplicates(list_items:list[any])->list[any]:
+    '''
+    Remove duplicate items from a list
+
+    Args:
+            list_items (list[any]): List of duplicated items.
+    Returns:
+            list[any]: List of unique items.
+    '''
+    return list(set(list_items))
+
+
 def main()->None:
     """ Main function to start the Remove Duplicates program """
     try:
