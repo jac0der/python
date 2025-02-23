@@ -6,12 +6,10 @@
 '''
 import sys
 import os
+from logging_custom import jaclog
 import prime_checker_error as pce
 import prime_checker_constants as pcc
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
-import jaclog
 logger = jaclog.configure('prime_checker', './prime_checker.log')
 
 

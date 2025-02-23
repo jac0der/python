@@ -8,11 +8,9 @@ import os
 import sys
 import tempconv_error
 import tempconv_constants as tc
+from logging_custom import jaclog
 from tempconv_enum import ConversionType
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../logging')))
-import jaclog
 logger = jaclog.configure('temperature_convertor', './tempconv.log')
 
 
