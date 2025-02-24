@@ -158,10 +158,7 @@ def main():
                     os.system('cls||clear')  # Clear screen
                     continue_calculating = False
 
-    except KeyboardInterrupt as ex:
-        exit_program(f"\n{EXIT_MESSAGE}")
-
-    except EOFError as ex:
+    except (KeyboardInterrupt, EOFError):
         exit_program(f"\n{EXIT_MESSAGE}")
 
     except Exception as ex:
