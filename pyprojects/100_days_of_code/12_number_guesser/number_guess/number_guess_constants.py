@@ -1,0 +1,3 @@
+EXIT_MESSAGE: str = 'Goodbye!'
+MINIMUM_GUESS:int = 1
+MAXIMUM_GUESS:int = 100
