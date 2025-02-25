@@ -24,7 +24,7 @@ def get_random_number(minimum:int, maximum:int)->int:
     Returns:
             int: The generated random number from the specified range.
     """
-    if not isinstance(minimum, int) and not isinstance(maximum, int):
+    if not isinstance(minimum, int) or not isinstance(maximum, int):
         raise TypeError(f"Invalid Input: Expected Type int for both minimum {minimum} and maximum {maximum} imputs.")
 
     logger.info(f"Getting the random number between {minimum} and {maximum}.")
@@ -70,7 +70,7 @@ def guess(guess_number:int, attempts:int)->int:
     Returns:
             int: Return 1 if random number was guessed successfully, otherwise, 0.    
     """
-    if not isinstance(guess_number, int) and not isinstance(attempts, int):
+    if not isinstance(guess_number, int) or not isinstance(attempts, int):
         raise TypeError(f"Invalid Input: Expected Type int for both guess_number {guess_number} and attempts {attempts} imputs.")
 
     logger.info('Starting the number guessing.')
@@ -103,6 +103,7 @@ def guess(guess_number:int, attempts:int)->int:
     # failed to guess random number.
     return 0
 
+
 def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle the program termination.
@@ -112,7 +113,8 @@ def exit_program(message:str, code:int=0)->None:
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
 def main()->None:
