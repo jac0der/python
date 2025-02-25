@@ -5,6 +5,7 @@ Guess a number between 1 and 100.
 @author:: jac0der
 '''
 
+import art
 from logging_custom import jaclog
 import number_guess_constants as ngc
 
@@ -15,6 +16,7 @@ def main()->None:
     """ Main function to start the Number Guessing program. """
     try:
         logger.info('Starting the Number Guessing program.')
+        print(art.logo)
 
     except (KeyboardInterrupt, EOFError):
         print(f"\n{ngc.EXIT_MESSAGE}")
