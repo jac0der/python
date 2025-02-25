@@ -6,12 +6,10 @@
 '''
 import sys
 import os
+from logging_custom import jaclog
 import multiplication_error as me
 import multiplication_constants as mc
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
-import jaclog
 logger = jaclog.configure('multiplication', './multiplication.log')
 
 

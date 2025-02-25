@@ -7,12 +7,10 @@ of string or sentence.
 '''
 import sys
 import os
+from logging_custom import jaclog
 import word_frequency_error as wfe
 import word_frequency_constants as wfc
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../logging')))
-import jaclog
 logger = jaclog.configure('word_frequency', './word_frequency.log')
 
 
