@@ -131,8 +131,8 @@ def main()->None:
             print(ngc.SUCCESS_MESSAGE.format(number))
             logger.info(ngc.SUCCESS_MESSAGE.format(number))
         else:
-            print(ngc.FAILED_MESSAGE)
-            logger.info(ngc.FAILED_MESSAGE)
+            print(ngc.FAILED_MESSAGE.format(number))
+            logger.info(ngc.FAILED_MESSAGE.format(number))
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")

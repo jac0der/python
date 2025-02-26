@@ -5,5 +5,5 @@ LEVEL_EASY:int = 10
 LEVEL_HARD:int = 5
 GUESS_MESSAGE:str = "Too {}. \nGuess again."
 SUCCESS_MESSAGE:str = "You got it! the answer was {}."
-FAILED_MESSAGE:str = "You've run out of guesses."
+FAILED_MESSAGE:str = "You've run out of guesses. The number was {}"
 GET_GUESS_WARNING = 'Invalid input entered.' + '\n' + 'Please enter an integer value.'
