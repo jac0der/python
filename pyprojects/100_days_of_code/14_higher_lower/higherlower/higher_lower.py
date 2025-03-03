@@ -1,7 +1,8 @@
 '''
-Guess a number between 1 and 100.
+Create the higher lower game, guess from among two options
+which has the higher value.
 
-@datetime:: February 25, 2025 2:32 am (UTC-5)
+@datetime:: March 2, 2025 11:49 pm (UTC-5)
 @author:: jac0der
 '''
 from logging_custom import jaclog

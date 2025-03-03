@@ -6,9 +6,6 @@ Block scopes in Python
 '''
 
 '''
-Variables declared within code blocks if, while, for etc...
-are only accessible within the defining code blocks.
-
 The while/if block does not create a new scope in Python. 
 Variables declared inside loops (or if statements) are part of the same scope 
 as the surrounding code unless they are inside a function or class.
