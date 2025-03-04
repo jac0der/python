@@ -20,7 +20,7 @@ CONVERSIONS = {
 }
 
 
-def get_conversion_type():
+def get_conversion_type()->None:
     ''' 
     Get the type of conversion to perform.
     Returns:
@@ -49,7 +49,7 @@ def get_conversion_type():
         logger.warning(tc.CONVERSION_TYPE_WARNING.format(choice))
 
 
-def get_temperature():
+def get_temperature()->None:
     ''' 
     Get the temperature value to be converted.
 
@@ -74,7 +74,7 @@ def get_temperature():
             logger.warning(f'{tc.GET_TEMPERATURE_WARNING} \n {ex}')
 
 
-def perform_conversion(temperature, conversion_type_code=ConversionType.CELSIUS_TO_FAHRENHEIT):
+def perform_conversion(temperature:float, conversion_type_code:str=ConversionType.CELSIUS_TO_FAHRENHEIT)->float:
     '''
     Perform temperature conversion of the specified temperature value and conversion code.
 
@@ -99,7 +99,7 @@ def perform_conversion(temperature, conversion_type_code=ConversionType.CELSIUS_
         raise tempconv_error.ConversionTypeCodeError("Invalid conversion type code entered.")
 
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle program termination.
 
@@ -111,7 +111,7 @@ def exit_program(message, code=0):
     sys.exit(message)
 
 
-def main():
+def main()->None:
     try:
         logger.info("Starting Temperature Converter.")
         print("Welcome to TEMPERATURE CONVERTER")
