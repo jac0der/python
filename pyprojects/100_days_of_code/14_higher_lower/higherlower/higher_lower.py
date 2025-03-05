@@ -100,7 +100,7 @@ def formulate_comparisson_line(tag:str, comparission_item:dict)->str:
     return tag + comparission_item['name'] + ", a " + comparission_item['description'] + ", from " + comparission_item['country'] +"."
 
 
-def display_comparissions(compare_line:str, against_line:str)->None:
+def display_comparisons(compare_line:str, against_line:str)->None:
     '''
     Displays to the user the comparission match up for two randomly selected items.
 
@@ -181,7 +181,7 @@ def compare(compare_item:dict, against_item:dict)->dict:
     against_item_line = formulate_comparisson_line(hlc.TAG_B, against_item)
     logger.info(f"against_item_line is: {against_item_line}")
 
-    display_comparissions(compare_item_line, against_item_line)
+    display_comparisons(compare_item_line, against_item_line)
 
     choice = get_user_choice()
 
