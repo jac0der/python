@@ -36,7 +36,18 @@ def increment_score()->None:
 
 
 def display_score(message:str)->None:
-    """ Clears screen and displays score after each correct guess. """
+    ''' 
+    Clears screen and displays score after each correct guess.
+    
+    Args:
+            message (str): The message to print to the screen to alert user.
+    '''
+    if not isinstance(message, str):
+        raise TypeError(f"Invalid Input: Expected Type 'str' for message {message} parameter.")
+
+    if len(message) == 0:
+        raise HigherLowerError(f"Invalid Input: message '{message}' cannot be empty.")
+
     logger.info("Displaying score...")
     os.system('cls||clear')
     print_logo()
@@ -120,13 +131,12 @@ def get_user_choice()->str:
 
         if choice == hlc.CHOICE_A.strip().lower():
             logger.info(hlc.USER_CHOICE.format(choice))
-            #print(hlc.USER_CHOICE.format(choice))
             return choice
 
         elif choice == hlc.CHOICE_B.strip().lower():
             logger.info(hlc.USER_CHOICE.format(choice))
-            #print(hlc.USER_CHOICE.format(choice))
             return choice
+
         else:
             logger.warning(hlc.USER_CHOICE_WARNING)
             print(hlc.USER_CHOICE_WARNING)
