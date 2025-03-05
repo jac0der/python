@@ -150,9 +150,21 @@ def get_user_choice()->str:
 
 def check_answer(user_choice:str, compare_item_follower_count:int, against_item_follower_count:int)->None:
     '''
-    Check whether users guess is correct or incorrect, based on the follower count for each of the
+    Check whether user's guess is correct or incorrect, based on the follower count for each of the
     game data compare items.
+
+    Args:
+            user_choice (str): The user's selection from the two compare options, A or B.
+            compare_item_follower_count (int): Total amount of followers for first compare item.
+            against_item_follower_count (int): Total amount of followers for the second against item.
     '''
+    if not isinstance(user_choice, str) or not isinstance(compare_item_follower_count, int) or \
+       not isinstance(against_item_follower_count, int):
+        raise TypeError(f"Invalid Input: Expected Type 'str' for user_choice '{user_choice}' and 'int' for compare_item_follower_count '{compare_item_follower_count} and 'int' for against_item_follower_count {against_item_follower_count}.")
+
+    if len(user_choice) == 0:
+        raise HigherLowerError(f"Invalid Input: user_choice '{user_choice}' cannot be empty.")
+
     logger.info("Checking user choice correctness.")
 
     if (compare_item_follower_count > against_item_follower_count) and user_choice == hlc.CHOICE_A.strip().lower() or \
