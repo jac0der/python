@@ -1,0 +1,3 @@
+EXIT_MESSAGE: str = 'Goodbye!'
+INITIAL_DATA_SELECT:int = 2
+DATA_SELECT:int = 1
