@@ -182,7 +182,16 @@ def compare(compare_item:dict, against_item:dict)->dict:
     ''' 
     Compares two data items, giving user the option to chose which of the
     two items has the most followers.
+
+    Args:
+            compare_item (dict): The first data item to be comapred.
+            against_item (dict): The second data item being compared to the first.
+    Returns:
+            dict: The current against_item.
     '''
+    if not isinstance(compare_item, dict) or not isinstance(against_item, dict):
+        raise TypeError(f"Invalid Input: Expected Type 'dict' for compare_item '{compare_item}' and against_item '{against_item}'.")
+
     logger.info("Comparing data items.")
     logger.info(f"compare item: {compare_item}")
     logger.info(f"against item: {against_item}")
