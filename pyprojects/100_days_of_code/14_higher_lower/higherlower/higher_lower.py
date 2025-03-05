@@ -8,10 +8,11 @@ which has the higher value.
 import art
 from random import sample
 from game_data import data
+from higher_lower_error import HigherLowerError
 import higher_lower_constants as hlc
 from logging_custom import jaclog
 
-logger = jaclog.configure('number_guess', './number_guess.log')
+logger = jaclog.configure('higher_lower', './higher_lower.log')
 
 
 def print_logo()->None:
@@ -34,6 +35,12 @@ def get_compare_item(game_data:list, item_amount:int)->list[dict]:
     if not isinstance(game_data, list) or not isinstance(item_amount, int):
         raise TypeError(f"Invalid Input: Expected Type 'list' for game_data {game_data} and 'int' for item_amount {item_amount} parameters.")
 
+    if len(game_data) == 0:
+        raise HigherLowerError(f"Invalid Input: Game data list '{game_data}' cannot be empty.")
+
+    if item_amount < 1 or item_amount > 2:
+        raise HigherLowerError(f"Invalid Input: item_amount '{item_amount}' parameter must be 1 or 2.")
+
     logger.info(f"Retrieving {item_amount} game data for comparisson.")
     return sample(game_data, item_amount)
 
@@ -52,6 +59,9 @@ def main()->None:
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
+
+    except HigherLowerError as ex:
+        logger.error(f"HigherLowerError: {ex}")
 
     except (KeyboardInterrupt, EOFError):
         print(f"\n{hlc.EXIT_MESSAGE}")
