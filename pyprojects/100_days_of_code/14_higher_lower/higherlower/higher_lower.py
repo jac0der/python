@@ -35,12 +35,12 @@ def increment_score()->None:
     hlc.SCORE += 1
 
 
-def display_score()->None:
+def display_score(message:str)->None:
     """ Clears screen and displays score after each correct guess. """
     logger.info("Displaying score...")
     os.system('cls||clear')
     print_logo()
-    print(hlc.CORRECT_PROMPT.format(hlc.SCORE))
+    print(message)
 
 
 def get_compare_item(game_data:list, item_amount:int)->list[dict]:
@@ -89,18 +89,18 @@ def formulate_comparisson_line(tag:str, comparission_item:dict)->str:
     return tag + comparission_item['name'] + ", a " + comparission_item['description'] + ", from " + comparission_item['country'] +"."
 
 
-def display_comparissions(compare:str, against:str)->None:
+def display_comparissions(compare_line:str, against_line:str)->None:
     '''
     Displays to the user the comparission match up for two randomly selected items.
 
     Args:
-            compare (str): The first game data item to be compared with another.
-            against (str): The second game dat item the first item is compared against.
+            compare_line (str): The first game data item to be compared with another.
+            against_line (str): The second game dat item the first item is compared against.
     '''
     logger.info("Show user the comparission options.")
-    print(compare)
+    print(compare_line)
     print_vs()
-    print(against)
+    print(against_line)
 
 
 def get_user_choice()->str:
@@ -115,14 +115,17 @@ def get_user_choice()->str:
     while True:
         choice = input(hlc.FOLLOWER_PROMPT).strip().lower()
 
+        if choice == hlc.EXIT_TRIGGER:
+            exit_program(hlc.EXIT_MESSAGE, 0)
+
         if choice == hlc.CHOICE_A.strip().lower():
             logger.info(hlc.USER_CHOICE.format(choice))
-            print(hlc.USER_CHOICE.format(choice))
+            #print(hlc.USER_CHOICE.format(choice))
             return choice
 
         elif choice == hlc.CHOICE_B.strip().lower():
             logger.info(hlc.USER_CHOICE.format(choice))
-            print(hlc.USER_CHOICE.format(choice))
+            #print(hlc.USER_CHOICE.format(choice))
             return choice
         else:
             logger.warning(hlc.USER_CHOICE_WARNING)
@@ -139,22 +142,20 @@ def check_answer(user_choice:str, compare_item_follower_count:int, against_item_
     if (compare_item_follower_count > against_item_follower_count) and user_choice == hlc.CHOICE_A.strip().lower() or \
     (against_item_follower_count > compare_item_follower_count) and user_choice == hlc.CHOICE_B.strip().lower():
         increment_score()
-        display_score()
+        display_score(hlc.CORRECT_PROMPT.format(hlc.SCORE))
+    
+    else:
+        os.system('cls||clear')
+        print_logo()
+        exit_program(hlc.INCORRECT_PROMPT.format(hlc.SCORE), 0)
 
 
-def init_compare()->dict:
+def compare(compare_item:dict, against_item:dict)->dict:
+    ''' 
+    Compares two data items, giving user the option to chose which of the
+    two items has the most followers.
     '''
-    Retrieves the first two comparisson game data items for comparisson.
-
-    Returns:
-            dict: The data item used as the against in the initial guess, which will then be used as the
-                  compare item in the next guess. 
-    '''
-    logger.info("Performing initial comparisson.")
-
-    data_items = get_compare_item(data, hlc.INITIAL_DATA_SELECT)
-    compare_item = data_items[0]
-    against_item = data_items[1]
+    logger.info("Comparing data items.")
     logger.info(f"compare item: {compare_item}")
     logger.info(f"against item: {against_item}")
 
@@ -172,6 +173,25 @@ def init_compare()->dict:
 
     return against_item
 
+
+def init_items()->dict:
+    '''
+    Retrieves the first two comparisson game data items for comparisson.
+
+    Returns:
+            dict: The data item used as the against in the initial guess, which will then be used as the
+                  compare item in the next guess. 
+    '''
+    logger.info("Performing initial comparisson.")
+
+    data_items = get_compare_item(data, hlc.INITIAL_DATA_SELECT)
+    compare_item = data_items[0]
+    against_item = data_items[1]
+    logger.info(f"compare item: {compare_item}")
+    logger.info(f"against item: {against_item}")
+
+    return compare(compare_item, against_item)
+   
 
 def exit_program(message:str, code:int=0)->None:
     '''
@@ -192,7 +212,11 @@ def main()->None:
         logger.info("Starting the Higher Lower Game.")
         print_logo()
 
-        compare_item = init_compare()
+        compare_item = init_items()
+
+        while True:
+            against_item = get_compare_item(data, 1)[0]
+            compare_item = compare(compare_item, against_item)
         
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")

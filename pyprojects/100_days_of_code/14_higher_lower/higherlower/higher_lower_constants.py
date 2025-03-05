@@ -1,4 +1,5 @@
 EXIT_MESSAGE: str = 'Goodbye!'
+EXIT_TRIGGER:str = "q"
 INITIAL_DATA_SELECT:int = 2
 DATA_SELECT:int = 1
 TAG_A:str = "Compare A: "
@@ -7,7 +8,7 @@ CHOICE_A:str = "A"
 CHOICE_B:str = "B"
 USER_CHOICE:str = "User's choice is: {0}"
 USER_CHOICE_WARNING:str ="Invalid choice, please enter 'A' or 'B'."
-FOLLOWER_PROMPT:str = "Who has more followers? Type 'A' or 'B': "
+FOLLOWER_PROMPT:str = "Who has more followers? Type 'A' or 'B' (q to quit): "
 CORRECT_PROMPT:str = "You're right! Current score: {0}."
-INCORRECT_PROMPT:str = "Sorry, that's wrong. Final score: "
+INCORRECT_PROMPT:str = "Sorry, that's wrong. Final score: {0}"
 SCORE:int = 0
