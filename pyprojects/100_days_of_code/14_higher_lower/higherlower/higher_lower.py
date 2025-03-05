@@ -7,6 +7,7 @@ which has the higher value.
 '''
 import sys
 import art
+import os
 from random import sample
 from game_data import data
 from higher_lower_error import HigherLowerError
@@ -18,18 +19,28 @@ logger = jaclog.configure('higher_lower', './higher_lower.log')
 
 def print_logo()->None:
     """ Prints the logo for the game. """
+    logger.info("Printing logo art.")
     print(art.logo)
 
 
 def print_vs()->None:
     """ Prints the VS symbol for the game coparissions. """
+    logger.info("Print versus symbol.")
     print(art.vs)
 
 
 def increment_score()->None:
-    """ """
-    logger.info("")
+    """ Increment the score on each successfult guess. """
+    logger.info("Incrementing score...")
     hlc.SCORE += 1
+
+
+def display_score()->None:
+    """ Clears screen and displays score after each correct guess. """
+    logger.info("Displaying score...")
+    os.system('cls||clear')
+    print_logo()
+    print(hlc.CORRECT_PROMPT.format(hlc.SCORE))
 
 
 def get_compare_item(game_data:list, item_amount:int)->list[dict]:
@@ -86,6 +97,7 @@ def display_comparissions(compare:str, against:str)->None:
             compare (str): The first game data item to be compared with another.
             against (str): The second game dat item the first item is compared against.
     '''
+    logger.info("Show user the comparission options.")
     print(compare)
     print_vs()
     print(against)
@@ -98,24 +110,47 @@ def get_user_choice()->str:
     Returns:
             str: The user's comparisson choice.
     '''
-    logger.info("  user's comparisson choice.")
+    logger.info("Get the user's comparisson choice.")
 
     while True:
         choice = input(hlc.FOLLOWER_PROMPT).strip().lower()
 
-        if choice == hlc.CHOICE_A:
-            return hlc.CHOICE_A
-        elif choice == hlc.CHOICE_B:
-            return hlc.CHOICE_B
+        if choice == hlc.CHOICE_A.strip().lower():
+            logger.info(hlc.USER_CHOICE.format(choice))
+            print(hlc.USER_CHOICE.format(choice))
+            return choice
+
+        elif choice == hlc.CHOICE_B.strip().lower():
+            logger.info(hlc.USER_CHOICE.format(choice))
+            print(hlc.USER_CHOICE.format(choice))
+            return choice
         else:
             logger.warning(hlc.USER_CHOICE_WARNING)
             print(hlc.USER_CHOICE_WARNING)
 
 
-def init_compare()->dict:
-    ''' 
+def check_answer(user_choice:str, compare_item_follower_count:int, against_item_follower_count:int)->None:
     '''
-    logger.info("")
+    Check whether users guess is correct or incorrect, based on the follower count for each of the
+    game data compare items.
+    '''
+    logger.info("Checking user choice correctness.")
+
+    if (compare_item_follower_count > against_item_follower_count) and user_choice == hlc.CHOICE_A.strip().lower() or \
+    (against_item_follower_count > compare_item_follower_count) and user_choice == hlc.CHOICE_B.strip().lower():
+        increment_score()
+        display_score()
+
+
+def init_compare()->dict:
+    '''
+    Retrieves the first two comparisson game data items for comparisson.
+
+    Returns:
+            dict: The data item used as the against in the initial guess, which will then be used as the
+                  compare item in the next guess. 
+    '''
+    logger.info("Performing initial comparisson.")
 
     data_items = get_compare_item(data, hlc.INITIAL_DATA_SELECT)
     compare_item = data_items[0]
@@ -133,7 +168,7 @@ def init_compare()->dict:
 
     choice = get_user_choice()
 
-
+    check_answer(choice,  compare_item['follower_count'], against_item['follower_count'])
 
     return against_item
 
