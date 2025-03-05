@@ -1,3 +1,10 @@
 EXIT_MESSAGE: str = 'Goodbye!'
 INITIAL_DATA_SELECT:int = 2
 DATA_SELECT:int = 1
+TAG_A:str = "Compare A: "
+TAG_B:str = "Against B: "
+CHOICE_A:str = "A"
+CHOICE_B:str = "B"
+USER_CHOICE_WARNING:str ="Invalid choice, please enter 'A' or 'B'."
+FOLLOWER_PROMPT:str = "Who has more followers? Type 'A' or 'B': "
+SCORE:int = 0
