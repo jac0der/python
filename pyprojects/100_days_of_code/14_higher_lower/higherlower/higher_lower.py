@@ -106,7 +106,7 @@ def display_comparisons(compare_line:str, against_line:str)->None:
 
     Args:
             compare_line (str): The first game data item to be compared with another.
-            against_line (str): The second game dat item the first item is compared against.
+            against_line (str): The second game data item the first item is compared against.
     '''
     if not isinstance(compare_line, str) or not isinstance(against_line, str):
         raise TypeError(f"Invalid Input: Expected Type 'str' for compare_line {compare_line} and against_line {against_line} parameters.")
