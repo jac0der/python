@@ -2,7 +2,7 @@
     Program to convert from Celsius to Fahrenheit or, Fahrenheit to Celsius.
 
     @datetime:: February 8, 2025 2:42 am (UTC-5)
-    @author:: jacoder
+    @author:: jac0der
 '''
 import os 
 import sys
@@ -35,7 +35,7 @@ def get_conversion_type()->None:
         choice = input('\nChoose conversion type (0 to quit): ')
 
         if choice == '0':
-            exit_program(tc.EXIT_MESSAGE)
+            exit_program(tc.EXIT_MESSAGE, 0)
 
         if choice == '1':
             logger.info(f'Conversion type is: {ConversionType.CELSIUS_TO_FAHRENHEIT}.')
@@ -61,7 +61,7 @@ def get_temperature()->None:
         try:
             user_input = input("\nEnter temperature value (q to quit): ")
             if user_input.lower().strip() == 'q':
-                exit_program(tc.EXIT_MESSAGE)
+                exit_program(tc.EXIT_MESSAGE, 0)
 
             temperature = float(user_input)
 
@@ -108,10 +108,12 @@ def exit_program(message:str, code:int=0)->None:
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
 def main()->None:
+    """ Main function to start the Temperature Conversion Program. """
     try:
         logger.info("Starting Temperature Converter.")
         print("Welcome to TEMPERATURE CONVERTER")
@@ -131,14 +133,12 @@ def main()->None:
                 print(f"{tc.CONVERSION_ISSUE} \n {ex}")
                 logger.warning(f"{tc.CONVERSION_ISSUE} \n {ex}")
 
-    except KeyboardInterrupt as ex:
-        exit_program(f"\n{tc.EXIT_MESSAGE}")
-
-    except EOFError as ex:
-        exit_program(f"\n{tc.EXIT_MESSAGE}")
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{tc.EXIT_MESSAGE}")
+        return
 
     except Exception as ex:
-        logger.exception("Error occurred in main temperature conversion function.")
+        logger.exception("Error occurred in main Temperature Conversion Function.")
 
 
 if __name__ == "__main__":
