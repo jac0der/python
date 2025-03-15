@@ -87,16 +87,16 @@ def perform_conversion(temperature:float, conversion_type_code:str=ConversionTyp
     if not isinstance(temperature, (int,float)):
         raise ValueError(f'Invalid type for temperature. Expected a numeric value.')
 
-    try:
-        converted_temperature = CONVERSIONS[conversion_type_code](temperature)
+    conversion_function = CONVERSIONS.get(conversion_type_code)
 
-        print(f'Result: {temperature}° → {converted_temperature}°.')
-        logger.info(f'Converted {temperature}° to {converted_temperature}° using {conversion_type_code}.')
-        return converted_temperature
+    if conversion_function is None:
+        raise tempconv_error.ConversionTypeCodeError(f"Invalid conversion type code: '{conversion_type_code}'")
 
-    except KeyError:
-        # raise exception if no match conversion type was found
-        raise tempconv_error.ConversionTypeCodeError("Invalid conversion type code entered.")
+    converted_temperature = conversion_function(temperature)
+
+    print(f'Result: {temperature}° → {converted_temperature}°.')
+    logger.info(f'Converted {temperature}° to {converted_temperature}° using {conversion_type_code}.')
+    return converted_temperature
 
 
 def exit_program(message:str, code:int=0)->None:
