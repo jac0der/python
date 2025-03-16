@@ -15,12 +15,12 @@ logger = jaclog.configure('temperature_convertor', './tempconv.log')
 
 
 CONVERSIONS = {
-    ConversionType.CELSIUS_TO_FAHRENHEIT: lambda t: (t * 1.8) + 32,
-    ConversionType.FAHRENHEIT_TO_CELSIUS: lambda t: (t - 32) / 1.8
+    ConversionType.CELSIUS_TO_FAHRENHEIT.value: lambda t: (t * 1.8) + 32,
+    ConversionType.FAHRENHEIT_TO_CELSIUS.value: lambda t: (t - 32) / 1.8
 }
 
 
-def get_conversion_type()->None:
+def get_conversion_type()->str:
     ''' 
     Get the type of conversion to perform.
     Returns:
@@ -38,12 +38,12 @@ def get_conversion_type()->None:
             exit_program(tc.EXIT_MESSAGE, 0)
 
         if choice == '1':
-            logger.info(f'Conversion type is: {ConversionType.CELSIUS_TO_FAHRENHEIT}.')
-            return ConversionType.CELSIUS_TO_FAHRENHEIT
+            logger.info(f'Conversion type is: {ConversionType.CELSIUS_TO_FAHRENHEIT.value}.')
+            return ConversionType.CELSIUS_TO_FAHRENHEIT.value
 
         if choice == '2':
-            logger.info(f'Conversion type is: {ConversionType.FAHRENHEIT_TO_CELSIUS}.')
-            return ConversionType.FAHRENHEIT_TO_CELSIUS   
+            logger.info(f'Conversion type is: {ConversionType.FAHRENHEIT_TO_CELSIUS.value}.')
+            return ConversionType.FAHRENHEIT_TO_CELSIUS.value   
 
         print(tc.CONVERSION_TYPE_WARNING.format(choice))
         logger.warning(tc.CONVERSION_TYPE_WARNING.format(choice))
@@ -80,12 +80,16 @@ def perform_conversion(temperature:float, conversion_type_code:str=ConversionTyp
 
     Args:
             temperature (float): Temperature to be converted to another unit.
+            conversion_type_code (str): Conversion code indicating the type of temperature conversion to perform.
     Returns:
             float: Converted temperature.
     '''
     logger.info('Start performing temperature conversion.')
     if not isinstance(temperature, (int,float)):
-        raise ValueError(f'Invalid type for temperature. Expected a numeric value.')
+        raise ValueError(f'Invalid Type for temperature. Expected a numeric value.')
+
+    if not isinstance(conversion_type_code, str):
+        raise ValueError(f"Invalid Type for conversion_tyoe_code. Expected a string value.")
 
     conversion_function = CONVERSIONS.get(conversion_type_code)
 
