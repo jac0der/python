@@ -2,7 +2,7 @@
     Program to convert from Celsius to Fahrenheit or, Fahrenheit to Celsius.
 
     @datetime:: February 8, 2025 2:42 am (UTC-5)
-    @author:: jacoder
+    @author:: jac0der
 '''
 import os 
 import sys
@@ -15,12 +15,12 @@ logger = jaclog.configure('temperature_convertor', './tempconv.log')
 
 
 CONVERSIONS = {
-    ConversionType.CELSIUS_TO_FAHRENHEIT: lambda t: (t * 1.8) + 32,
-    ConversionType.FAHRENHEIT_TO_CELSIUS: lambda t: (t - 32) / 1.8
+    ConversionType.CELSIUS_TO_FAHRENHEIT.value: lambda t: (t * 1.8) + 32,
+    ConversionType.FAHRENHEIT_TO_CELSIUS.value: lambda t: (t - 32) / 1.8
 }
 
 
-def get_conversion_type()->None:
+def get_conversion_type()->str:
     ''' 
     Get the type of conversion to perform.
     Returns:
@@ -35,15 +35,15 @@ def get_conversion_type()->None:
         choice = input('\nChoose conversion type (0 to quit): ')
 
         if choice == '0':
-            exit_program(tc.EXIT_MESSAGE)
+            exit_program(tc.EXIT_MESSAGE, 0)
 
         if choice == '1':
-            logger.info(f'Conversion type is: {ConversionType.CELSIUS_TO_FAHRENHEIT}.')
-            return ConversionType.CELSIUS_TO_FAHRENHEIT
+            logger.info(f'Conversion type is: {ConversionType.CELSIUS_TO_FAHRENHEIT.value}.')
+            return ConversionType.CELSIUS_TO_FAHRENHEIT.value
 
         if choice == '2':
-            logger.info(f'Conversion type is: {ConversionType.FAHRENHEIT_TO_CELSIUS}.')
-            return ConversionType.FAHRENHEIT_TO_CELSIUS   
+            logger.info(f'Conversion type is: {ConversionType.FAHRENHEIT_TO_CELSIUS.value}.')
+            return ConversionType.FAHRENHEIT_TO_CELSIUS.value   
 
         print(tc.CONVERSION_TYPE_WARNING.format(choice))
         logger.warning(tc.CONVERSION_TYPE_WARNING.format(choice))
@@ -61,7 +61,7 @@ def get_temperature()->None:
         try:
             user_input = input("\nEnter temperature value (q to quit): ")
             if user_input.lower().strip() == 'q':
-                exit_program(tc.EXIT_MESSAGE)
+                exit_program(tc.EXIT_MESSAGE, 0)
 
             temperature = float(user_input)
 
@@ -80,23 +80,27 @@ def perform_conversion(temperature:float, conversion_type_code:str=ConversionTyp
 
     Args:
             temperature (float): Temperature to be converted to another unit.
+            conversion_type_code (str): Conversion code indicating the type of temperature conversion to perform.
     Returns:
             float: Converted temperature.
     '''
     logger.info('Start performing temperature conversion.')
     if not isinstance(temperature, (int,float)):
-        raise ValueError(f'Invalid type for temperature. Expected a numeric value.')
+        raise ValueError(f'Invalid Type for temperature. Expected a numeric value.')
 
-    try:
-        converted_temperature = CONVERSIONS[conversion_type_code](temperature)
+    if not isinstance(conversion_type_code, str):
+        raise ValueError(f"Invalid Type for conversion_tyoe_code. Expected a string value.")
 
-        print(f'Result: {temperature}° → {converted_temperature}°.')
-        logger.info(f'Converted {temperature}° to {converted_temperature}° using {conversion_type_code}.')
-        return converted_temperature
+    conversion_function = CONVERSIONS.get(conversion_type_code)
 
-    except KeyError:
-        # raise exception if no match conversion type was found
-        raise tempconv_error.ConversionTypeCodeError("Invalid conversion type code entered.")
+    if conversion_function is None:
+        raise tempconv_error.ConversionTypeCodeError(f"Invalid conversion type code: '{conversion_type_code}'")
+
+    converted_temperature = conversion_function(temperature)
+
+    print(f'Result: {temperature}° → {converted_temperature}°.')
+    logger.info(f'Converted {temperature}° to {converted_temperature}° using {conversion_type_code}.')
+    return converted_temperature
 
 
 def exit_program(message:str, code:int=0)->None:
@@ -108,10 +112,12 @@ def exit_program(message:str, code:int=0)->None:
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
 def main()->None:
+    """ Main function to start the Temperature Conversion Program. """
     try:
         logger.info("Starting Temperature Converter.")
         print("Welcome to TEMPERATURE CONVERTER")
@@ -131,14 +137,12 @@ def main()->None:
                 print(f"{tc.CONVERSION_ISSUE} \n {ex}")
                 logger.warning(f"{tc.CONVERSION_ISSUE} \n {ex}")
 
-    except KeyboardInterrupt as ex:
-        exit_program(f"\n{tc.EXIT_MESSAGE}")
-
-    except EOFError as ex:
-        exit_program(f"\n{tc.EXIT_MESSAGE}")
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{tc.EXIT_MESSAGE}")
+        return
 
     except Exception as ex:
-        logger.exception("Error occurred in main temperature conversion function.")
+        logger.exception("Error occurred in main Temperature Conversion Function.")
 
 
 if __name__ == "__main__":
