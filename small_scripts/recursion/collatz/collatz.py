@@ -6,7 +6,7 @@
 """
 
 
-def main():
+def main()->None:
     # get input from user
     str_number = input("Enter number: ")
 
@@ -14,20 +14,23 @@ def main():
     displaySteps(str_number)
 
 
-def validateInput(str_number):
+def validateInput(number:str)->(bool, int):
     """
-        Function to validate the user input to ensure a valid 
-        numeric value is entered as well as a value >= 1.
-        @input:: value enetered by user
-        @output:: List contaoining 2 elements. Index 0 is used 
-                to indicate by a boolean value if the user input
-                was valid; and index 1, is used to store the 
-                successfully cast integer value.
+    Function to validate the user input to ensure a valid 
+    numeric value is entered as well as a value >= 1.
+
+    Args:
+            str_number (str): value enetered by user.
+    Returns:
+            Tuple(bool, int): Tuple contaoining 2 elements. Index 0 is used 
+                              to indicate by a boolean value if the user input
+                              was valid; and index 1, is used to store the 
+                              successfully cast integer value.
     """
 
     try:
         # try cast input to integer to ensure numeric value was entered
-        number = int(str_number)
+        number = int(number)
 
         # ensure positive whole numbers are entered >= 1
         if(number < 1):
@@ -38,18 +41,21 @@ def validateInput(str_number):
     
     except ValueError:
         # invalid input enetered
-        return (False, str_number)
+        return (False, number)
 
 
-def collatz(str_number):
+def collatz(number:str)->int:
     """
-        Function to calculate the number of steps taken
-        to get to 1, given a number n, using the algorithm
-        for the collatz sequence, as outlined in the 
-        README_COLLATZ read me file.
-        @input:: value enetered by user
-        @output:: number of steps taking to get to 1, from 
-                a number n.
+    Function to calculate the number of steps taken
+    to get to 1, given a number n, using the algorithm
+    for the collatz sequence, as outlined in the 
+    README_COLLATZ read me file.
+        
+    Args:
+            number (str): Value enetered by user.
+    Returns:
+            int: Number of steps taking to get to 1, from 
+                 a number n.
     """
 
     step_count = 1;
@@ -59,7 +65,7 @@ def collatz(str_number):
         was successful, and also the actual input entered
         by user.
     """ 
-    validation = validateInput(str_number)
+    validation = validateInput(number)
 
     if(validation[0]):
 
@@ -76,37 +82,39 @@ def collatz(str_number):
     else:
         # set step_count to -1 if user input validation failed.
         step_count = -1
-        print(f"Invalid Input '{str_number}' entered...")
+        print(f"Invalid Input '{number}' entered...")
 
     return step_count
 
 
-def isEven(number):
+def isEven(number:int)->bool:
     """
-        Function to determine if an integer is even or odd.
-        Modulus operator wqas used to get the modulus of number / 2.  If there
-        is no remainder, it means number is exactly
-        divissible by 2, Thus number is even, otherwise odd.
-        @input:: number entered by user.
-        @output:: True if number is Even, otherwise False.
+    Function to determine if an integer is even or odd.
+    Modulus operator wqas used to get the modulus of number / 2.  If there
+    is no remainder, it means number is exactly
+    divissible by 2, Thus number is even, otherwise odd.
+    
+    Args:
+            number (int): Number entered by user.
+    Returns:
+            bool: rue if number is Even, otherwise False.
     """
-
     if( (number % 2) == 0 ):
         return True
     else:
         return False
 
 
-def displaySteps(str_number):
+def displaySteps(number:str)->None:
     """
         Function to display the results from collatz
         function execution.
     """
 
-    steps = collatz(str_number)
+    steps = collatz(number)
 
-    if( (steps == 0) and (str_number == '1') ):
-        print(f"Already at '{str_number}', so 0 steps...")
+    if( (steps == 0) and (number == '1') ):
+        print(f"Already at '{number}', so 0 steps...")
     elif(steps > 0):
         print(f"Steps count is: {steps}")
 

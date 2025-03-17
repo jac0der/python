@@ -74,7 +74,7 @@ def get_temperature()->None:
             logger.warning(f'{tc.GET_TEMPERATURE_WARNING} \n {ex}')
 
 
-def perform_conversion(temperature:float, conversion_type_code:str=ConversionType.CELSIUS_TO_FAHRENHEIT)->float:
+def perform_conversion(temperature:float, conversion_type_code:str=ConversionType.CELSIUS_TO_FAHRENHEIT.value)->float:
     '''
     Perform temperature conversion of the specified temperature value and conversion code.
 
