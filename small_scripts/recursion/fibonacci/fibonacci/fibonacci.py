@@ -8,14 +8,12 @@ import sys
 import os
 import fibonacci_constants as fc
 import fibonacci_error as fe
+from logging_custom import jaclog
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
-import jaclog
 logger = jaclog.configure('fibonacci', './fibonacci.log')
 
 
-def get_position():
+def get_position()->int:
     '''
     Get the position in the Fibonacci sequence to get value for.
     
@@ -41,7 +39,7 @@ def get_position():
             logger.warning(f'{fc.GET_NUMBER_WARNING} \n {ex}')
 
 
-def fibonacci(position):
+def fibonacci(position:int)->int:
     ''' 
     Find the Fibonacci number for the Fibonacci position entered.
 
@@ -63,7 +61,7 @@ def fibonacci(position):
     return fibonacci(position - 1) + fibonacci(position - 2)
 
 
-def display_nth_sequence(position):
+def display_nth_sequence(position:int)->None:
     '''
     Print the nth numbers of the Fibonacii sequence.
 
@@ -81,7 +79,7 @@ def display_nth_sequence(position):
     print([fibonacci(n) for n in range(position)]) # list comprehension
     
 
-def exit_program(message, code=0):
+def exit_program(message:str, code=0)->None:
     '''
     Centralized exit function to handle the program termination.
 
@@ -90,10 +88,11 @@ def exit_program(message, code=0):
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
-def main():
+def main()->None:
     """ Main function to start the Fibonacci Program. """
     try:
         while True:
