@@ -13,7 +13,7 @@ import prime_checker_constants as pcc
 logger = jaclog.configure('prime_checker', './prime_checker.log')
 
 
-def get_number():
+def get_number()->int:
     '''
     Get a number from the user to check for primality.
 
@@ -47,7 +47,7 @@ def get_number():
             logger.warning(f'{pcc.GET_PRIME_START_WARNING} \n {ex}')
 
 
-def is_prime(number):
+def is_prime(number:int)->bool:
     '''
     Check if number is a prime number.
 
@@ -84,7 +84,7 @@ def is_prime(number):
     return True
   
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle the program termination.
 
@@ -93,10 +93,11 @@ def exit_program(message, code=0):
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
-def main():
+def main()->None:
     """ Main function to start the isPrime check Program. """
     try:
         logger.info('Starting the Prime Checker Program.')
