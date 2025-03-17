@@ -10,14 +10,12 @@ import os
 import math
 import factorial_error as fe
 import factorial_constants as fc
+from logging_custom import jaclog
 
-# Add the 'logging' folder to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../logging')))
-import jaclog
 logger = jaclog.configure('factorial', './factorial.log')
 
 
-def get_number():
+def get_number()->int:
     '''
     Get number for factorial calculation.
 
@@ -36,7 +34,7 @@ def get_number():
             number = int(user_input)
 
             if number < 0:
-                raise fe.FactorialError('Invalid input: Expecting only positive integers.')
+                raise fe.FactorialError('Invalid Input: Expecting only positive integers.')
 
             print(fc.ENTERED_NUMBER.format(number))
             logger.info(fc.ENTERED_NUMBER.format(number))
@@ -52,7 +50,7 @@ def get_number():
             logger.warning(f'{fc.GET_NUMBER_WARNING} \n {ex}')
 
 
-def factorial(number):
+def factorial(number:int)->int:
     '''
         Find the factorial of a number.
 
@@ -62,10 +60,10 @@ def factorial(number):
                 int: Factorial of input number.
     '''
     if not isinstance(number, int):
-        raise ValueError('Invalid Type: Expected an integer.')
+        raise TypeError('Invalid Type: Expected an integer.')
 
     if number < 0:
-        raise fe.FactorialError('Invalid input: Expecting only positive integers.')
+        raise fe.FactorialError('Invalid Input: Expecting only positive integers.')
 
     if number in [0, 1]:
         return 1
@@ -74,12 +72,12 @@ def factorial(number):
     #return math.factorial(number)
 
 
-def factorial_iterative(number):
+def factorial_iterative(number:int)->int:
     if not isinstance(number, int):
-        raise ValueError('Invalid Type: Expected an integer.')
+        raise TypeError('Invalid Type: Expected an integer.')
     
     if number < 0:
-        raise fe.FactorialError('Invalid input: Expecting only positive integers.')
+        raise fe.FactorialError('Invalid Input: Expecting only positive integers.')
 
     result = 1
     for i in range(2, number + 1):
@@ -87,7 +85,7 @@ def factorial_iterative(number):
     return result
 
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle the program termination.
 
@@ -96,10 +94,11 @@ def exit_program(message, code=0):
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
-def main():
+def main()->None:
     """ Main function to start the factorial program.  """
     try:
         logger.info('Starting the factorial program.')
@@ -110,8 +109,8 @@ def main():
             print(f"Factorial is: {fact}")
             logger.info(f"Factorial is: {fact}")
 
-    except ValueError as ex:
-        logger.error(f"ValueError: {ex}")
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
 
     except fe.FactorialError as ex:
         logger.error(f"FactorialError: {ex}")
