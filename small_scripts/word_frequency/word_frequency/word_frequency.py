@@ -102,7 +102,8 @@ def exit_program(message, code=0)->None:
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
 def main()->None:
