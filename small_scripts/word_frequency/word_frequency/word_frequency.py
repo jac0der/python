@@ -93,7 +93,7 @@ def generate_word_tally(unique_words: set[str], words: list[str])->dict[str, int
     }
 
    
-def exit_program(message, code=0)->None:
+def exit_program(message:str, code=0)->None:
     '''
     Centralized exit function to handle the program termination.
 
