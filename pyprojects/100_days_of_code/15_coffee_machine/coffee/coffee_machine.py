@@ -20,6 +20,34 @@ def display_logo()->None:
     print(logo)
 
 
+def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
+    '''
+    Validating the coffee order to ensure customer's coffee order
+    is on the coffee menu.
+
+    Args:
+            coffee_order (str): The customer's coffee order.
+            menu (dict[str,dict]): The coffee menu from which customer makes order.
+    Returns:
+            bool: True customer's coffee order is on the coffee menu,
+                  otherwise False.
+    '''
+    if not isinstance(coffee_order, str):
+        raise TypeError(f"Invalid Type for 'coffee_order': Expected a string value.")
+
+    if not isinstance(menu, dict):
+        raise TypeError(f"Invalid Type for 'menu': Expected a dictionary value.")
+
+    logger.info("Validating coffee order.")
+
+    coffee_item = menu.get(coffee_order)
+
+    if coffee_item is None:
+        return False
+
+    return True
+
+
 def coffee_order()->str:
     '''
     Gets the type of coffee customer ordered to be made.
@@ -29,7 +57,13 @@ def coffee_order()->str:
     '''
     logger.info("Getting customer coffee order.")
 
-    coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+    while True:
+        coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+        if validate_coffee_order(coffee_order, cd.MENU):
+            break
+        else:
+            print(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
+            logger.warning(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
 
     print(cmc.COFFEE_ORDER.format(coffee_order))
     logger.info(cmc.COFFEE_ORDER.format(coffee_order))
@@ -42,6 +76,9 @@ def main()->None:
         logger.info("Starting the coffee machine program.")
         display_logo()
         coffee_order()
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
     
     except (KeyboardInterrupt, EOFError):
         print(f"\n{cmc.EXIT_MESSAGE}")
