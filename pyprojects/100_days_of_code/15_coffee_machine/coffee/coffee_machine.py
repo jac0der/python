@@ -20,11 +20,28 @@ def display_logo()->None:
     print(logo)
 
 
+def coffee_order()->str:
+    '''
+    Gets the type of coffee customer ordered to be made.
+
+    Returns:
+            str: The type of coffee customer ordered.
+    '''
+    logger.info("Getting customer coffee order.")
+
+    coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+
+    print(cmc.COFFEE_ORDER.format(coffee_order))
+    logger.info(cmc.COFFEE_ORDER.format(coffee_order))
+    return coffee_order
+
+
 def main()->None:
     """ Main function to start the Coffee Machine Program. """
     try:
         logger.info("Starting the coffee machine program.")
         display_logo()
+        coffee_order()
     
     except (KeyboardInterrupt, EOFError):
         print(f"\n{cmc.EXIT_MESSAGE}")
