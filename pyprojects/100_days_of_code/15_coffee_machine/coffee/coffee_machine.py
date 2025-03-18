@@ -9,6 +9,7 @@ coffee for customers.
 from art import logo
 import coffee_data as cd
 from logging_custom import jaclog
+import coffee_machine_error as cme
 import coffee_machine_constants as cmc
 
 logger = jaclog.configure('coffee_machine', './coffee_machine.log')
@@ -32,13 +33,15 @@ def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
             bool: True customer's coffee order is on the coffee menu,
                   otherwise False.
     '''
+    logger.info("Validating coffee order.")
     if not isinstance(coffee_order, str):
         raise TypeError(f"Invalid Type for 'coffee_order': Expected a string value.")
 
     if not isinstance(menu, dict):
         raise TypeError(f"Invalid Type for 'menu': Expected a dictionary value.")
 
-    logger.info("Validating coffee order.")
+    if len(coffee_order) == 0 or len(menu) == 0:
+        raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_order' or 'menu' parameters cannot be empty.")
 
     coffee_item = menu.get(coffee_order)
 
@@ -58,12 +61,16 @@ def coffee_order()->str:
     logger.info("Getting customer coffee order.")
 
     while True:
-        coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
-        if validate_coffee_order(coffee_order, cd.MENU):
-            break
-        else:
-            print(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
-            logger.warning(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
+        try:
+            coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+            if validate_coffee_order(coffee_order, cd.MENU):
+                break
+            else:
+                print(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
+                logger.warning(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
+    
+        except cme.CoffeeMachineError as ex:
+            logger.warning(f"CoffeeMachineError: {ex}")
 
     print(cmc.COFFEE_ORDER.format(coffee_order))
     logger.info(cmc.COFFEE_ORDER.format(coffee_order))
@@ -79,7 +86,7 @@ def main()->None:
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
-    
+   
     except (KeyboardInterrupt, EOFError):
         print(f"\n{cmc.EXIT_MESSAGE}")
         return
