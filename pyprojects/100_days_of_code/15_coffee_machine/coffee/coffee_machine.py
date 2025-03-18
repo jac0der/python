@@ -65,9 +65,7 @@ def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
     if len(coffee_order) == 0 or len(menu) == 0:
         raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_order' or 'menu' parameters cannot be empty.")
 
-    coffee_item = menu.get(coffee_order)
-
-    if coffee_item is None:
+    if coffee_order not in menu.keys():
         return False
 
     return True
