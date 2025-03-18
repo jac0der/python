@@ -22,6 +22,27 @@ def display_logo()->None:
     print(logo)
 
 
+def generate_resources_report(coffee_machine_resources:dict[str, int])->None:
+    '''
+    Generates a current resource details report for the coffee machine.
+
+    Args:
+            coffee_machine_resources (dict[str, int]): The coffee machine for which to print the 
+                                                       current available coffee resources to make coffee.
+    '''
+    logger.info("Generating current coffee machine resources report.")
+
+    if not isinstance(coffee_machine_resources, dict):
+        raise TypeError(f"Invalid Type for 'coffee_machine_resources': Expected a dictionary value.")
+
+    if len(coffee_machine_resources) == 0:
+        raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_machine_resources' parameter cannot be empty.")
+
+    print(f"Water: {coffee_machine_resources.get("water")}ml")
+    print(f"Milk: {coffee_machine_resources.get("milk")}ml")
+    print(f"Coffee: {coffee_machine_resources.get("coffee")}g", end='\n\n')
+
+
 def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
     '''
     Validating the coffee order to ensure customer's coffee order
@@ -67,6 +88,10 @@ def coffee_order()->str:
 
             if coffee_order == cmc.EXIT_TRIGGER:
                 exit_program(cmc.EXIT_MESSAGE, 0)
+
+            if coffee_order == cmc.REPORT_TRIGGER:
+                generate_resources_report(cd.resources)
+                continue
 
             if validate_coffee_order(coffee_order, cd.MENU):
                 break
