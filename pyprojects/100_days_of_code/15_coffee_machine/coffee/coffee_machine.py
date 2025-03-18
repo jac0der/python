@@ -7,6 +7,7 @@ coffee for customers.
 '''
 
 import coffee_machine_constants as cmc
+import coffee_data as cd
 from logging_custom import jaclog
 
 logger = jaclog.configure('coffee_machine', './coffee_machine.log')
