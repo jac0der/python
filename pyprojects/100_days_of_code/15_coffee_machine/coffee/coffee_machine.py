@@ -6,6 +6,7 @@ coffee for customers.
 @author:: jac0der
 '''
 
+import sys
 from art import logo
 import coffee_data as cd
 from logging_custom import jaclog
@@ -62,7 +63,11 @@ def coffee_order()->str:
 
     while True:
         try:
-            coffee_order = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+            coffee_order = input("What would you like? (espresso/latte/cappuccino) (q to quit): ").strip().lower()
+
+            if coffee_order == cmc.EXIT_TRIGGER:
+                exit_program(cmc.EXIT_MESSAGE, 0)
+
             if validate_coffee_order(coffee_order, cd.MENU):
                 break
             else:
@@ -77,12 +82,25 @@ def coffee_order()->str:
     return coffee_order
 
 
+def exit_program(message:str, code:int=0)->None:
+    '''
+    Centralized exit function to handle program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    print(message)
+    sys.exit(code)
+
+
 def main()->None:
     """ Main function to start the Coffee Machine Program. """
     try:
         logger.info("Starting the coffee machine program.")
         display_logo()
-        coffee_order()
+        coffeeorder = coffee_order()
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
