@@ -186,13 +186,22 @@ def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[
     Args:
             coffee_ingredients (dict[str,int]): The dictionary of coffee ingredients to be used to update the
                                                 coffee machine with.
-            coffee_machine (dict[str,int]): The coffee machine coffee ingredients being updated.
+            coffee_machine (dict[str,float]): The coffee machine coffee ingredients being updated.
             unstock (bool): If True, reduce the coffee machine ingredients by the coffee_ingredients, otherwise,
                             If False, stock or increase the coffee machin ingredients with the coffee_ingredients.
+    Returns:
+            dict[str,float]: The updated coffee machine with new ingredient values.
     '''
     logger.info("Updating the Coffee Machine resource ingredients.")
 
-    # do validations
+    if not isinstance(coffee_ingredients, dict) or not isinstance(coffee_machine, dict):
+        raise TypeError(f"Invalid Type for coffee_ingredients or coffee_machine. Expected a dictionary value.")
+
+    if not isinstance(unstock, bool):
+        raise TypeError(f"Invalid Type for unstock. Expected a boolean value.")
+
+    if len(coffee_ingredients) == 0 or len(coffee_machine) == 0 :
+        raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_ingredients' or 'coffee_machine' parameters cannot be empty.")
 
     if unstock:
         operation = operator.sub
@@ -306,10 +315,10 @@ def main()->None:
             process_payment(ordered_coffee)
 
     except TypeError as ex:
-        logger.error(f"TypeError: {ex}")
+        logger.exception(f"TypeError: {ex}")
 
     except cme.CoffeeMachineError as ex:
-        logger.error(f"CoffeeMachineError: {ex}")
+        logger.exception(f"CoffeeMachineError: {ex}")
    
     except (KeyboardInterrupt, EOFError):
         print(f"\n{cmc.EXIT_MESSAGE}")
