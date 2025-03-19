@@ -104,7 +104,7 @@ def coffee_order()->dict[str,typing.Any]:
         except cme.CoffeeMachineError as ex:
             logger.warning(f"CoffeeMachineError: {ex}")
 
-    #print(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
+    cmc.ORDERED_COFFEE = coffee_order
     logger.info(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
     return coffee_item
 
@@ -135,6 +135,37 @@ def check_coffee_machine_resources(ordered_coffee:dict[str,int], coffee_machine:
    return ""
 
 
+def get_coin_total(coin_amounts:dict[str,int], coffee_machine_coins:dict[str,float])->float:
+    '''
+    Calculate the total coins dollar value entered by customer
+    to pay for their coffee order.
+
+    Args:
+            coin_amounts (dict[str,int]): The total amount of coins enetred by customer for
+                                          each coin (quarter, dime etc...)
+            
+            coffee_machine_coins (dict[str,float]): The coffee machine coins dollar value associations.
+                                                    Ex. quarters: 0.25, dimes: 0.10 etc...
+    Returns:
+            float: Calculated dollar value for amount of coins entered into coffee machine.
+    '''
+    logger.info(f"Tallying coins total for {coin_amounts}.")
+
+    if not isinstance(coin_amounts, dict):
+        raise TypeError(f"Invalid Type for coin_amounts. Expected a dictionary value.")
+
+    if len(coin_amounts) == 0:
+        raise cme.CoffeeMachineError(f"Invalid Input: 'coin_amounts' parameter cannot be empty.")
+
+    total:float = 0
+
+    for coin, coin_amount in coin_amounts.items():
+        total = total + (coin_amount * coffee_machine_coins[coin])
+
+    logger.info(f"Coin dollar value: {total}.")
+    return total
+
+
 def process_payment(ordered_coffee:dict[str,typing.Any])->None:
     '''
     Process the payment for coffee in coins.
@@ -155,7 +186,7 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
     coin_entry:bool = True
     coin_amounts:dict = dict()
 
-    for coin in cmc.COINS:
+    for coin in cmc.COINS.keys():
 
         while coin_entry:
             try:
@@ -179,6 +210,20 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
     
     logger.info(f"coin_amounts is: {coin_amounts}")
     print(coin_amounts)
+
+    dollar_value = get_coin_total(coin_amounts, cmc.COINS)
+    print(dollar_value)
+
+    coffee_cost:float = ordered_coffee['cost'];
+
+    if dollar_value < coffee_cost:
+        print(cmc.INSUFFICIENT_FUNDS.format(cmc.ORDERED_COFFEE))
+        return
+
+    elif dollar_value > coffee_cost:
+        print(cmc.ORDER_CHANGE.format(round((dollar_value - coffee_cost),2)))
+
+    print(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE), end='\n\n')
         
 
 def exit_program(message:str, code:int=0)->None:
@@ -199,14 +244,16 @@ def main()->None:
     try:
         logger.info("Starting the coffee machine program.")
         display_logo()
-        ordered_coffee:dict[str, typing.Any] = coffee_order()
+        
+        while True:                        
+            ordered_coffee:dict[str, typing.Any] = coffee_order()
 
-        sufficient_ingredients:str = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
+            sufficient_ingredients:str = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
 
-        if len(sufficient_ingredients) > 0:
-            print(f"Sorry there is not enough {sufficient_ingredients}")
+            if len(sufficient_ingredients) > 0:
+                print(f"Sorry there is not enough {sufficient_ingredients}")
 
-        process_payment(ordered_coffee)
+            process_payment(ordered_coffee)
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
