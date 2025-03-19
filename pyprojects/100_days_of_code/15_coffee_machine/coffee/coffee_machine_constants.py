@@ -1,4 +1,4 @@
-EXIT_TRIGGER:str = "q"
+EXIT_TRIGGER:str = "off"
 ORDERED_COFFEE: str = ""
 
 COINS:dict[str, float] = {

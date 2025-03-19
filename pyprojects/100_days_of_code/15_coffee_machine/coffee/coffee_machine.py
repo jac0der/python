@@ -39,9 +39,21 @@ def generate_resources_report(coffee_machine_resources:dict[str, int])->None:
     if len(coffee_machine_resources) == 0:
         raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_machine_resources' parameter cannot be empty.")
 
-    print(f"Water: {coffee_machine_resources.get("water")}ml")
-    print(f"Milk: {coffee_machine_resources.get("milk")}ml")
-    print(f"Coffee: {coffee_machine_resources.get("coffee")}g", end='\n\n')
+    for key, value in coffee_machine_resources.items():
+        
+        if key != "money":
+
+            if key in ['water', 'milk']:
+                unit = 'ml'
+            elif key == 'coffee':
+                unit = 'g'
+
+            print(f"{key.title()}: {value}{unit}")
+        else:
+            unit = '$'
+            print(f"{key.title()}: {unit}{value}")
+
+    print("\n")
 
 
 def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->dict:
@@ -84,7 +96,7 @@ def coffee_order()->dict[str,typing.Any]:
 
     while True:
         try:
-            coffee_order = input("What would you like? (espresso/latte/cappuccino) (q to quit): ").strip().lower()
+            coffee_order = input("What would you like? (espresso/latte/cappuccino) (off to quit): ").strip().lower()
 
             if coffee_order == cmc.EXIT_TRIGGER:
                 exit_program(cmc.EXIT_MESSAGE, 0)
@@ -166,6 +178,10 @@ def get_coin_total(coin_amounts:dict[str,int], coffee_machine_coins:dict[str,flo
     return total
 
 
+def update_coffee_machine()->None:
+    pass
+
+
 def process_payment(ordered_coffee:dict[str,typing.Any])->None:
     '''
     Process the payment for coffee in coins.
@@ -214,16 +230,22 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
     dollar_value = get_coin_total(coin_amounts, cmc.COINS)
     print(dollar_value)
 
-    coffee_cost:float = ordered_coffee['cost'];
+    coffee_cost:float = ordered_coffee['cost']
+    logger.info(f"Cost for {cmc.ORDERED_COFFEE}: ${coffee_cost}")
 
     if dollar_value < coffee_cost:
         print(cmc.INSUFFICIENT_FUNDS.format(cmc.ORDERED_COFFEE))
+        logger.info(cmc.INSUFFICIENT_FUNDS.format(cmc.ORDERED_COFFEE))
         return
 
     elif dollar_value > coffee_cost:
-        print(cmc.ORDER_CHANGE.format(round((dollar_value - coffee_cost),2)))
+        change:float = dollar_value - coffee_cost
+
+        print(cmc.ORDER_CHANGE.format(round((change),2)))
+        logger.info(cmc.ORDER_CHANGE.format(round((change),2)))
 
     print(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE), end='\n\n')
+    logger.info(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE))
         
 
 def exit_program(message:str, code:int=0)->None:
