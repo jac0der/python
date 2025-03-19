@@ -7,6 +7,7 @@ coffee for customers.
 '''
 
 import sys
+import typing
 from art import logo
 import coffee_data as cd
 from logging_custom import jaclog
@@ -72,7 +73,7 @@ def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->dict:
     return coffee_item
 
 
-def coffee_order()->dict:
+def coffee_order()->dict[str,typing.Any]:
     '''
     Gets the type of coffee customer ordered to be made.
 
@@ -92,7 +93,7 @@ def coffee_order()->dict:
                 generate_resources_report(cd.resources)
                 continue
 
-            coffee_item = validate_coffee_order(coffee_order, cd.MENU)
+            coffee_item:dict = validate_coffee_order(coffee_order, cd.MENU)
 
             if len(coffee_item) > 0:
                 break
@@ -103,7 +104,7 @@ def coffee_order()->dict:
         except cme.CoffeeMachineError as ex:
             logger.warning(f"CoffeeMachineError: {ex}")
 
-    print(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
+    #print(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
     logger.info(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
     return coffee_item
 
@@ -122,17 +123,63 @@ def check_coffee_machine_resources(ordered_coffee:dict[str,int], coffee_machine:
    logger.info(f"Checking if coffee machine has sufficient ingredients to make '{ordered_coffee}'")
 
    if not isinstance(ordered_coffee, dict) or not isinstance(coffee_machine,dict):
-    raise TypeError(f"Invalid Type for ordered_coffee or coffee_machine. Expected a dictionary value.")
+        raise TypeError(f"Invalid Type for ordered_coffee or coffee_machine. Expected a dictionary value.")
 
    if len(ordered_coffee) == 0 or len(coffee_machine) == 0:
-    raise cme.CoffeeMachineError(f"Invalid Input: 'ordered_coffee' or 'coffee_machine' parameters cannot be empty.")
+        raise cme.CoffeeMachineError(f"Invalid Input: 'ordered_coffee' or 'coffee_machine' parameters cannot be empty.")
 
    for ingredient, ingredient_amount in ordered_coffee.items():
-    if ingredient_amount > coffee_machine[ingredient]:
-        return ingredient
+        if ingredient_amount > coffee_machine[ingredient]:
+            return ingredient
 
    return ""
 
+
+def process_payment(ordered_coffee:dict[str,typing.Any])->None:
+    '''
+    Process the payment for coffee in coins.
+
+    Args:
+            ordered_coffee (dict[str,typing.Any]): The customer's coffee order being paid for.
+    '''
+    logger.info(f"Processing payment for '{ordered_coffee}'")
+
+    if not isinstance(ordered_coffee, dict):
+        raise TypeError(f"Invalid Type for ordered_coffee. Expected a dictionary value.")
+
+    if len(ordered_coffee) == 0:
+        raise cme.CoffeeMachineError(f"Invalid Input: 'ordered_coffee' parameter cannot be empty.")
+
+    print("Please insert coins.")
+
+    coin_entry:bool = True
+    coin_amounts:dict = dict()
+
+    for coin in cmc.COINS:
+
+        while coin_entry:
+            try:
+                coin_amount = int(input(f"How many {coin}?: ").strip())
+
+                if coin_amount < 0:
+                    raise cme.CoffeeMachineError(cmc.COIN_AMOUNT_NUMBER_WARNING.format(coin))
+
+                coin_amounts[coin] = coin_amount
+                coin_entry = False
+
+            except ValueError as ex:
+                print(cmc.COIN_AMOUNT_WARNING.format(coin))
+                logger.warning(cmc.COIN_AMOUNT_WARNING.format(coin))
+            
+            except cme.CoffeeMachineError as ex:
+                print(cmc.COIN_AMOUNT_NUMBER_WARNING.format(coin))
+                logger.warning(f"CoffeeMachineError: {ex}")
+
+        coin_entry = True
+    
+    logger.info(f"coin_amounts is: {coin_amounts}")
+    print(coin_amounts)
+        
 
 def exit_program(message:str, code:int=0)->None:
     '''
@@ -152,13 +199,14 @@ def main()->None:
     try:
         logger.info("Starting the coffee machine program.")
         display_logo()
-        ordered_coffee = coffee_order()
+        ordered_coffee:dict[str, typing.Any] = coffee_order()
 
-        sufficient_ingredients = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
+        sufficient_ingredients:str = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
 
         if len(sufficient_ingredients) > 0:
             print(f"Sorry there is not enough {sufficient_ingredients}")
 
+        process_payment(ordered_coffee)
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
