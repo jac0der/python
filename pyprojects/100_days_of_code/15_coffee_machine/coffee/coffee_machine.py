@@ -8,6 +8,7 @@ coffee for customers.
 
 import sys
 import typing
+import operator
 from art import logo
 import coffee_data as cd
 from logging_custom import jaclog
@@ -23,7 +24,7 @@ def display_logo()->None:
     print(logo)
 
 
-def generate_resources_report(coffee_machine_resources:dict[str, int])->None:
+def generate_resources_report(coffee_machine_resources:dict[str, float])->None:
     '''
     Generates a current resource details report for the coffee machine.
 
@@ -121,7 +122,7 @@ def coffee_order()->dict[str,typing.Any]:
     return coffee_item
 
 
-def check_coffee_machine_resources(ordered_coffee:dict[str,int], coffee_machine:dict[str,int])->str:
+def check_coffee_machine_resources(ordered_coffee:dict[str,int], coffee_machine:dict[str,float])->str:
    '''
     Check if coffee machine has sufficient ingredient resources to make the customer's
     coffee order.
@@ -178,8 +179,30 @@ def get_coin_total(coin_amounts:dict[str,int], coffee_machine_coins:dict[str,flo
     return total
 
 
-def update_coffee_machine()->None:
-    pass
+def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[str, float], unstock:bool=False)->dict[str,float]:
+    '''
+    Updating the coffee machin resource ingredients.
+
+    Args:
+            coffee_ingredients (dict[str,int]): The dictionary of coffee ingredients to be used to update the
+                                                coffee machine with.
+            coffee_machine (dict[str,int]): The coffee machine coffee ingredients being updated.
+            unstock (bool): If True, reduce the coffee machine ingredients by the coffee_ingredients, otherwise,
+                            If False, stock or increase the coffee machin ingredients with the coffee_ingredients.
+    '''
+    logger.info("Updating the Coffee Machine resource ingredients.")
+
+    # do validations
+
+    if unstock:
+        operation = operator.sub
+    else:
+        operation = operator.add
+
+    for ingredient, amount in coffee_ingredients.items():
+        coffee_machine[ingredient] = round(operation(coffee_machine[ingredient],amount), 2)
+
+    return coffee_machine
 
 
 def process_payment(ordered_coffee:dict[str,typing.Any])->None:
@@ -245,7 +268,11 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
         logger.info(cmc.ORDER_CHANGE.format(round((change),2)))
 
     print(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE), end='\n\n')
-    logger.info(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE))
+    logger.info(cmc.ORDER_SUCCESS.format(cmc.ORDERED_COFFEE))\
+
+    cd.resources = update_coffee_machine(ordered_coffee['ingredients'], cd.resources, True)
+    cd.resources['money'] = round(operator.add(cd.resources['money'], coffee_cost),2)
+
         
 
 def exit_program(message:str, code:int=0)->None:
@@ -273,7 +300,7 @@ def main()->None:
             sufficient_ingredients:str = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
 
             if len(sufficient_ingredients) > 0:
-                print(f"Sorry there is not enough {sufficient_ingredients}")
+                print(cmc.INSUFFICIENT_INGREDIENTS.format(sufficient_ingredients))
                 continue
 
             process_payment(ordered_coffee)
