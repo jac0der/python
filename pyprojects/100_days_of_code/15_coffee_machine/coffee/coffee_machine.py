@@ -274,6 +274,7 @@ def main()->None:
 
             if len(sufficient_ingredients) > 0:
                 print(f"Sorry there is not enough {sufficient_ingredients}")
+                continue
 
             process_payment(ordered_coffee)
 
