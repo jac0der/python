@@ -1,5 +1,5 @@
 EXIT_TRIGGER:str = "q"
 EXIT_MESSAGE: str = "Goodbye!"
 REPORT_TRIGGER: str = "report"
-COFFEE_ORDER: str = "Coffee order is: {}."
+COFFEE_ORDER: str = "Coffee order is {}: {}."
 ORDER_VALIDATION_WARNING: str = "Invalid coffee order {}."

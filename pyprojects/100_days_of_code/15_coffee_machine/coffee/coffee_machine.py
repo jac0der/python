@@ -43,7 +43,7 @@ def generate_resources_report(coffee_machine_resources:dict[str, int])->None:
     print(f"Coffee: {coffee_machine_resources.get("coffee")}g", end='\n\n')
 
 
-def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
+def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->dict:
     '''
     Validating the coffee order to ensure customer's coffee order
     is on the coffee menu.
@@ -52,8 +52,7 @@ def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
             coffee_order (str): The customer's coffee order.
             menu (dict[str,dict]): The coffee menu from which customer makes order.
     Returns:
-            bool: True customer's coffee order is on the coffee menu,
-                  otherwise False.
+            dict: The customer's coffee order - ingredients used to make the order and cost. 
     '''
     logger.info("Validating coffee order.")
     if not isinstance(coffee_order, str):
@@ -65,18 +64,20 @@ def validate_coffee_order(coffee_order:str, menu:dict[str,dict])->bool:
     if len(coffee_order) == 0 or len(menu) == 0:
         raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_order' or 'menu' parameters cannot be empty.")
 
-    if coffee_order not in menu.keys():
-        return False
+    coffee_item = menu.get(coffee_order)
 
-    return True
+    if coffee_item is None:
+        return {}
+
+    return coffee_item
 
 
-def coffee_order()->str:
+def coffee_order()->dict:
     '''
     Gets the type of coffee customer ordered to be made.
 
     Returns:
-            str: The type of coffee customer ordered.
+            dict: The customer's coffee order - ingredients used to make the order and cost. 
     '''
     logger.info("Getting customer coffee order.")
 
@@ -91,7 +92,9 @@ def coffee_order()->str:
                 generate_resources_report(cd.resources)
                 continue
 
-            if validate_coffee_order(coffee_order, cd.MENU):
+            coffee_item = validate_coffee_order(coffee_order, cd.MENU)
+
+            if len(coffee_item) > 0:
                 break
             else:
                 print(cmc.ORDER_VALIDATION_WARNING.format(coffee_order))
@@ -100,9 +103,9 @@ def coffee_order()->str:
         except cme.CoffeeMachineError as ex:
             logger.warning(f"CoffeeMachineError: {ex}")
 
-    print(cmc.COFFEE_ORDER.format(coffee_order))
-    logger.info(cmc.COFFEE_ORDER.format(coffee_order))
-    return coffee_order
+    print(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
+    logger.info(cmc.COFFEE_ORDER.format(coffee_order, coffee_item))
+    return coffee_item
 
 
 def exit_program(message:str, code:int=0)->None:
