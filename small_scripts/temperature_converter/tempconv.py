@@ -89,7 +89,7 @@ def perform_conversion(temperature:float, conversion_type_code:str=ConversionTyp
         raise ValueError(f'Invalid Type for temperature. Expected a numeric value.')
 
     if not isinstance(conversion_type_code, str):
-        raise ValueError(f"Invalid Type for conversion_tyoe_code. Expected a string value.")
+        raise ValueError(f"Invalid Type for conversion_type_code. Expected a string value.")
 
     conversion_function = CONVERSIONS.get(conversion_type_code)
 

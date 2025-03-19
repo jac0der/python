@@ -108,6 +108,32 @@ def coffee_order()->dict:
     return coffee_item
 
 
+def check_coffee_machine_resources(ordered_coffee:dict[str,int], coffee_machine:dict[str,int])->str:
+   '''
+    Check if coffee machine has sufficient ingredient resources to make the customer's
+    coffee order.
+
+    Args:
+            ordered_coffee (dict[str,int]): The coffee order of customer.
+            coffee_machine (dict[str,int]): The coffee machine current available ingredient amounts.
+    Returns:
+            str: The first insufficient coffee ingredient from the current coffee machine ingredient amounts.
+   '''
+   logger.info(f"Checking if coffee machine has sufficient ingredients to make '{ordered_coffee}'")
+
+   if not isinstance(ordered_coffee, dict) or not isinstance(coffee_machine,dict):
+    raise TypeError(f"Invalid Type for ordered_coffee or coffee_machine. Expected a dictionary value.")
+
+   if len(ordered_coffee) == 0 or len(coffee_machine) == 0:
+    raise cme.CoffeeMachineError(f"Invalid Input: 'ordered_coffee' or 'coffee_machine' parameters cannot be empty.")
+
+   for ingredient, ingredient_amount in ordered_coffee.items():
+    if ingredient_amount > coffee_machine[ingredient]:
+        return ingredient
+
+   return ""
+
+
 def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle program termination.
@@ -126,10 +152,19 @@ def main()->None:
     try:
         logger.info("Starting the coffee machine program.")
         display_logo()
-        coffeeorder = coffee_order()
+        ordered_coffee = coffee_order()
+
+        sufficient_ingredients = check_coffee_machine_resources(ordered_coffee['ingredients'], cd.resources)
+
+        if len(sufficient_ingredients) > 0:
+            print(f"Sorry there is not enough {sufficient_ingredients}")
+
 
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
+
+    except cme.CoffeeMachineError as ex:
+        logger.error(f"CoffeeMachineError: {ex}")
    
     except (KeyboardInterrupt, EOFError):
         print(f"\n{cmc.EXIT_MESSAGE}")
