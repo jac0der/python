@@ -10,7 +10,7 @@ COINS:dict[str, float] = {
 
 EXIT_MESSAGE: str = "Goodbye!"
 REPORT_TRIGGER: str = "report"
-ORDER_CHANGE: str = "Here is ${} in change."
+ORDER_CHANGE: str = "Here is ${} dollars in change."
 COFFEE_ORDER: str = "Coffee order is {}: {}."
 ORDER_SUCCESS: str = "Here is your {} ☕ Enjoy!"
 ORDER_VALIDATION_WARNING: str = "Invalid coffee order {}."

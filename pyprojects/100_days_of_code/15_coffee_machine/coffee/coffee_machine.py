@@ -192,7 +192,7 @@ def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[
     Returns:
             dict[str,float]: The updated coffee machine with new ingredient values.
     '''
-    logger.info("Updating the Coffee Machine resource ingredients.")
+    logger.info("Updating the Coffee Machine resource ingredients.")    
 
     if not isinstance(coffee_ingredients, dict) or not isinstance(coffee_machine, dict):
         raise TypeError(f"Invalid Type for coffee_ingredients or coffee_machine. Expected a dictionary value.")
@@ -203,6 +203,8 @@ def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[
     if len(coffee_ingredients) == 0 or len(coffee_machine) == 0 :
         raise cme.CoffeeMachineError(f"Invalid Input: 'coffee_ingredients' or 'coffee_machine' parameters cannot be empty.")
 
+    logger.info(f"Initial coffee machine: {coffee_machine}")
+
     if unstock:
         operation = operator.sub
     else:
@@ -211,6 +213,7 @@ def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[
     for ingredient, amount in coffee_ingredients.items():
         coffee_machine[ingredient] = round(operation(coffee_machine[ingredient],amount), 2)
 
+    logger.info(f"Updated coffee machine: {coffee_machine}")
     return coffee_machine
 
 
@@ -257,10 +260,8 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
         coin_entry = True
     
     logger.info(f"coin_amounts is: {coin_amounts}")
-    print(coin_amounts)
 
     dollar_value = get_coin_total(coin_amounts, cmc.COINS)
-    print(dollar_value)
 
     coffee_cost:float = ordered_coffee['cost']
     logger.info(f"Cost for {cmc.ORDERED_COFFEE}: ${coffee_cost}")
@@ -281,7 +282,7 @@ def process_payment(ordered_coffee:dict[str,typing.Any])->None:
 
     cd.resources = update_coffee_machine(ordered_coffee['ingredients'], cd.resources, True)
     cd.resources['money'] = round(operator.add(cd.resources['money'], coffee_cost),2)
-
+    logger.info(f"Updated coffee machine profit: {cd.resources}")
         
 
 def exit_program(message:str, code:int=0)->None:
