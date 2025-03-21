@@ -8,6 +8,12 @@ COINS:dict[str, float] = {
         'pennies':0.01
     }
 
+COFFEE_INGREDIENTS:dict[str,str] = {
+    'water': 'ml',
+    'milk': 'ml',
+    'coffee': 'g'
+}
+
 STOCK_TRIGGER:str = "stock"
 EXIT_MESSAGE: str = "Goodbye!"
 REPORT_TRIGGER: str = "report"

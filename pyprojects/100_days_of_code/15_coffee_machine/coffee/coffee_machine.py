@@ -184,10 +184,31 @@ def get_coin_total(coin_amounts:dict[str,int], coffee_machine_coins:dict[str,flo
 
 
 def stock_coffee_machine()->dict[str, float]:
-    """ """
+    '''
+    Stock the coffee machine with additional ingredients.
+
+    Returns:
+            dict[str,float]: The stocked coffee machine.
+    '''
     logger.info("Stocking coffee machine")
+
+    additional_ingredients:dict[str,int] = dict()
     print("Enter additional amounts of coffee ingredients to stock coffee machine.")
-    coffee_machine:dict[str,float] = {"":3}
+
+    for ingredient, unit in cmc.COFFEE_INGREDIENTS.items():
+
+        while True:
+            try:
+                amount = int(input(f"{ingredient.title()} ({unit}): "))
+                additional_ingredients[ingredient] = amount
+                break
+
+            except ValueError as ex:
+                print(f"")
+                logger.warning(f"Invalid amotn entered, expecting an interger value.")
+
+
+    coffee_machine = update_coffee_machine(additional_ingredients, cd.resources, False)
 
     return coffee_machine
 
