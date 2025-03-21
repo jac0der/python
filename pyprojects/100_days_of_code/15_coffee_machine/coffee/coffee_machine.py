@@ -106,6 +106,10 @@ def coffee_order()->dict[str,typing.Any]:
                 generate_resources_report(cd.resources)
                 continue
 
+            if coffee_order == cmc.STOCK_TRIGGER:
+                stock_coffee_machine()
+                continue
+
             coffee_item:dict = validate_coffee_order(coffee_order, cd.MENU)
 
             if len(coffee_item) > 0:
@@ -177,6 +181,15 @@ def get_coin_total(coin_amounts:dict[str,int], coffee_machine_coins:dict[str,flo
 
     logger.info(f"Coin dollar value: {total}.")
     return total
+
+
+def stock_coffee_machine()->dict[str, float]:
+    """ """
+    logger.info("Stocking coffee machine")
+    print("Enter additional amounts of coffee ingredients to stock coffee machine.")
+    coffee_machine:dict[str,float] = {"":3}
+
+    return coffee_machine
 
 
 def update_coffee_machine(coffee_ingredients:dict[str,int], coffee_machine:dict[str, float], unstock:bool=False)->dict[str,float]:
