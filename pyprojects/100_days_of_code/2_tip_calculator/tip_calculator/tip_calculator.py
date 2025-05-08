@@ -29,11 +29,12 @@ def get_bill_amount(message:str)->float:
         try:
             bill = float(input(message))
             logger.info(f"Bill amount: {bill}")
+
             return bill
         
         except ValueError as ex:
-            print(tcc.GET_NUMBER_WARNING.format('bill'))
-            logger.warning(f'{tcc.GET_NUMBER_WARNING.format('bill')} \n {ex}')
+            print(tcc.GET_NUMBER_WARNING.format(tcc.BILL_AMOUNT))
+            logger.warning(f'{tcc.GET_NUMBER_WARNING.format(tcc.BILL_AMOUNT)} \n {ex}')
 
 
 def get_input(message:str)->int:
@@ -45,7 +46,7 @@ def get_input(message:str)->int:
             message (str): The text to display when asking user for input.
 
     Returns:
-            int: The validated tip percentage and patron count. 
+            int: The validated tip percentage or patron count. 
     '''
     logger.info("Getting tip percentage or patron count.")
 
@@ -55,22 +56,20 @@ def get_input(message:str)->int:
             return user_input
         
         except ValueError as ex:
-            print(tcc.GET_NUMBER_WARNING.format('tip or patrons'))
-            logger.warning(f'{tcc.GET_NUMBER_WARNING.format('tip or patrons')} \n {ex}')
+            print(tcc.GET_NUMBER_WARNING.format(tcc.TIP_PATRON))
+            logger.warning(f'{tcc.GET_NUMBER_WARNING.format(tcc.TIP_PATRON)} \n {ex}')
 
 
 def calculate_pay_amounts()->float:
     '''
-    Function to calculate and split up how much each of a number of 
+    Function to calculate and split up, how much each of a number of 
     friends/patron is to pay from a bill.
 
     Returns:
 
         float: Amount payable by each patron.
-    '''
-   
+    '''   
     logger.info("Calculating payable amounts.")
-    print("Welcome to the tip calculator!")
     
     bill = get_bill_amount("What was the total bill? $")
 
@@ -84,7 +83,7 @@ def calculate_pay_amounts()->float:
     grand_total = bill + (bill * (tip/100))
     logger.info(f"Grand Total: {grand_total}")
 
-    split_amount = round(grand_total / people, 2)
+    split_amount = round((grand_total / people), 2)
 
     return split_amount
 
@@ -92,9 +91,13 @@ def calculate_pay_amounts()->float:
 def main()->None:
     """ Main function to start the Tip Calculator Program. """
     try:
+        print("Welcome to the tip calculator!")
+
         logger.info("Starting the Tip Calculator Program.")
         split_amount = calculate_pay_amounts()
-        print(f"Each person should pay: ${split_amount}")
+
+        print(tcc.RESULT_MESSAGE.format(split_amount))
+        logger.info(tcc.RESULT_MESSAGE.format(split_amount))
 
     except Exception:
         logger.exception("Error occurred in main Tip Calculator function.")
