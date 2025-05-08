@@ -28,11 +28,35 @@ def get_bill_amount(message:str)->float:
     while True:
         try:
             bill = float(input(message))
+            logger.info(f"Bill amount: {bill}")
             return bill
         
         except ValueError as ex:
             print(tcc.GET_NUMBER_WARNING.format('bill'))
             logger.warning(f'{tcc.GET_NUMBER_WARNING.format('bill')} \n {ex}')
+
+
+def get_input(message:str)->int:
+    '''
+    Get the percentage tip and amount of patron to split bill among from user, and validate to 
+    ensure it is a valid numeric int entry.
+
+    Args:
+            message (str): The text to display when asking user for input.
+
+    Returns:
+            int: The validated tip percentage and patron count. 
+    '''
+    logger.info("Getting tip percentage or patron count.")
+
+    while True:
+        try:
+            user_input = int(input(message))
+            return user_input
+        
+        except ValueError as ex:
+            print(tcc.GET_NUMBER_WARNING.format('tip or patrons'))
+            logger.warning(f'{tcc.GET_NUMBER_WARNING.format('tip or patrons')} \n {ex}')
 
 
 def calculate_pay_amounts()->float:
@@ -50,17 +74,17 @@ def calculate_pay_amounts()->float:
     
     bill = get_bill_amount("What was the total bill? $")
 
-    tip = int(input("What percentage tip would you like to give? 10, 12, or 15? "))
-    people = int(input("How many people to split the bill? "))
+    tip = get_input("What percentage tip would you like to give? 10, 12, or 15? ")
+    logger.info(f"Tip: {tip}")
+
+    people = get_input("How many people to split the bill? ")
+    logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
     grand_total = bill + (bill * (tip/100))
+    logger.info(f"Grand Total: {grand_total}")
 
     split_amount = round(grand_total / people, 2)
-
-    
-        # print(f"Each person should pay: ${split_amount}")
-
 
     return split_amount
 
@@ -69,8 +93,8 @@ def main()->None:
     """ Main function to start the Tip Calculator Program. """
     try:
         logger.info("Starting the Tip Calculator Program.")
-        pay_amount = calculate_pay_amounts()
-        print(f"Each person should pay: ${pay_amount}")
+        split_amount = calculate_pay_amounts()
+        print(f"Each person should pay: ${split_amount}")
 
     except Exception:
         logger.exception("Error occurred in main Tip Calculator function.")
