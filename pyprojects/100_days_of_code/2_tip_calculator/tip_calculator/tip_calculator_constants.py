@@ -1,0 +1,1 @@
+GET_NUMBER_WARNING:str = 'Invalid input entered.' + '\n' + 'Please enter a numeric value for {}.'
