@@ -6,6 +6,7 @@
     @datetime:: September 18, 2024 5:14 am (UTC-5)
     @author:: jacoder
 '''
+import sys
 import tip_calculator_constants as tcc
 from logging_custom import jaclog
 
@@ -30,7 +31,11 @@ def get_bill_amount(message:str)->float:
 
     while True:
         try:
-            bill = float(input(message))
+            bill = float(input(message).strip().lower())
+
+            if bill == tcc.EXIT_TRIGGER:
+                exit_program(tcc.EXIT_MESSAGE, 0)
+
             logger.info(f"Bill amount: {bill}")
 
             return bill
@@ -58,7 +63,11 @@ def get_input(message:str)->int:
 
     while True:
         try:
-            user_input = int(input(message))
+            user_input = int(input(message).strip().lower())
+
+            if user_input == tcc.EXIT_TRIGGER:
+                exit_program(tcc.EXIT_MESSAGE, 0)
+
             return user_input
         
         except ValueError as ex:
@@ -77,12 +86,12 @@ def calculate_pay_amounts()->float:
     '''   
     logger.info("Calculating payable amounts.")
     
-    bill = get_bill_amount("What was the total bill? $")
+    bill = get_bill_amount("What was the total bill? (0 to quit) $")
 
-    tip = get_input("What percentage tip would you like to give? 10, 12, or 15? ")
+    tip = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ")
     logger.info(f"Tip: {tip}")
 
-    people = get_input("How many people to split the bill? ")
+    people = get_input("How many people to split the bill? (0 to quit) ")
     logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
@@ -92,6 +101,19 @@ def calculate_pay_amounts()->float:
     split_amount = round((grand_total / people), 2)
 
     return split_amount
+
+
+def exit_program(message:str, code:int=0)->None:
+    '''
+    Centralized exit function to handle the program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    print(message)
+    sys.exit(code)
 
 
 def main()->None:
