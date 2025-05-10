@@ -6,6 +6,7 @@
     @datetime:: September 18, 2024 5:14 am (UTC-5)
     @author:: jacoder
 '''
+import sys
 import tip_calculator_constants as tcc
 from logging_custom import jaclog
 
@@ -25,9 +26,16 @@ def get_bill_amount(message:str)->float:
     '''
     logger.info("Getting bill amount.")
 
+    if not isinstance(message, str):
+        raise TypeError(f"Invalid Input: Expected Type 'str' for message '{message}' parameter.")
+
     while True:
         try:
-            bill = float(input(message))
+            bill = float(input(message).strip().lower())
+
+            if bill == tcc.EXIT_TRIGGER:
+                exit_program(tcc.EXIT_MESSAGE, 0)
+
             logger.info(f"Bill amount: {bill}")
 
             return bill
@@ -39,7 +47,7 @@ def get_bill_amount(message:str)->float:
 
 def get_input(message:str)->int:
     '''
-    Get the percentage tip and amount of patron to split bill among from user, and validate to 
+    Get the percentage tip or amount of patron to split bill among from user, and validate to 
     ensure it is a valid numeric int entry.
 
     Args:
@@ -50,9 +58,16 @@ def get_input(message:str)->int:
     '''
     logger.info("Getting tip percentage or patron count.")
 
+    if not isinstance(message, str):
+        raise TypeError(f"Invalid Input: Expected Type 'str' for message '{message}' parameter.")
+
     while True:
         try:
-            user_input = int(input(message))
+            user_input = int(input(message).strip().lower())
+
+            if user_input == tcc.EXIT_TRIGGER:
+                exit_program(tcc.EXIT_MESSAGE, 0)
+
             return user_input
         
         except ValueError as ex:
@@ -62,7 +77,7 @@ def get_input(message:str)->int:
 
 def calculate_pay_amounts()->float:
     '''
-    Function to calculate and split up, how much each of a number of 
+    Function to calculate and split up how much each of a number of 
     friends/patron is to pay from a bill.
 
     Returns:
@@ -71,12 +86,12 @@ def calculate_pay_amounts()->float:
     '''   
     logger.info("Calculating payable amounts.")
     
-    bill = get_bill_amount("What was the total bill? $")
+    bill = get_bill_amount("What was the total bill? (0 to quit) $")
 
-    tip = get_input("What percentage tip would you like to give? 10, 12, or 15? ")
+    tip = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ")
     logger.info(f"Tip: {tip}")
 
-    people = get_input("How many people to split the bill? ")
+    people = get_input("How many people to split the bill? (0 to quit) ")
     logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
@@ -88,16 +103,36 @@ def calculate_pay_amounts()->float:
     return split_amount
 
 
+def exit_program(message:str, code:int=0)->None:
+    '''
+    Centralized exit function to handle the program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, 1 for errors).
+    '''
+    logger.info(message)
+    print(message)
+    sys.exit(code)
+
+
 def main()->None:
     """ Main function to start the Tip Calculator Program. """
     try:
-        print("Welcome to the tip calculator!")
-
         logger.info("Starting the Tip Calculator Program.")
+
+        print("Welcome to the tip calculator!")
         split_amount = calculate_pay_amounts()
 
         print(tcc.RESULT_MESSAGE.format(split_amount))
         logger.info(tcc.RESULT_MESSAGE.format(split_amount))
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
+
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{tcc.EXIT_MESSAGE}")
+        return
 
     except Exception:
         logger.exception("Error occurred in main Tip Calculator function.")
