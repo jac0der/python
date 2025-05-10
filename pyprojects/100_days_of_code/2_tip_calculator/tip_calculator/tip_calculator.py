@@ -45,7 +45,7 @@ def get_bill_amount(message:str)->float:
             logger.warning(f'{tcc.GET_NUMBER_WARNING.format(tcc.BILL_AMOUNT)} \n {ex}')
 
 
-def get_input(message:str)->int:
+def get_input(message:str, is_tip:bool=False)->int:
     '''
     Get the percentage tip or amount of patron to split bill among from user, and validate to 
     ensure it is a valid numeric int entry.
@@ -68,6 +68,11 @@ def get_input(message:str)->int:
             if str(user_input) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
 
+            if is_tip:
+                if user_input not in tcc.TIP_PERCENTAGES:
+                    logger.warning(tcc.TIP_PERCENTAGES_WARNING.format(user_input))
+                    continue
+
             return user_input
         
         except ValueError as ex:
@@ -88,7 +93,7 @@ def calculate_pay_amounts()->float:
     
     bill = get_bill_amount("What was the total bill? (0 to quit) $")
 
-    tip = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ")
+    tip = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ", True)
     logger.info(f"Tip: {tip}")
 
     people = get_input("How many people to split the bill? (0 to quit) ")
