@@ -50,6 +50,9 @@ def get_input(message:str)->int:
     '''
     logger.info("Getting tip percentage or patron count.")
 
+    if not isinstance(message, str):
+        raise(f"Invalid Input: Expected Type 'str' for message '{message}' parameter.")
+
     while True:
         try:
             user_input = int(input(message))
@@ -98,6 +101,9 @@ def main()->None:
 
         print(tcc.RESULT_MESSAGE.format(split_amount))
         logger.info(tcc.RESULT_MESSAGE.format(split_amount))
+
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
 
     except Exception:
         logger.exception("Error occurred in main Tip Calculator function.")
