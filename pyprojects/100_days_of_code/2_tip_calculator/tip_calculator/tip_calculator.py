@@ -33,7 +33,7 @@ def get_bill_amount(message:str)->float:
         try:
             bill = float(input(message).strip().lower())
 
-            if bill == tcc.EXIT_TRIGGER:
+            if str(int(bill)) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
 
             logger.info(f"Bill amount: {bill}")
@@ -65,7 +65,7 @@ def get_input(message:str)->int:
         try:
             user_input = int(input(message).strip().lower())
 
-            if user_input == tcc.EXIT_TRIGGER:
+            if str(user_input) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
 
             return user_input
