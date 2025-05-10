@@ -31,7 +31,7 @@ def get_bill_amount(message:str)->float:
 
     while True:
         try:
-            bill = float(input(message).strip().lower())
+            bill = float(input(message))
 
             if str(int(bill)) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
@@ -63,13 +63,14 @@ def get_input(message:str, is_tip:bool=False)->int:
 
     while True:
         try:
-            user_input = int(input(message).strip().lower())
+            user_input = int(input(message))
 
             if str(user_input) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
 
             if is_tip:
                 if user_input not in tcc.TIP_PERCENTAGES:
+                    print(tcc.TIP_PERCENTAGES_WARNING.format(user_input))
                     logger.warning(tcc.TIP_PERCENTAGES_WARNING.format(user_input))
                     continue
 
@@ -103,6 +104,7 @@ def calculate_pay_amounts()->float:
     grand_total = bill + (bill * (tip/100))
     logger.info(f"Grand Total: {grand_total}")
 
+    # At this point, people cannot be 0 due to prior EXIT_TRIGGER check
     split_amount = round((grand_total / people), 2)
 
     return split_amount
