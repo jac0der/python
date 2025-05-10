@@ -108,6 +108,10 @@ def main()->None:
     except TypeError as ex:
         logger.error(f"TypeError: {ex}")
 
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{tcc.EXIT_MESSAGE}")
+        return
+
     except Exception:
         logger.exception("Error occurred in main Tip Calculator function.")
 
