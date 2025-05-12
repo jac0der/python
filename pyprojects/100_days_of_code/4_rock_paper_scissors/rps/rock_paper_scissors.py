@@ -6,6 +6,9 @@
     @author:: jacoder
 '''
 import random as r
+from logging_custom import jaclog
+
+logger = jaclog.configure('rock_paper_scissors', './rock_paper_scissors.log')
 
 
 # define the ascii art list for rock, paper and scissors
@@ -37,11 +40,7 @@ RPS_ASCII = [
 ]
 
 
-def main():
-    play()
-
-
-def play():
+def play()->None:
     '''
         Function to start playing the rock, paper, scissors game.
         @input:: none
@@ -107,6 +106,15 @@ def determine_winner(player_choice, computer_choice):
     else:
         # computer wins
         return -1
+
+
+def main()->None:
+    """ Main function to start the Rock Paper Scissors Game.  """
+    try:
+        play()
+
+    except Exception as ex:
+        logger.exception("Error occurred in main Rock Paper Scissors function.")
 
 
 if __name__ == "__main__":
