@@ -93,7 +93,6 @@ def calculate_pay_amounts()->float:
     logger.info("Calculating payable amounts.")
     
     bill:float = get_bill_amount("What was the total bill? (0 to quit) $")
-    bill:float = get_bill_amount("What was the total bill? (0 to quit) $")
 
     tip:int = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ", True)
     logger.info(f"Tip: {tip}")
