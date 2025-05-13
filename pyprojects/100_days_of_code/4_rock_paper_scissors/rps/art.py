@@ -1,5 +1,5 @@
 # define the ascii art list for rock, paper and scissors
-RPS_ASCII = [
+RPS_ASCII:list[str] = [
     """
     _______
 ---'   ____)
