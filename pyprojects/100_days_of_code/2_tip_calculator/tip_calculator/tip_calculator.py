@@ -31,7 +31,7 @@ def get_bill_amount(message:str)->float:
 
     while True:
         try:
-            bill = float(input(message))
+            bill:float = float(input(message))
 
             if str(int(bill)) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
@@ -63,7 +63,7 @@ def get_input(message:str, is_tip:bool=False)->int:
 
     while True:
         try:
-            user_input = int(input(message))
+            user_input:int = int(input(message))
 
             if str(user_input) == tcc.EXIT_TRIGGER:
                 exit_program(tcc.EXIT_MESSAGE, 0)
@@ -92,20 +92,20 @@ def calculate_pay_amounts()->float:
     '''   
     logger.info("Calculating payable amounts.")
     
-    bill = get_bill_amount("What was the total bill? (0 to quit) $")
+    bill:float = get_bill_amount("What was the total bill? (0 to quit) $")
 
-    tip = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ", True)
+    tip:int = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ", True)
     logger.info(f"Tip: {tip}")
 
-    people = get_input("How many people to split the bill? (0 to quit) ")
+    people:int = get_input("How many people to split the bill? (0 to quit) ")
     logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
-    grand_total = bill + (bill * (tip/100))
+    grand_total:float = bill + (bill * (tip/100))
     logger.info(f"Grand Total: {grand_total}")
 
     # At this point, people cannot be 0 due to prior EXIT_TRIGGER check
-    split_amount = round((grand_total / people), 2)
+    split_amount:float = round((grand_total / people), 2)
 
     return split_amount
 
@@ -129,7 +129,7 @@ def main()->None:
         logger.info("Starting the Tip Calculator Program.")
 
         print("Welcome to the tip calculator!")
-        split_amount = calculate_pay_amounts()
+        split_amount:float = calculate_pay_amounts()
 
         print(tcc.RESULT_MESSAGE.format(split_amount))
         logger.info(tcc.RESULT_MESSAGE.format(split_amount))
