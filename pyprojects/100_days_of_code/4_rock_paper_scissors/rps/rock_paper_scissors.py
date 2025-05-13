@@ -5,92 +5,79 @@
     @datetime:: September 26, 2024 8:29 am (UTC-5)
     @author:: jacoder
 '''
+import sys
 import random as r
+from art import RPS_ASCII
 from logging_custom import jaclog
 
 logger = jaclog.configure('rock_paper_scissors', './rock_paper_scissors.log')
 
 
-# define the ascii art list for rock, paper and scissors
-RPS_ASCII = [
-    """
-    _______
----'   ____)
-      (_____)
-      (_____)
-      (____)
----.__(___)
-""",
-"""
-     _______
----'    ____)____
-           ______)
-          _______)
-         _______)
----.__________)
-""",
-"""
-    _______
----'   ____)____
-          ______)
-       __________)
-      (____)
----.__(___)
-"""
-]
+game_params:dict[int,str] = {
+    0: 'rock',
+    1: 'paper',
+    2: 'scissors'
+}
 
 
 def play()->None:
     '''
         Function to start playing the rock, paper, scissors game.
-        @input:: none
-        @output:: winner of the game, ascii art of winning option.
+        Prints winner of the game and ascii art of winning option.
     '''
-    try:
-        # get user's choice
-        player_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n").rstrip())
+    logger.info("Starting play function.")
 
-        # exit program if invalid number is entered.
-        if player_choice != 0 and player_choice != 1 and player_choice != 2:
-            print("Invalid entry entered. You Lose.")
-            return 0
+    # get user's choice
+    player_choice:int = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n").rstrip())
+    logger.info(f"Player choice: {game_params.get(player_choice)}")
 
-        # get computer choice
-        computer_choice = r.randint(0, 2)
+    # exit program if invalid number is entered.
+    if player_choice != 0 and player_choice != 1 and player_choice != 2:
+        logger.warning("Invalid entry entered. You Lose.")
+        exit_program("Invalid entry entered. You Lose.", 0)
 
-        print(RPS_ASCII[player_choice], end="\n\n")
-        print("Computer chose:")
-        print(RPS_ASCII[computer_choice])
+    # get computer choice
+    computer_choice:int = r.randint(0, 2)
+    logger.info(f"Computer choice: {game_params.get(computer_choice)}")
 
-        winner = determine_winner(player_choice, computer_choice)
+    print(RPS_ASCII[player_choice], end="\n\n")
+    print("Computer chose:")
+    print(RPS_ASCII[computer_choice])
 
-        if winner == 0:
-            print("It's a draw")
-        
-        elif winner == 1:
-            print("You win!")
-        
-        else:
-            print("You lose")
+    winner:int = determine_winner(player_choice, computer_choice)
 
-        print()
+    if winner == 0:
+        print("It's a draw")
+        logger.info("It's a draw")
+    
+    elif winner == 1:
+        print("You win!")
+        logger.info("You win!")
+    
+    else:
+        print("You lose")
+        logger.info("You lose")
 
-    except ValueError:
-        print("Invalid entry. Only Numeric values allowed. You lose.")
+    print()
 
 
-def determine_winner(player_choice, computer_choice):
+def determine_winner(player_choice:int, computer_choice:int)->int:
     '''
-        Function to determine the winner of the rockk paper scissors game
-        by comparing the user choice with the computer.
-        @input:: int -> player_choice: the option selected by user.
-                 int -> computer_choice: the option randomly selected for computer.
+    Function to determine the winner of the rock paper scissors game
+    by comparing the user choice with the computer.
 
-        @output:: int -> integer value indicating who won the game.
-                         -1 if computer wins.
-                         0 for a draw game
-                         1 if the player wins. 
+    Args:
+            player_choice (int): the option selected by user.
+            computer_choice (int): the option randomly selected for computer.
+
+    Returns:
+            int: integer value indicating who won the game.
+                        -1 if computer wins.
+                        0 for a draw game
+                        1 if the player wins. 
     '''
+    logger.info("Determining winner of game.")
+
     # draw game test
     if player_choice == computer_choice:
         return 0
@@ -108,13 +95,31 @@ def determine_winner(player_choice, computer_choice):
         return -1
 
 
+def exit_program(message:str, code:int=0)->None:
+    '''
+    Centralized exit function to handle the program termination.
+
+    Args:
+            message (str): Message to display and log when exiting.
+            code (int): Exit code (0 for normal exit, >=1 for errors).
+    '''
+    logger.info(message)
+    print(message)
+    sys.exit(code)
+
+
 def main()->None:
     """ Main function to start the Rock Paper Scissors Game.  """
     try:
+        logger.info("Starting the Rock Paper Scissors Game.")
         play()
 
+    except ValueError as ex:
+        print("Invalid entry. Only Numeric values allowed. You lose.")
+        logger.exception(f"Invalid entry. Only Numeric values allowed. You lose.")
+
     except Exception as ex:
-        logger.exception("Error occurred in main Rock Paper Scissors function.")
+        logger.exception(f"Error occurred in main Rock Paper Scissors function.")
 
 
 if __name__ == "__main__":
