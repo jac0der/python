@@ -93,14 +93,17 @@ def calculate_pay_amounts()->float:
     logger.info("Calculating payable amounts.")
     
     bill:float = get_bill_amount("What was the total bill? (0 to quit) $")
+    bill:float = get_bill_amount("What was the total bill? (0 to quit) $")
 
     tip:int = get_input("What percentage tip would you like to give? (0 to quit) 10, 12, or 15? ", True)
     logger.info(f"Tip: {tip}")
 
     people:int = get_input("How many people to split the bill? (0 to quit) ")
+    people:int = get_input("How many people to split the bill? (0 to quit) ")
     logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
+    grand_total:float = bill + (bill * (tip/100))
     grand_total:float = bill + (bill * (tip/100))
     logger.info(f"Grand Total: {grand_total}")
 
@@ -129,6 +132,7 @@ def main()->None:
         logger.info("Starting the Tip Calculator Program.")
 
         print("Welcome to the tip calculator!")
+        split_amount:float = calculate_pay_amounts()
         split_amount:float = calculate_pay_amounts()
 
         print(tcc.RESULT_MESSAGE.format(split_amount))
