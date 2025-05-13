@@ -78,6 +78,9 @@ def determine_winner(player_choice:int, computer_choice:int)->int:
     '''
     logger.info("Determining winner of game.")
 
+    if not isinstance(player_choice, int) or not isinstance(computer_choice, int):
+        raise TypeError(f"Invalid Input: Expected Type 'int' for both player_choice and computer_choice parameters.")
+
     # draw game test
     if player_choice == computer_choice:
         return 0
@@ -114,9 +117,16 @@ def main()->None:
         logger.info("Starting the Rock Paper Scissors Game.")
         play()
 
+    except TypeError as ex:
+        logger.error(f"TypeError: {ex}")
+
     except ValueError as ex:
         print("Invalid entry. Only Numeric values allowed. You lose.")
         logger.exception(f"Invalid entry. Only Numeric values allowed. You lose.")
+
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n{tcc.EXIT_MESSAGE}")
+        return
 
     except Exception as ex:
         logger.exception(f"Error occurred in main Rock Paper Scissors function.")
