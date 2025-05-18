@@ -41,7 +41,7 @@ def main():
     play()
 
 
-def play():
+def play()->None:
     '''
         Function to start playing the rock, paper, scissors game.
         @input:: none
@@ -80,7 +80,7 @@ def play():
         print("Invalid entry. Only Numeric values allowed. You lose.")
 
 
-def determine_winner(player_choice, computer_choice):
+def determine_winner(player_choice:int, computer_choice:int)->int:
     '''
         Function to determine the winner of the rockk paper scissors game
         by comparing the user choice with the computer.
