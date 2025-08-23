@@ -19,7 +19,7 @@ logger = jaclog.configure('leapyear_100days', './leapyear.log')
 EXIT_MESSAGE = 'Goodbye!'
 
 
-def is_leap_year(year):
+def is_leap_year(year:int)->bool:
     ''' 
     Determine if year is a leap year.
 
@@ -35,7 +35,7 @@ def is_leap_year(year):
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
-def get_year():
+def get_year()->int:
     '''
     Retrieve the year from user to check if it is a leap year.
 
@@ -60,7 +60,7 @@ def get_year():
             logger.warning('Invalid year entered.' + '\n' + 'Please enter a valid numeric value.')
 
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle program termination.
 
@@ -69,10 +69,11 @@ def exit_program(message, code=0):
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
-def main():
+def main()->None:
     '''
     Main function to trigger the leap year program.
     '''
@@ -91,15 +92,11 @@ def main():
         logger.error(f'Leap Year error: {ex}')
         exit_program(f'Error: {ex}. Please check the logs for details')
 
-    except KeyboardInterrupt as ex:
-        exit_program(f"\n{EXIT_MESSAGE}")
-
-    except EOFError as ex:
+    except (KeyboardInterrupt, EOFError):
         exit_program(f"\n{EXIT_MESSAGE}")
 
     except Exception:
         logger.exception('Error occured in main() leap year function.')
-        exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
