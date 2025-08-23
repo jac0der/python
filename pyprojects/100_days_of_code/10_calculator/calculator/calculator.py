@@ -164,7 +164,7 @@ def main()->None:
                     continue_calculating = False
 
     except (KeyboardInterrupt, EOFError):
-        exit_program(f"\n{EXIT_MESSAGE}", -1)
+        exit_program(f"\n{EXIT_MESSAGE}")
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
