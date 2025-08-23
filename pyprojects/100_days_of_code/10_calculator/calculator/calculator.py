@@ -36,6 +36,9 @@ def get_number(prompt):
         Returns:
                 float: the converted number from the entered user number.
     '''
+    if not isinstance(prompt, str):
+        raise ValueError(f'Invalid type for prompt. Expected a string.')
+
     while True:
         try:
             number = float(input(prompt))
@@ -161,7 +164,7 @@ def main()->None:
                     continue_calculating = False
 
     except (KeyboardInterrupt, EOFError):
-        exit_program(f"\n{EXIT_MESSAGE}")
+        exit_program(f"\n{EXIT_MESSAGE}", -1)
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
