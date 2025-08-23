@@ -48,7 +48,7 @@ def get_number(prompt):
             logger.warning('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
 
 
-def get_operation():
+def get_operation()->str:
     ''' 
         Function used to list the available operations for the calculator.
         Returns: 
@@ -109,13 +109,15 @@ def exit_program(message, code=0):
     sys.exit(message)
 
 
-def main():
-    ''' main function to run the calculator'''
-    logger.info('Starting calculator.')
-    print(logo)
-    print("Welcome to the Calculator App!")
+def main()->None:
+    ''' main function to start the calculator'''
 
     try:
+        logger.info('Starting calculator.')
+        print(logo)
+        print("Welcome to the Calculator App!")
+
+    
         while True:
             logger.info('Getting first number.')           
             first_number = get_number("What's the first number? (0 to quit): ")
