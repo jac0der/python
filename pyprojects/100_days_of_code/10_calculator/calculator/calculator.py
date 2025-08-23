@@ -106,17 +106,18 @@ def exit_program(message:str, code:int=0)->None:
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
-
-
-def main()->None:
-    ''' main function to start the calculator'''
-    logger.info('Starting calculator.')
     print(message)
     sys.exit(code)
 
 
+def main()->None:
+    ''' main function to start the calculator'''
+
     try:
+        logger.info('Starting calculator.')
+        print(logo)
+        print("Welcome to the Calculator App!")
+
         while True:
             logger.info('Getting first number.')           
             first_number = get_number("What's the first number? (0 to quit): ")
