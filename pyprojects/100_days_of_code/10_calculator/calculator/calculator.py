@@ -27,7 +27,7 @@ OPERATIONS = {
 }
 
 
-def get_number(prompt):
+def get_number(prompt:str)->int:
     '''
         Handles numeric input with validation.
 
@@ -48,7 +48,7 @@ def get_number(prompt):
             logger.warning('Invalid number entered for math calculation.' + '\n' + 'Please enter a valid numeric value.')
 
 
-def get_operation():
+def get_operation()->None:
     ''' 
         Function used to list the available operations for the calculator.
         Returns: 
@@ -73,7 +73,7 @@ def get_operation():
         logger.warning('Invalid operation. Please choose from the list of math operations.')
 
 
-def calculate(first_number, second_number, operation):
+def calculate(first_number:float, second_number:float, operation:str)->float:
     '''
     Performs the calculation based on the selected operation.
 
@@ -97,7 +97,7 @@ def calculate(first_number, second_number, operation):
     return round(OPERATIONS[operation](first_number, second_number), 2)
  
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle program termination.
 
@@ -106,16 +106,18 @@ def exit_program(message, code=0):
             code (int): Exit code (0 for normal exit, 1 for errors).
     '''
     logger.info(message)
-    sys.exit(message)
+    print(message)
+    sys.exit(code)
 
 
-def main():
-    ''' main function to run the calculator'''
-    logger.info('Starting calculator.')
-    print(logo)
-    print("Welcome to the Calculator App!")
+def main()->None:
+    """ main function to start the calculator program. """
 
     try:
+        logger.info('Starting calculator.')
+        print(logo)
+        print("Welcome to the Calculator App!")
+
         while True:
             logger.info('Getting first number.')           
             first_number = get_number("What's the first number? (0 to quit): ")
@@ -163,7 +165,6 @@ def main():
 
     except Exception as ex:
         logger.exception("Error occured in main calculator function.")
-        exit_program('An error occured. Please check the logs for details.')
 
 
 if __name__ == "__main__":
