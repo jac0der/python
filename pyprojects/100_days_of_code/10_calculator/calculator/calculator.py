@@ -36,6 +36,9 @@ def get_number(prompt:str)->int:
         Returns:
                 float: the converted number from the entered user number.
     '''
+    if not isinstance(prompt, str):
+        raise ValueError(f'Invalid type for prompt. Expected a string.')
+
     while True:
         try:
             number = float(input(prompt))
