@@ -7,11 +7,7 @@
 '''
 
 
-def main():
-    generate_band_name()
-
-
-def generate_band_name():
+def generate_band_name()->str:
     '''
         Function to accept two user inputs then concatenate
         inputs to form possible name of band.
@@ -23,7 +19,12 @@ def generate_band_name():
     city = input("What's the name of the city you grew up in?\n")
     pet = input("What's your pets's name?\n")
 
-    print(f"Your band name could be {city + ' ' + pet}")
+    band_name = f"Your band name could be {city + ' ' + pet}"
+    return band_name
+
+
+def main()->None:
+    print(generate_band_name())
 
 
 if __name__ == "__main__":
