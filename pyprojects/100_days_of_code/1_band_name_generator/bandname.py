@@ -40,6 +40,9 @@ def generate_band_name()->str:
     except (KeyboardInterrupt, EOFError):
         exit_program("\n"+EXIT_MESSAGE)
 
+    except Exception as ex:
+        print(f"Error occurred in main Tip Calculator function.\n{ex}")
+
 
 def main()->None:
     """ Main function to start the Band Generator program. """
