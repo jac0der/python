@@ -34,7 +34,7 @@ def get_bill_amount(message:str)->float:
             bill:float = float(input(message))
 
             if str(int(bill)) == tcc.EXIT_TRIGGER:
-                exit_program(tcc.EXIT_MESSAGE, 0)
+                exit_program(tcc.EXIT_MESSAGE)
 
             logger.info(f"Bill amount: {bill}")
 
@@ -98,11 +98,9 @@ def calculate_pay_amounts()->float:
     logger.info(f"Tip: {tip}")
 
     people:int = get_input("How many people to split the bill? (0 to quit) ")
-    people:int = get_input("How many people to split the bill? (0 to quit) ")
     logger.info(f"People: {people}")
 
     # bill total plus added tip percentage
-    grand_total:float = bill + (bill * (tip/100))
     grand_total:float = bill + (bill * (tip/100))
     logger.info(f"Grand Total: {grand_total}")
 
@@ -131,7 +129,6 @@ def main()->None:
         logger.info("Starting the Tip Calculator Program.")
 
         print("Welcome to the tip calculator!")
-        split_amount:float = calculate_pay_amounts()
         split_amount:float = calculate_pay_amounts()
 
         print(tcc.RESULT_MESSAGE.format(split_amount))
