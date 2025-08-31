@@ -111,8 +111,13 @@ def find_treasure()->None:
 
 def main()->None:
     """ Main function to start the treasure island game. """
-    draw_greet_banner()
-    find_treasure()
+
+    try:
+        draw_greet_banner()
+        find_treasure()
+
+    except Exception as ex:
+        print(f"Error occured in main treasure island function. {ex}")
 
 
 if __name__ == "__main__":
