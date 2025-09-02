@@ -16,18 +16,18 @@
 '''
 
 
-def main():
+def main()->None:
     print("Welcome to Python Pizza Deliveries!")
     get_pizza_bill()
 
 
-def get_pizza_bill():
+def get_pizza_bill()->None:
     '''
         Function to calculate the pizza bill based on 
         options for pizza selected by the client. 
     '''
-    bill = 0
-    valid_entry = False
+    bill:int = 0
+    valid_entry:bool = False
 
     while not valid_entry:
         size = input("What size pizza do you want? S, M, L or q to quit: ").lower()
@@ -55,7 +55,7 @@ def get_pizza_bill():
     # reset valid_entry
     valid_entry = False
     while not valid_entry:
-        pepperoni = input("Do you want pepperoni on your pizza? Y or N or q to quit: ").lower()
+        pepperoni:str = input("Do you want pepperoni on your pizza? Y or N or q to quit: ").lower()
 
             # how much more to add to bill based on pepperoni choice.
         if pepperoni == "y":
@@ -81,7 +81,7 @@ def get_pizza_bill():
     valid_entry = False
 
     while not valid_entry:
-        extra_cheese = input("Do you want extra cheese Y or N or q to quit: ").lower()
+        extra_cheese:str = input("Do you want extra cheese Y or N or q to quit: ").lower()
 
         # add cost for extra cheese.
         if extra_cheese == "y":
