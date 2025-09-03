@@ -7,12 +7,12 @@
 '''
 
 
-def main():
+def main()->None:
     draw_banner()
     survive_jungle()
 
 
-def draw_banner():
+def draw_banner()->None:
     print('''
         d8b                         888         
         Y8P                         888         
@@ -28,7 +28,7 @@ def draw_banner():
     ''')
 
 
-def survive_jungle():
+def survive_jungle()->None:
     print("Welcome to Jungle Survival.")
     print("Your mission is to survive by finding an escape route out of the Jungle.")
     print("You are deep in the jungle, at your feet is a waterproof back pack and a few resource items.")
@@ -56,7 +56,7 @@ def survive_jungle():
 
     \n''')
 
-    signaling_items_dict = {
+    signaling_items_dict:dict[str:str] = {
         '6': 'Flashlight',
         '8': 'Horn',
         '9': 'Flare',
@@ -67,7 +67,7 @@ def survive_jungle():
 
     while True:
 
-        choice = input("Choose only '5' items (0,1,2...) or type 'none' to leave backpack or 'q' to quit:   ").rstrip().lower()
+        choice:str = input("Choose only '5' items (0,1,2...) or type 'none' to leave backpack or 'q' to quit:   ").rstrip().lower()
         
         if choice == "q":
             print("Bye...")
@@ -80,14 +80,14 @@ def survive_jungle():
             print("Select resource items.\n")
      
         elif len(choice) > 0:
-            chosen_items = choice.split(",")
+            chosen_items:list[str] = choice.split(",")
 
             if len(chosen_items) > 5:
                 print("Too many resource items selected. Please reselect items.\n")
             else:
                 break
         
-    direction = input("Let's Go! You can go 'North' or 'South' or 'q' to quit:\n").rstrip().lower()
+    direction:str = input("Let's Go! You can go 'North' or 'South' or 'q' to quit:\n").rstrip().lower()
 
     if direction == "q":
         print("Bye...")
@@ -100,7 +100,7 @@ def survive_jungle():
             return 0
 
         print("After walking for many hours you come to a cliff approximately 50 feet.")
-        cliff_decision = input("    Type 'down' to go down the cliff or 'up' to return to starting point. or 'q' to quit\n").rstrip().lower()
+        cliff_decision:str = input("    Type 'down' to go down the cliff or 'up' to return to starting point. or 'q' to quit\n").rstrip().lower()
 
         if cliff_decision == "q":
             print("Bye...")
@@ -111,7 +111,7 @@ def survive_jungle():
             # check if the Rope or Parashoot was packed.
             if '1' in chosen_items or '14' in chosen_items:
                 print("You have made it to the bottom of the cliff safely where there is now a flowing river.")
-                river_decision = input("     Type 'swim' to swim accross the river or 'walk' to walk to a shallow section to walk across or 'q' to quit.\n").rstrip().lower()
+                river_decision:str = input("     Type 'swim' to swim accross the river or 'walk' to walk to a shallow section to walk across or 'q' to quit.\n").rstrip().lower()
 
                 if river_decision == "q":
                     print("Bye...")
@@ -122,7 +122,7 @@ def survive_jungle():
                     # check if scoba diving gears were packed.
                     if '2' in chosen_items:
                         print("You have crossed the river safely. Do you now stop to eat and rest before night fall?")
-                        eat_decision = input(" Type 'eat' to eat and rest or 'walk' to continue or 'q' to quit.\n")
+                        eat_decision:str = input(" Type 'eat' to eat and rest or 'walk' to continue or 'q' to quit.\n")
 
                         if eat_decision == "q":
                             print("Bye...")
@@ -137,7 +137,7 @@ def survive_jungle():
                                 # check if flashlight was packed
                                 if '6' in chosen_items:
                                     print("Do you wish to turn on your flashlight?")
-                                    flashlight = input("        yes/no or 'q' to quit\n")
+                                    flashlight:str = input("        yes/no or 'q' to quit\n")
 
                                     if flashlight == "yes":
                                         print("Light has brought unnecessary attention by wild animals to kill you in your sleep. Game Over!")
@@ -159,7 +159,7 @@ def survive_jungle():
                             elif '3' not in chosen_items and '4' not in chosen_items and '5' not in chosen_items and '11' not in chosen_items:
 
                                 print("You packed nothing to eat or drink. It is now night time, do you want to make camp now?")
-                                make_camp = input(" Type 'yes' or 'no' or 'q' to quit.\n").rstrip().lower()
+                                make_camp:str = input(" Type 'yes' or 'no' or 'q' to quit.\n").rstrip().lower()
 
                                 if make_camp == "q":
                                     print("Bye...")
@@ -211,7 +211,7 @@ def survive_jungle():
 
                     print("You have successfully crossed the river with more strenght to spare compared to if you had swam across.")
                     print("In the distance you can finally see civilization. You keep walking to reach before nightfall or make camp for the night then continue tomorrow?")
-                    camp  = input("     Type 'camp' or 'walk' or 'q' to quit.\n").rstrip().lower()
+                    camp:str  = input("     Type 'camp' or 'walk' or 'q' to quit.\n").rstrip().lower()
 
                     if camp == "q":
                         print("Bye...")
@@ -233,7 +233,7 @@ def survive_jungle():
                         # check if flashlight was packed
                         if '6' in chosen_items:
                             print("Do you wish to turn on your flashlight?")
-                            flashlight = input("        yes/no or 'q' to quit.\n")
+                            flashlight:str = input("        yes/no or 'q' to quit.\n")
 
                             if flashlight == "q":
                                 print("Bye...")
@@ -276,7 +276,7 @@ def survive_jungle():
         
         print("Up north is a steep mountain that if you get to the top you will be rescude or eaten by tigers.")
         print("You come to an old broken down hut, do you enter to rest or keep walking?")
-        enter = input("     Type 'enter' to rest or 'walk' to keep going or 'q' to quit.\n").rstrip().lower()
+        enter:str = input("     Type 'enter' to rest or 'walk' to keep going or 'q' to quit.\n").rstrip().lower()
 
         if enter == "q":
             print("Bye...")
@@ -284,7 +284,7 @@ def survive_jungle():
 
         elif enter == "walk":
             print("A pack of wolves have picked up your trail, do you defend yourself or run?")
-            defend = input("        Type 'defend' or 'run' or 'q' to quit.\n")
+            defend:str = input("        Type 'defend' or 'run' or 'q' to quit.\n")
 
             if defend == "q":
                 print("Bye...")
@@ -303,7 +303,7 @@ def survive_jungle():
                 else:
                     print("You have successfully ran off the wolves with either your rifle, knife or saw.\n")
                     print("While walking you slipped and cut your leg on an old rusty tiger poucher trap.")
-                    firstaid = input("      Do you have first aid medicine to clean wound? 'y' or 'n' or 'q' to quit.\n").rstrip().lower()
+                    firstaid:str = input("      Do you have first aid medicine to clean wound? 'y' or 'n' or 'q' to quit.\n").rstrip().lower()
 
                     if firstaid == "q":
                         print("Bye...")
@@ -314,7 +314,7 @@ def survive_jungle():
                         print("Wound cleaned and wrapped successfully.\n\n")
                         print("Though hopping, you have finally reached the top of the mountain at night.")
                         print("To be rescude you must signal the rescuers who have been searching for you in a Hellicoptor with beam lights.")
-                        rescueitems = input("        Type 'view' to view your rescue items or 'q' to quit.\n").rstrip().lower()
+                        rescueitems:str = input("        Type 'view' to view your rescue items or 'q' to quit.\n").rstrip().lower()
 
                         if rescueitems == "view":
                             has_signaling_item = False
@@ -330,7 +330,7 @@ def survive_jungle():
                                 print("With no more medicine, you die either of infection and dehydration or you are eaten by the moutain Tigers. Game Over!")
                                 return 0
 
-                            signalitem = input("Select rescue item(s) to signal the Helicopter (6,8,9...) or 'q' to quit.\n")
+                            signalitem:str = input("Select rescue item(s) to signal the Helicopter (6,8,9...) or 'q' to quit.\n")
 
                             if signalitem == "q":
                                 print("Bye...")
