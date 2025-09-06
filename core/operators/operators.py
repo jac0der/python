@@ -68,3 +68,13 @@ print(not True)  # False
 print(not False) # True
 
 
+print()
+#*** 5 => identity operator
+a = 10
+b = 10
+x = [1,2,3]
+y = [1,2,3]
+
+print(a is b)       # True
+print(b is not a)    # False
+print(x is y)       # False
