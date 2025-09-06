@@ -24,3 +24,11 @@ product = persons * cost_per_person     # persons (int) is automatically convert
 print(product)          # 91.75
 print(type(product))    # <class 'float'>
 
+
+#*** 3 => implicit type conversion for integer division - integer division gives float
+fruits = 14
+children = 7
+
+portions = fruits / children # result portions is automatically converted into float by python
+print(portions)         # 2.0
+print(type(portions))   # <class 'float'>
