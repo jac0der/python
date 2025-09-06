@@ -15,3 +15,26 @@ print(f'division of {x} and {y}: {x / y}')          # 4.0
 print(f'floor division of {x} and {y}: {x // y}')   # 4 - force integer division
 print(f'modulo of {x} and {y}: {x % y}')            # 0    
 print(f'power of {x} and {y}: {x ** y}')            # 64
+
+
+#*** 2 => assignment operators
+number = 7
+print(number)
+
+number += 1
+print(number)
+
+number -= 1
+print(number)
+
+number *= 2
+print(number)
+
+number /= 2
+print(number)
+
+number **= 2
+print(number)
+
+number %= 1
+print(number)
