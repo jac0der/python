@@ -32,3 +32,16 @@ children = 7
 portions = fruits / children # result portions is automatically converted into float by python
 print(portions)         # 2.0
 print(type(portions))   # <class 'float'>
+
+
+
+# explicit type conversion
+
+#*** 4 => cast user inpput to perform arithmetic operations
+floors = input('Enter number of floors: ')
+buildings = input('Enter building amount: ')
+
+total_floors = int(floors) * int(buildings)
+
+print(total_floors)         # 8
+print(type(total_floors))   # <class 'int'>
