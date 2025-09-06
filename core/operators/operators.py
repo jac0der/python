@@ -78,3 +78,14 @@ y = [1,2,3]
 print(a is b)       # True
 print(b is not a)    # False
 print(x is y)       # False
+
+
+
+print()
+#*** 6 => membership operator
+code_languages = ['python', 'c++', 'c#', 'cobalt', 'go', 'rust', 'c']
+
+print('rust' in code_languages)         # True
+print('vb' not in code_languages)       # True
+print('cobalt' not in code_languages)   # False
+print('sql' in code_languages)          # False
