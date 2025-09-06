@@ -9,7 +9,7 @@ import random as r
 
 
 # define the ascii art list for rock, paper and scissors
-RPS_ASCII = [
+RPS_ASCII:list[str] = [
     """
     _______
 ---'   ____)
@@ -37,7 +37,7 @@ RPS_ASCII = [
 ]
 
 
-def main():
+def main()->None:
     play()
 
 
@@ -49,7 +49,7 @@ def play()->None:
     '''
     try:
         # get user's choice
-        player_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n").rstrip())
+        player_choice:int = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n").rstrip())
 
         # exit program if invalid number is entered.
         if player_choice != 0 and player_choice != 1 and player_choice != 2:
@@ -57,13 +57,13 @@ def play()->None:
             return 0
 
         # get computer choice
-        computer_choice = r.randint(0, 2)
+        computer_choice:int = r.randint(0, 2)
 
         print(RPS_ASCII[player_choice], end="\n\n")
         print("Computer chose:")
         print(RPS_ASCII[computer_choice])
 
-        winner = determine_winner(player_choice, computer_choice)
+        winner:int = determine_winner(player_choice, computer_choice)
 
         if winner == 0:
             print("It's a draw")
