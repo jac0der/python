@@ -38,3 +38,20 @@ print(number)
 
 number %= 1
 print(number)
+
+
+
+#*** 3 => comparison operators
+patient_count = 20
+doctor_count = 18
+
+print(patient_count == doctor_count)    # False     
+print(patient_count != doctor_count)    # True
+print(patient_count > doctor_count)     # True
+print(patient_count < doctor_count)     # False
+print(patient_count >= doctor_count)    # True
+print(patient_count <= doctor_count)    # False
+
+
+
+
