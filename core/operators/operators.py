@@ -53,5 +53,18 @@ print(patient_count >= doctor_count)    # True
 print(patient_count <= doctor_count)    # False
 
 
+print()
+print('logical ops...', end='\n')
+#*** 4 => logical operators
+print((5 > 2) and (6 >= 6)) # True   
+print((5 < 2) and (6 >= 6)) # False 
+print()
+
+print((5 == 5) or (2 > 7))  # True
+print((5 != 5) or (2 > 7))  # False
+
+print()
+print(not True)  # False
+print(not False) # True
 
 
