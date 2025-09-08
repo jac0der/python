@@ -49,3 +49,13 @@ print(fruits)
 
 #*** 7 => 
 print(random.sample(fruits, 2))
+
+
+print()
+books = {
+    'c++': 'Tour of C++',
+    'c#': 'cSharpe for everyone',
+    'python': 'Fundamental python'
+}
+print(books)
+print(random.sample(sorted(books), 2))
