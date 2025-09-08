@@ -118,7 +118,7 @@ def main()->None:
         play()
 
     except TypeError as ex:
-        logger.error(f"TypeError: {ex}")
+        logger.error(f"TpyeError: {ex}")
 
     except ValueError as ex:
         print("Invalid entry. Only Numeric values allowed. You lose.")

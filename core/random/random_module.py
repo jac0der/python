@@ -1,0 +1,28 @@
+'''
+    random module is used to generate random numbers
+    or to randomly select an item from a sequence.
+
+    @datetime:: September 7, 2025 8:42 am (UTC-5)
+    @author:: jac0der
+'''
+
+#*** 1 => import random module
+import random
+# import random as r
+# from random import randint
+
+
+# functions for integers
+#*** 2 => generate a random integer
+number = random.randint(7,14)
+print(number)
+
+
+#*** 3 => generate random number up to 4
+range_number = random.randrange(5)
+print(range_number)
+
+
+#*** 4 => generate random number specifying range (and step)
+print(random.randrange(20, 40))
+print(random.randrange(60, 80, 2))
