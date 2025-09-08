@@ -45,3 +45,7 @@ print(random.choice(country))
 print()
 random.shuffle(fruits)
 print(fruits)
+
+
+#*** 7 => 
+print(random.sample(fruits, 2))
