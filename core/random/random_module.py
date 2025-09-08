@@ -31,10 +31,17 @@ print(random.randrange(60, 80, 2))
 print()
 
 #*** 5 => return a random element from a non-empty sequence
-fruits = ['apple', 'grape', 'orange', 'banana', 'strawberry', 'blueberry', 'melon']
+fruits = ['apple', 'grape', 'orange', 'banana', 'strawberry', 'blueberry', 'melon', 'apple']
 print(random.choice(fruits))
 
 
 # return a random letter from a string
 country = 'Cuba'
 print(random.choice(country))
+
+
+
+#*** 6 => shuffle or rearrange items in a sequence.
+print()
+random.shuffle(fruits)
+print(fruits)
