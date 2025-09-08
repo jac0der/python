@@ -26,3 +26,10 @@ print(range_number)
 #*** 4 => generate random number specifying range (and step)
 print(random.randrange(20, 40))
 print(random.randrange(60, 80, 2))
+
+
+print()
+
+#*** 5 => return a random element from a non-empty sequence
+fruits = ['apple', 'grape', 'orange', 'banana', 'strawberry', 'blueberry', 'melon']
+print(random.choice(fruits))
