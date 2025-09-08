@@ -64,3 +64,5 @@ print(random.sample(sorted(books), 2))
 print()
 #*** 8 => generate a random floating point number in an inclusive range
 print(random.uniform(4, 8)) # 4 <= N <=8
+
+print(random.random() * 5)
