@@ -33,3 +33,8 @@ print()
 #*** 5 => return a random element from a non-empty sequence
 fruits = ['apple', 'grape', 'orange', 'banana', 'strawberry', 'blueberry', 'melon']
 print(random.choice(fruits))
+
+
+# return a random letter from a string
+country = 'Cuba'
+print(random.choice(country))
