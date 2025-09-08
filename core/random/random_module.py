@@ -47,7 +47,7 @@ random.shuffle(fruits)
 print(fruits)
 
 
-#*** 7 => 
+#*** 7 => randomly selects a certain specified amount of items from a sequence
 print(random.sample(fruits, 2))
 
 
@@ -59,3 +59,8 @@ books = {
 }
 print(books)
 print(random.sample(sorted(books), 2))
+
+
+print()
+#*** 8 => generate a random floating point number in an inclusive range
+print(random.uniform(4, 8)) # 4 <= N <=8
