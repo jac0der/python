@@ -15,21 +15,21 @@ from art import logo
 ALPHABET = a.ALPHABET
 
 
-def main():
+def main()->None:
     '''
         Entry point to the caesar cipher program.
         Accepts user inputs and decide whether to encode or decode text.
     '''
     print(logo)
-    running = True
+    running:bool = True
 
     while running:
 
-        direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower().strip()
-        text = input("Type your message:\n").lower()
+        direction:str = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower().strip()
+        text:str = input("Type your message:\n").lower()
 
         try:
-            shift = int(input("Type the shift number:\n"))
+            shift:int = int(input("Type the shift number:\n"))
 
         except ValueError:
             print("Invalid shift amount entered. Only Numeric values allowed.")
@@ -43,33 +43,33 @@ def main():
             print('No text entered to encrypt/decrypt.')
             continue
 
-        response = caesar(direction, text, shift)
+        response:str = caesar(direction, text, shift)
 
         if response == '':
             print("Error occured.")
             continue
 
         print(f'Here\'s the {direction}d result: {response}', end='\n')
-        goagain = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n\t").strip().lower()
+        goagain:str = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n\t").strip().lower()
 
         if goagain != 'yes':
             print("Bye! Bye!")
             running = False
 
-def caesar(direction, original_text, shift_amount):
+def caesar(direction:str, original_text:str, shift_amount:int)->str:
     '''
-        function to perform a caesar encrypt or decrypt based on the
-        direction variable of either encode or decode.
+    function to perform a caesar encrypt or decrypt based on the
+    direction variable of either encode or decode.
 
-        @inputs:: direction-> string: indicator to either perform encrypt or
-                                      decrypt.
-                  original_text-> str: the text entered by user to be encrypted/decrypted.
-                  shift_amounbt-> int: the amount of shifts to be appied to original_text.
+    Args:   direction (str): indicator to either perform encrypt or decrypt.
+            original_text (str): the text entered by user to be encrypted/decrypted.
+            shift_amounbt int: the amount of shifts to be appied to original_text.
         
-        @output:: message-> str: the encrypted caesar cipher by specified shift amount or
+    Returns: 
+            str: the encrypted caesar cipher by specified shift amount or
                                  the plain_text decrypted cipher or an empty string indicating an error.
     '''
-    output_value = ''
+    output_value:str = ''
 
     try:
         # set shift to be negative when decrypting
