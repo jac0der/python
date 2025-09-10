@@ -13,7 +13,7 @@ from logging_custom import jaclog
 logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 
-def bid():
+def bid()->None:
     '''
         Retrieve user bids and store them in a dictionary.
 
@@ -22,19 +22,19 @@ def bid():
                   Returns None if an error occurs.
     '''
     logger.info('Getting bids from bidders.') 
-    is_bidding_active = True
-    bids = dict()
+    is_bidding_active:bool = True
+    bids:dict = dict()
 
     try: 
         float(input("What is your bid?: $"))
         while is_bidding_active:
-            name = input("What is your name?: ")
+            name:str = input("What is your name?: ")
             if len(name) == 0:
                 logger.warning("Name is required for the bidding process.")
                 continue
 
             try:
-                bid_amount = float(input("What is your bid?: $"))
+                bid_amount:float = float(input("What is your bid?: $"))
                 if bid_amount <= 0:
                     logger.warning(f"Bid value for {name} must be greater than 0.")
                     continue
@@ -45,7 +45,7 @@ def bid():
             logger.info(f'{name} has placed a bid of {bid_amount}.')
             bids[name] = bid_amount
 
-            has_more_bidders = input("Are there any other bidders? Type 'yes' or 'no'.\n").strip().lower()
+            has_more_bidders:str = input("Are there any other bidders? Type 'yes' or 'no'.\n").strip().lower()
 
             if has_more_bidders == "no":
                 logger.info('Biding has ended.')
@@ -61,7 +61,7 @@ def bid():
         raise bidding_error.BiddingError("An error occurred during the bidding process.") from e
 
 
-def find_highest_bidder(bidder_dictionary):
+def find_highest_bidder(bidder_dictionary:dict)->None:
     '''
         Find the highest bidder from the dictionary of bids.
 
@@ -70,8 +70,8 @@ def find_highest_bidder(bidder_dictionary):
     '''
     try:
         logger.info('Finding the highest bidder from list of bidders.')
-        max_bid = 0
-        winner = ''
+        max_bid:int = 0
+        winner:str = ''
 
         # checking if bidder_dictionary is empty
         if not bidder_dictionary:
@@ -97,7 +97,7 @@ def find_highest_bidder(bidder_dictionary):
         logger.exception('Error occured determining the highest bidder.')
     
 
-def main():
+def main()->None:
     ''' 
     Main function to run the silent auction program.
     '''
