@@ -13,7 +13,7 @@ from logging_custom import jaclog
 logger = jaclog.configure('silent_auction_100days', './auction.log')
 
 
-def bid()->None:
+def bid()->dict:
     '''
         Retrieve user bids and store them in a dictionary.
 
@@ -106,7 +106,7 @@ def main()->None:
         print(art.logo)
         print("Welcome to the secret auction program.")
 
-        bids = bid()  # This may raise a BiddingError
+        bids:dict = bid()  # This may raise a BiddingError
         logger.info(f'Bids: {bids}.')
         find_highest_bidder(bids)
         
