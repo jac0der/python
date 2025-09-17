@@ -16,7 +16,7 @@ except ImportError:
 logger = jaclog.configure('even_odd', './even_odd.log')
 
 
-def get_number():
+def get_number()->int:
     '''
     Get number to check if it is Even or Odd.
 
@@ -26,12 +26,12 @@ def get_number():
     logger.info('Getting number from user.')
     while True:
         try:
-            user_input = input("\nEnter number (q to quit): ").strip().lower()
+            user_input:str = input("\nEnter number (q to quit): ").strip().lower()
 
             if user_input == 'q':
                 exit_program(eoc.EXIT_MESSAGE)
 
-            number = int(user_input)
+            number:int = int(user_input)
 
             print(eoc.ENTERED_NUMBER.format(number))
             logger.info(eoc.ENTERED_NUMBER.format(number))
@@ -43,7 +43,7 @@ def get_number():
             logger.warning(f'{eoc.GET_NUMBER_WARNING} \n {ex}')
 
 
-def is_even(number):
+def is_even(number:int)->bool:
     '''
     Check if specified number is an even or an odd number.
 
@@ -60,7 +60,7 @@ def is_even(number):
     return number % 2 == 0
 
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0)->None:
     '''
     Centralized exit function to handle the program termination.
 
@@ -72,14 +72,14 @@ def exit_program(message, code=0):
     sys.exit(message)
 
 
-def main():
+def main()->None:
     """ Main function to start Even Odd Program. """
     
     try:
         logger.info("Starting The Even Odd Program...")
 
         while True:
-            number = get_number()
+            number:int = get_number()
 
             if is_even(number):
                 print(eoc.RESULT_MESSAGE.format(number, eoc.EVEN))
