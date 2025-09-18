@@ -8,15 +8,15 @@
 
 
 # declaring global multiple constant values to check for.
-MULT3 = 3
-MULT5 = 5
+MULT3:int = 3
+MULT5:int = 5
 
 
-def main():
+def main()->None:
     fizzbuzz()
 
 
-def is_multiple(dividend, divisor):
+def is_multiple(dividend:int, divisor:int)->bool:
     """
         Function to determine if a divisor is a multiple of dividend.
         Used the modulo (%) operator to determine if divisor is a multiple
@@ -35,7 +35,7 @@ def is_multiple(dividend, divisor):
         return False
 
 
-def fizzbuzz():
+def fizzbuzz()->None:
     """
         Function to loop through numbers from 1 to 100,
         printing 
