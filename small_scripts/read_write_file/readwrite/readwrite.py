@@ -26,7 +26,7 @@ def modify_file(input_file:str, output_file:str)->None:
         lines = file.readlines()
 
     # Process lines and modify content
-    modified_lines = [line.replace('tuple', 'Tuple') for line in lines]
+    modified_lines:list = [line.replace('tuple', 'Tuple') for line in lines]
 
     # Write modified content to the output file
     with open(output_file, "w") as file:
