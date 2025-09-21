@@ -47,7 +47,7 @@ def get_number(prompt, default=None):
             logger.warning(f'MultiplicationTableError: {ex}')
 
 
-def generate_times_table(number, range_number=mc.DEFAULT_RANGE):
+def generate_times_table(number:int, range_number:int=mc.DEFAULT_RANGE):
     '''
     Generate the multiplication times table for a number up to the
     specified range.
