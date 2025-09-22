@@ -22,7 +22,7 @@ def get_number(prompt, default=None):
     logger.info('Getting number or range from user.')
     while True:
         try:
-            user_input = input(prompt).strip().lower()
+            user_input:str = input(prompt).strip().lower()
 
             if user_input == 'q':
                 exit_program(mc.EXIT_MESSAGE)
