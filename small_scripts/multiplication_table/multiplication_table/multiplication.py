@@ -75,7 +75,7 @@ def generate_times_table(number:int, range_number:int=mc.DEFAULT_RANGE):
     logger.info(table_output)
 
 
-def exit_program(message, code=0):
+def exit_program(message:str, code:int=0):
     '''
     Centralized exit function to handle the program termination.
 
@@ -87,17 +87,17 @@ def exit_program(message, code=0):
     sys.exit(message)
 
 
-def main():
+def main()->None:
     """ Main function to start the multiplication table program. """
     try:
         logger.info('Starting the multiplication table program.')
 
         while True:            
-            number = get_number("\nEnter number for multiplication table (q to quit): ")
+            number:str = get_number("\nEnter number for multiplication table (q to quit): ")
             print(mc.ENTERED_NUMBER.format('Number', number))
             logger.info(mc.ENTERED_NUMBER.format('Number', number))
 
-            range_number = get_number("\nEnter range (default is 12) (q to quit): ", mc.DEFAULT_RANGE)
+            range_number:str = get_number("\nEnter range (default is 12) (q to quit): ", mc.DEFAULT_RANGE)
             print(mc.ENTERED_NUMBER.format('Range', range_number))
             logger.info(mc.ENTERED_NUMBER.format('Range', range_number))
 
