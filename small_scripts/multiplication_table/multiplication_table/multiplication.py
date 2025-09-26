@@ -13,7 +13,7 @@ import multiplication_constants as mc
 logger = jaclog.configure('multiplication', './multiplication.log')
 
 
-def get_number(prompt, default=None):
+def get_number(prompt:str, default=None)->int:
     '''
     Get a number to generate multiplication table.
     Returns:
@@ -47,7 +47,7 @@ def get_number(prompt, default=None):
             logger.warning(f'MultiplicationTableError: {ex}')
 
 
-def generate_times_table(number, range_number=mc.DEFAULT_RANGE):
+def generate_times_table(number:int, range_number:int=mc.DEFAULT_RANGE):
     '''
     Generate the multiplication times table for a number up to the
     specified range.
@@ -63,12 +63,12 @@ def generate_times_table(number, range_number=mc.DEFAULT_RANGE):
     if number < 0 or range_number < 0:
         raise me.MultiplicationTableError(mc.INVALID_NUMBER)
 
-    header = f'\nGenerating Multiplication table for {number} up to {range_number}.'
+    header:str = f'\nGenerating Multiplication table for {number} up to {range_number}.'
     print(header)
     logger.info(header)
 
     # list comprehension
-    table_lines = [f"\t{number} * {n} = {number * n}" for n in range(1, range_number + 1)]
+    table_lines:list = [f"\t{number} * {n} = {number * n}" for n in range(1, range_number + 1)]
     table_output = "\n".join(table_lines)
 
     print(table_output)
@@ -93,11 +93,11 @@ def main()->None:
         logger.info('Starting the multiplication table program.')
 
         while True:            
-            number:str = get_number("\nEnter number for multiplication table (q to quit): ")
+            number:int = get_number("\nEnter number for multiplication table (q to quit): ")
             print(mc.ENTERED_NUMBER.format('Number', number))
             logger.info(mc.ENTERED_NUMBER.format('Number', number))
 
-            range_number:str = get_number("\nEnter range (default is 12) (q to quit): ", mc.DEFAULT_RANGE)
+            range_number:int = get_number("\nEnter range (default is 12) (q to quit): ", mc.DEFAULT_RANGE)
             print(mc.ENTERED_NUMBER.format('Range', range_number))
             logger.info(mc.ENTERED_NUMBER.format('Range', range_number))
 
