@@ -31,7 +31,7 @@ def get_number(prompt:str, default=None)->int:
             if default is not None and user_input == "":
                 return default
 
-            number = int(user_input)
+            number:int = int(user_input)
 
             if number < 0:
                 raise me.MultiplicationTableError(pcc.INVALID_NUMBER)
