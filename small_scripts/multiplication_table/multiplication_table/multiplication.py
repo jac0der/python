@@ -22,7 +22,7 @@ def get_number(prompt:str, default=None)->int:
     logger.info('Getting number or range from user.')
     while True:
         try:
-            user_input = input(prompt).strip().lower()
+            user_input:str = input(prompt).strip().lower()
 
             if user_input == 'q':
                 exit_program(mc.EXIT_MESSAGE)
@@ -31,7 +31,7 @@ def get_number(prompt:str, default=None)->int:
             if default is not None and user_input == "":
                 return default
 
-            number = int(user_input)
+            number:int = int(user_input)
 
             if number < 0:
                 raise me.MultiplicationTableError(pcc.INVALID_NUMBER)
