@@ -5,6 +5,7 @@
     @author:: jac0der
 '''
 from logging_custom import jaclog
+import sys
 
 try:
     # When running as a module (for unittest)
