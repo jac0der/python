@@ -4,7 +4,7 @@
     @datetime:: February 8, 2025 11:18 pm (UTC-5)
     @author:: jac0der
 '''
-from logging_custom import jaclog
+from py_custom import jaclog
 import sys
 
 try:
