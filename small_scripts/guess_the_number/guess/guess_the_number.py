@@ -6,7 +6,7 @@
 """
 import random as r
 import guess_constants as gc
-import guess_result_enum
+from guess_result_enum import GuessResult
 from py_custom import jaclog, jacexit as je
 
 logger = jaclog.configure('guess_number', './guess_number.log')
