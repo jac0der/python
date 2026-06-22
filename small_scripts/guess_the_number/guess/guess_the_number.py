@@ -6,7 +6,7 @@
 """
 import random as r
 import guess_constants as gc
-import guess_result_enum as ge
+import guess_result_enum
 from py_custom import jaclog, jacexit as je
 
 logger = jaclog.configure('guess_number', './guess_number.log')
@@ -88,12 +88,12 @@ def compare_numbers(user_guess_number:int, random_number:int)->int:
         raise TypeError(f"random_number must be int, got {type(random_number).__name__}")
 
     if user_guess_number < random_number:
-        return ge.GuessResult.LOW
+        return GuessResult.LOW
 
     if user_guess_number > random_number:
-        return ge.GuessResult.HIGH
+        return GuessResult.HIGH
 
-    return ge.GuessResult.CORRECT
+    return GuessResult.CORRECT
 
 
 def main()->None:
@@ -113,7 +113,7 @@ def main()->None:
                 user_number = get_number()        
                 result = compare_numbers(user_number, random_number)
 
-                if result == ge.GuessResult.CORRECT:
+                if result == GuessResult.CORRECT:
                     print("You have gussed the correct number.")
                     startover = input("Do you want to start over (Y or N)?")
                     if startover.strip().lower() == 'y':
@@ -122,11 +122,11 @@ def main()->None:
                         guessing = False
                         break
 
-                elif result == ge.GuessResult.LOW:
+                elif result == GuessResult.LOW:
                     tries_counter -= 1
                     print(f"Too low. You have {tries_counter} tries remaining. Try again. \n")
 
-                elif result == ge.GuessResult.HIGH:
+                elif result == GuessResult.HIGH:
                     tries_counter -= 1
                     print(f"Too high. You have {tries_counter} tries remaining. Try again. \n")
 
